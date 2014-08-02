@@ -42,6 +42,7 @@
     }
 
     var drawWordCloud = function() {
+      // 한번만 실행됨
       // Helper function to test if an element overlaps others
       var hitTest = function(elem, other_elems) {
         // Pairwise overlap detection
@@ -107,7 +108,52 @@
           weight = Math.round((word.weight - word_array[word_array.length - 1].weight) /
                               (word_array[0].weight - word_array[word_array.length - 1].weight) * 9.0) + 1;
         }
+        
+        //  0.0% - -0.5% q5
+        // -0.5% - -1.0% q4
+	    // -1.0% - -1.5% q3
+	    // -1.5% - -2.0% q2
+	    // -2.0% -  이하 q1
+        
+        // 0.0% - 0.5% q6
+        // 0.5% - 1.0% q7
+        
+	    // 1.0% - 1.5% q8
+	    // 1.5% - 2.0% q9
+	    // 2.0% - 이상 q10
+        
         word_span = $('<span>').attr(word.html).addClass('w' + weight + " " + custom_class);
+        
+        if(word.yield < -2.0){
+        	word_span.addClass('q1');
+        }
+        else if(word.yield >= -2.0 && word.yield < -1.5){
+        	word_span.addClass('q2');
+        }
+        else if(word.yield >= -1.5 && word.yield < -1.0){
+        	word_span.addClass('q3');
+        }
+        else if(word.yield >= -1.0 && word.yield < -0.5){
+        	word_span.addClass('q4');
+        }
+        else if(word.yield >= -0.5 && word.yield < 0){
+        	word_span.addClass('q5');
+        }
+        else if(word.yield >= 0 && word.yield < 0.5){
+        	word_span.addClass('q6');
+        }
+        else if(word.yield >= 0.5 && word.yield < 1.0){
+        	word_span.addClass('q7');
+        }
+        else if(word.yield >= 1.0 && word.yield < 1.5){
+        	word_span.addClass('q8');
+        }
+        else if(word.yield >= 1.5 && word.yield < 2.0){
+        	word_span.addClass('q9');
+        }
+        else if(word.yield >= 2.0){
+        	word_span.addClass('q10');
+        }
 
         // Append link if word.url attribute was set
         if (word.link) {

@@ -3,6 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	
@@ -11,7 +12,7 @@
     <!-- Core CSS - Include with every page -->
     <!--  <link href="resources/css/bootstrap.min.css" rel="stylesheet"> -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
     <link href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.css" rel="stylesheet">
 
@@ -26,7 +27,26 @@
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>   
     <script src="${pageContext.request.contextPath}/resources/js/jqcloud/jqcloud-1.0.4.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/jqcloud/jqcloud.css">
-	          
+    
+    <style>
+    	.footer
+    	{
+    	text-align: center;
+    	}
+    	.footer
+    	{
+		  position: absolute;
+		  bottom: 0;
+		  width: 100%;
+		  /* Set the fixed height of the footer here */
+		  height: 60px;
+		  background-color: #f5f5f5;
+		}
+		.container .text-muted {
+		  margin: 20px 0;
+		}
+				    	
+    </style>
     
     <script>
 
@@ -42,32 +62,56 @@
 	
 </head>
 <body>	
-	<div id="div_cloud" style="text-align: center;">	
-		<div class="btn-group btn-group-sm">
-		  <button id="btn_b" type="submit" class="btn btn-default" onclick="$('#type_input').val('b');">유난히 튀는</button>
-		  <button id="btn_a" type="submit" class="btn btn-success" onclick="$('#type_input').val('a');">비중이 높은</button>
-		  <!-- <button id="btn_c" type="submit" class="btn btn-default" onclick="$('#type_input').val('c');">공시 관련</button> -->
+		<div class="row" style="text-align: center; margin-top: 30px">
+			<div align="center">
+				<div id="div_cloud" style="max-width: 600px; height: 500px; text-align: center"></div>
+				<div id="div_table" style="max-width: 600px; text-align: center">
+				
+				<table class="table table-striped">
+					<thead>
+						<th>뉴스시각</th>
+						<th>뉴스제목</th>
+						<th>제공처</th>
+					</thead>
+					<tbody id="table_contents">
+					</tbody>
+				</table>
+				
+					<p><a id="btn_back" class="btn btn-warning" role="button">Back to the cloud</a></p>					
+				</div>
+			</div>
 		</div>
-	
-		<p>
-			<input name="dt" type="text" id="datepicker">
-			<button type="submit" class="btn btn-default">Refresh</button>		
-		</p>
-		 
-	<div id="div_cloud" class="jqcloud" style="width: 100%; height: 500px; border: 0px solid #ccc; margin-top: 30px;"></div>
+		<div align="center">
+			<!-- <div class="row" style="text-align: center; max-width: 600px; border-top-style: solid; border-top-width: 1px"> -->
+			<div>
+				<img width="100px" alt="" src="${pageContext.request.contextPath}/resources/img/anvil.jpg">
+			</div>
+		</div>
+		<div class="row" style="text-align: center">
+			<div class="jumbotron" style="padding-top: 10px; padding-bottom: 10px">
+			  <h1>BlackSmith</h1>
+			  <h3>Creative Finance</h3>
+			  <p><a class="btn btn-primary btn-lg" role="button">ENTER</a></p>
+			  <p class="text-muted credit" style="font-size: small;">Daehyun kim <a href="mailto:reinitiate@gmail.com">reinitiate@gmail.com</a></p>			  
+			</div>		
+		</div> 
 		
-	</div>
-	
-	
-	<div class="row"></div>
-	<div class="row"></div>
-	<div class="footer">fnblacksmith.com</div>
+		<div id="loading" style="position:absolute; top:50%; left :0; width:100%; margin-top: -10px; line_height:20px; text-align:center;">
+			<p><img src='${pageContext.request.contextPath}/resources/img/ajax-loader.gif'/>
+		</div>
+		
+		<input id="t0" type="hidden" value="${t0}"/>
+		<input id="t1" type="hidden" value="${t1}"/>   	
 </body>
 
 <script type="text/javascript">
 	      var word_list = ${cloud};	      
 	      $(function() {
-	    	 $("#div_cloud").jQCloud(word_list);
+	    	  
+	    	 // 초기화
+	    	 $("#loading").hide(); 
+	    	 $("#div_table").hide();
+	    	 $("#div_cloud").jQCloud(word_list, {shape: 'rectangular'});
 	         $("#datepicker").datepicker(
 	        		 	{
 	        		 		dateFormat: 'yymmdd',
@@ -77,9 +121,7 @@
 	        			 }
 	        		 );
 	         $("#datepicker").val("<%=request.getAttribute("dt")%>");
-	         
 	         var type = $("#type_input").val();
-	         
 	         $("button[class='btn btn-success']").attr("class", "btn btn-default");
 	         
 	         if(type == "a") {
@@ -90,12 +132,11 @@
 	        
 	        $("#btn_back").bind('click', function(){
 	        	
-	        	
 	            var effect = 'slide';
-	            var options = { direction: 'left'};
+	            var options = { direction: 'down'};
 	            var duration = 1000;
 	            
-	        	$("#div_news").hide();
+	        	$("#div_table").hide();
 	        	$("#div_cloud").toggle(effect, options, duration);
 	        });
 	        
@@ -105,9 +146,48 @@
 	  		$("li").removeClass("active");
 	  		$("#li_snc").addClass("active");
 	  		$("#div_news").hide();
-	  	});	      
+	  	});
+	      
+	    function loadData(gicode){
+	    	$.ajax({
+				type: 'post',				
+				url: '${pageContext.request.contextPath}/news/json',
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",				
+				dataType: "json",
+				beforeSend: function(){
+				     $("#loading").show();
+				},
+				complete: function(){
+				     $("#loading").hide();
+				},
+				data: {gicode : gicode, t0 : $('#t0').val(), t1 : $('#t1').val()},				
+				success: function(data){
+					
+					var effect = 'slide';
+		            var options = { direction: 'up'};
+		            var duration = 1000;
+			            
+			        $("#div_table").toggle(effect, options, duration);
+			        $("#div_cloud").hide();
+			        
+			        var html = '';
+			        
+			        for(i=0; i<data.length; i++){
+			        	html = html + '<tr>';
+			        	html = html + '<td>' + data[i].pub_dt + '</td>';
+			        	html = html + '<td>' + data[i].title + '</td>';
+			        	html = html + '<td>' + data[i].provider + '</td>';			        	
+			        	html = html + '</tr>';
+			        }
+					$('#table_contents').html(html);
+					
+	            },
+	            error: function(XMLHttpRequest, textStatus, errorThrown) {	            	  
+	              alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+	            }
+			});
+	    	
+	    	return ;
+	    }
 	 </script>
-	 
-	 
-	 
 </html>
