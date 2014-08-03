@@ -1,6 +1,7 @@
 package fnlab.service.news;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -93,9 +94,11 @@ public class NewsService extends SqlSessionDaoSupport{
 		List<HashMap<String, Object>> news = getSqlSession().selectList("news.selectNewDetail", params);		
 		JSONArray result = new JSONArray();
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		
 		for(int i=0; i<news.size(); i++){
 			JSONObject object = new JSONObject();
-			object.put("pub_dt", news.get(i).get("pub_dt"));						
+			object.put("pub_dt", sdf.format((Date)news.get(i).get("pub_dt")));						
 			object.put("title", news.get(i).get("title"));
 			object.put("url",news.get(i).get("url"));
 			object.put("provider",news.get(i).get("provider"));

@@ -31,7 +31,7 @@
     <style>
     	.footer
     	{
-    	text-align: center;
+    		text-align: center;
     	}
     	.footer
     	{
@@ -43,7 +43,22 @@
 		  background-color: #f5f5f5;
 		}
 		.container .text-muted {
-		  margin: 20px 0;
+			margin: 20px 0;
+		}		
+		table thead th
+		{
+			text-align: center;
+		}
+		
+		table tbody tr td:first-child
+		{
+			
+		}
+		
+		table tbody tr td
+		{
+			text-align: left;
+			font-size: 12px;
 		}
 				    	
     </style>
@@ -64,9 +79,9 @@
 <body>	
 		<div class="row" style="text-align: center; margin-top: 30px">
 			<div align="center">
-				<div id="div_cloud" style="max-width: 600px; height: 500px; text-align: center"></div>
-				<div id="div_table" style="max-width: 600px; text-align: center">
-				
+				<div id="div_cloud" style="max-width: 600px; height: 450px; text-align: center"></div>
+				<div id="div_table" style="max-width: 600px; height: 450px; overflow:auto; text-align: center">
+				<p style="width: 100px;"><a id="btn_back" class="btn btn-warning" role="button">Back to the cloud</a></p>
 				<table class="table table-striped">
 					<thead>
 						<th>뉴스시각</th>
@@ -75,9 +90,7 @@
 					</thead>
 					<tbody id="table_contents">
 					</tbody>
-				</table>
-				
-					<p><a id="btn_back" class="btn btn-warning" role="button">Back to the cloud</a></p>					
+				</table>						
 				</div>
 			</div>
 		</div>
@@ -175,7 +188,7 @@
 			        for(i=0; i<data.length; i++){
 			        	html = html + '<tr>';
 			        	html = html + '<td>' + data[i].pub_dt + '</td>';
-			        	html = html + '<td>' + data[i].title + '</td>';
+			        	html = html + "<td><a target='_blank' href='" + data[i].url + "'>" + data[i].title + '</a></td>';
 			        	html = html + '<td>' + data[i].provider + '</td>';			        	
 			        	html = html + '</tr>';
 			        }
