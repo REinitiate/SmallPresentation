@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	
-    <title>창의적 금융 FnBlackSmith</title>
+    <title>똑똑한 금융공학 FnBlackSmith</title>
 
     <!-- Core CSS - Include with every page -->
     <!--  <link href="resources/css/bootstrap.min.css" rel="stylesheet"> -->
@@ -80,7 +79,7 @@
 		<div class="row" style="text-align: center; margin-top: 30px">
 			<div align="center">
 				<div id="div_cloud" style="max-width: 600px; height: 450px; text-align: center"></div>
-				<div id="div_table" style="max-width: 600px; height: 450px; overflow:auto; text-align: center">
+				<div id="div_table" style="max-width: 550px; height: 450px; overflow:auto; text-align: center">
 				<p style="width: 100px;"><a id="btn_back" class="btn btn-warning" role="button">Back to the cloud</a></p>
 				<table class="table table-striped">
 					<thead>
@@ -103,8 +102,8 @@
 		<div class="row" style="text-align: center">
 			<div class="jumbotron" style="padding-top: 10px; padding-bottom: 10px">
 			  <h1>BlackSmith</h1>
-			  <h3>Creative Finance</h3>
-			  <p><a class="btn btn-primary btn-lg" role="button">ENTER</a></p>
+			  <h3>SMART Finance</h3>
+			  <p><a href="${pageContext.request.contextPath}/main" class="btn btn-primary btn-lg" role="button">ENTER</a></p>
 			  <p class="text-muted credit" style="font-size: small;">Daehyun kim <a href="mailto:reinitiate@gmail.com">reinitiate@gmail.com</a></p>			  
 			</div>		
 		</div> 

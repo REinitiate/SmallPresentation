@@ -10,26 +10,10 @@
     
  <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
-                <ul class="nav" id="side-menu">
-                
-                	<li style="text-align: center;">
-                		<a><input name="dt" type="text" id="datepicker"></a>
-                	</li>
-                	
+                <ul class="nav" id="side-menu">	
                 	<li class="sidebar-search">
                         <div class="input-group custom-search-form">
                             <input type="text" class="form-control" placeholder="주식코드 검색...">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>                        
-                        <!-- /input-group -->
-                    </li>
-                    <li class="sidebar-search">
-                        <div class="input-group custom-search-form">
-                            <input type="text" class="form-control" placeholder="채권코드 검색...">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">
                                     <i class="fa fa-search"></i>
@@ -44,29 +28,42 @@
                     </li>
                                         
                     <li>
-                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>채권지수<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>주식전략 테스트<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="javascript:action_menu('/bond/ktb')">국고채</a>
+                                <a href="javascript:action_menu('/bond/ktb')">이동평균선 전략</a>
                             </li>
                             <li>
-                                <a href="javascript:action_menu('/bond/cash')">KRW CASH</a>
+                                <a href="javascript:action_menu('/bond/cash')">페어트레이딩 모니터링</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>주식지수<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>급등주 탐색<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="flot.html">지수 기초정보 출력</a>
+                                <a href="flot.html">룰 1</a>
                             </li>
                             <li>
-                                <a href="morris.html">개편 상황</a>
+                                <a href="morris.html">룰 2</a>
                             </li>                           
                             <li>
-                                <a href="morris.html">지수별 보유비중</a>
+                                <a href="morris.html">룰 3</a>
                             </li>                            
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                    
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>금융공학<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="flot.html">Black Scholes</a>
+                            </li>
+                            <li>
+                                <a href="morris.html">Volatility Pumpin</a>
+                            </li>                        
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
