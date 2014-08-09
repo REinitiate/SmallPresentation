@@ -38,8 +38,8 @@ public class NewsController {
 	@ResponseBody
 	public String Jenny(@RequestParam(required=false) String dt, String gicode) throws ParseException {		
 		
-		Date targetDt = Ut.sdf_full.parse("2014-08-01 16:00:00");
-		//Date targetDt = new Date();
+		//Date targetDt = Ut.sdf_full.parse("2014-08-01 16:00:00");
+		Date targetDt = new Date();
 		String t1 = Ut.sdf_full.format(targetDt);		
 		Calendar cal = new GregorianCalendar();
 		cal.setTime(targetDt);	

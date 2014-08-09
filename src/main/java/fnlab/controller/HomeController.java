@@ -39,8 +39,8 @@ public class HomeController {
 	@RequestMapping(value = {"/index", "", "/"}, method = RequestMethod.GET)	
 	public String home(@RequestParam(required=false) String dt, HttpServletRequest req, Model model) throws ParseException {
 		
-		Date targetDt = Ut.sdf_full.parse("2014-08-01 16:00:00");
-		//Date targetDt = new Date();
+		//Date targetDt = Ut.sdf_full.parse("2014-08-01 16:00:00");
+		Date targetDt = new Date();
 		String t1 = Ut.sdf_full.format(targetDt);		
 		Calendar cal = new GregorianCalendar();
 		cal.setTime(targetDt);	
@@ -73,6 +73,14 @@ public class HomeController {
 		
 		logger.info("root 경로로 접속했을 시!");
 		return "jenny/prince";
+		
+	}
+	
+	@RequestMapping(value = "/pattern", method = {RequestMethod.GET, RequestMethod.POST})	
+	public String Pattern(@RequestParam(required=false) String dt, HttpServletRequest req, Model model) {	
+		
+		logger.info("root 경로로 접속했을 시!");
+		return "pattern";
 		
 	}
 }
