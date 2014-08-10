@@ -17,23 +17,14 @@
             <ul class="nav navbar-top-links navbar-right">            	
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-folder-open fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-messages">                        
+                    <ul class="dropdown-menu dropdown-messages">
+                    	 <li><a href="pattern"><i class="fa fa-gavel fa-fw"></i> Candle Chart Pattern</a>               
                     </ul>
                     <!-- /.dropdown-messages -->
                 </li>
-                <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-tasks">                        
-                    </ul>
-                    <!-- /.dropdown-tasks -->
-                </li>
-                <!-- /.dropdown -->
-                <li class="dropdown">
+                <li class="dropdown disabled">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
@@ -47,13 +38,15 @@
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> Developer</a>
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> 개발자</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-phone fa-fw"></i> Contact</a>
+                        <li><a href="#"><i class="fa fa-phone fa-fw"></i> 연락처</a>
                         </li>
+                        <!-- 
                         <li class="divider"></li>
                         <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
+                         -->
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>

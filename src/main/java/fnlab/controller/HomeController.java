@@ -38,13 +38,21 @@ public class HomeController {
 	
 	@RequestMapping(value = {"/index", "", "/"}, method = RequestMethod.GET)	
 	public String home(@RequestParam(required=false) String dt, HttpServletRequest req, Model model) throws ParseException {
-		
 		//Date targetDt = Ut.sdf_full.parse("2014-08-01 16:00:00");
 		Date targetDt = new Date();
+		
 		String t1 = Ut.sdf_full.format(targetDt);		
 		Calendar cal = new GregorianCalendar();
 		cal.setTime(targetDt);	
-		cal.add(Calendar.DATE, -1);
+		
+		
+		if(cal.DAY_OF_WEEK == Calendar.SATURDAY)
+			cal.add(Calendar.DATE, -2);
+		else if(cal.DAY_OF_WEEK == Calendar.SUNDAY)
+			cal.add(Calendar.DATE, - 3);
+		else
+			cal.add(Calendar.DATE, -1);
+		
 		String t0 = Ut.sdf_full.format(cal.getTime());
 		JSONArray json = newsService.GetNewsJson4IndexPage(t0, t1, 500);
 		model.addAttribute("cloud", json);

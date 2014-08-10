@@ -59,6 +59,21 @@
 			text-align: left;
 			font-size: 12px;
 		}
+		.video-container {
+		    position: relative;
+		    padding-bottom: 56.25%;
+		    padding-top: 30px; height: 0; overflow: hidden;
+		}
+		 
+		.video-container iframe,
+		.video-container object,
+		.video-container embed {
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 100%;
+		}
 				    	
     </style>
     
@@ -80,7 +95,7 @@
 			<div align="center">
 				<div id="div_cloud" style="max-width: 600px; height: 450px; text-align: center"></div>
 				<div id="div_table" style="max-width: 550px; height: 450px; overflow:auto; text-align: center">
-				<p style="width: 100px;"><a id="btn_back" class="btn btn-warning" role="button">Back to the cloud</a></p>
+				<p style="width: 100px;"><a id="btn_back" class="btn btn-warning" role="button"><span class="fa fa-reply"></span>  Back to the cloud</a></p>
 				<table class="table table-striped">
 					<thead>
 						<th>뉴스시각</th>
@@ -103,10 +118,23 @@
 			<div class="jumbotron" style="padding-top: 10px; padding-bottom: 10px">
 			  <h1>BlackSmith</h1>
 			  <h3>SMART Finance</h3>
-			  <p><a href="${pageContext.request.contextPath}/main" class="btn btn-primary btn-lg" role="button">ENTER</a></p>
+			  <p><a href="${pageContext.request.contextPath}/pattern" class="btn btn-primary btn-lg" role="button">ENTER</a></p>
 			  <p class="text-muted credit" style="font-size: small;">Daehyun kim <a href="mailto:reinitiate@gmail.com">reinitiate@gmail.com</a></p>			  
 			</div>		
 		</div> 
+		
+		<div class="jumbotron">
+		  <h1><a href="${pageContext.request.contextPath}/pattern">Smart Candle chart</a></h1>
+		  <p>현재 주가의 상황을 캔들차트의 시선으로 바라봅니다. 원하는 패턴을 찾고, 패턴의 유용함을 파악합니다.</p>
+		  <div class="row">
+		  	<div class="col-md-6">
+			  <div class="video-container">
+			  	<iframe height="400" src="//www.youtube.com/embed/TP-la2j-NPU" frameborder="0" allowfullscreen></iframe>
+			  </div>
+			</div>
+		  </div>
+		  <!-- <p><a href="${pageContext.request.contextPath}/pattern" class="btn btn-primary btn-lg" role="button">Enter</a></p> -->
+		</div>
 		
 		<div id="loading" style="position:absolute; top:50%; left :0; width:100%; margin-top: -10px; line_height:20px; text-align:center;">
 			<p><img src='${pageContext.request.contextPath}/resources/img/ajax-loader.gif'/>

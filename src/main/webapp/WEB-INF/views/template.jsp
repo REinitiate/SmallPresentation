@@ -12,7 +12,6 @@
 <html>
 
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,19 +35,15 @@
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>            
     
     <script>
-
 	if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
 		  var msViewportStyle = document.createElement("style")
 		  msViewportStyle.appendChild(
 		    document.createTextNode(
 		      "@-ms-viewport{width:auto!important}" )
 		  )
-		  document.getElementsByTagName("head")[0].appendChild(msViewportStyle)
-		}
-	
+		  document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+	}
 	</script>
-	
-	<script src="js/jquery-1.10.2.js"></script>
 </head>
 <body>	
 

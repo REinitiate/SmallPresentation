@@ -42,8 +42,15 @@ public class NewsController {
 		Date targetDt = new Date();
 		String t1 = Ut.sdf_full.format(targetDt);		
 		Calendar cal = new GregorianCalendar();
-		cal.setTime(targetDt);	
-		cal.add(Calendar.DATE, -1);
+		cal.setTime(targetDt);
+		
+		if(cal.DAY_OF_WEEK == Calendar.SATURDAY)
+			cal.add(Calendar.DATE, -2);
+		else if(cal.DAY_OF_WEEK == Calendar.SUNDAY)
+			cal.add(Calendar.DATE, - 3);
+		else
+			cal.add(Calendar.DATE, -1);
+		
 		String t0 = Ut.sdf_full.format(cal.getTime());
 		
 		JSONArray result = newsService.GetNewsDetail(t0, t1, gicode);
