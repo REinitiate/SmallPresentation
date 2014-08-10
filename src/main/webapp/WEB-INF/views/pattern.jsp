@@ -15,17 +15,13 @@
 <%@ include file="include.jsp"%>
 <style>
 	  	  
-	  .candle {width:60px; left:150px; top:150px; background-color: transparent; position: absolute;}
-	  
+	  .candle {width:60px; left:150px; top:150px; background-color: transparent; position: absolute;}	  
 	  .candle .div_candle{background-color:#3A3A9A; border-width: 1px; border-style: solid;}
 	  .candle .bull{background-color:#990000;}	  
-	  .candle_canvas{width:100%; height:400px; background-color: transparent; border-style: groove;}	  
-	  
+	  .candle_canvas{width:100%; height:400px; background-color: transparent; border-style: groove;}	  	  
 	  .stick_high{height:30px; width:15px; background-color: wight; left:22.5px; border-top: solid; border-right: solid; border-left: solid; border-width: 1px;}
-	  .stick_low{height:30px; width:15px; background-color: wight; left:22.5px; border-bottom: solid; border-right: solid; border-left: solid; border-width: 1px;}
-	  
-	  .ui-resizable-helper { border: 2px dotted #00F; }
-	  
+	  .stick_low{height:30px; width:15px; background-color: wight; left:22.5px; border-bottom: solid; border-right: solid; border-left: solid; border-width: 1px;}	  
+	  .ui-resizable-helper { border: 2px dotted #00F; }	  
 	  .modify_area{border-style:outset; border-width: 5px;}
 	  .delete_area{height:70px; background-color: transparent; width: 50%; float: left; text-align: center; border-right-style: inset;}
 	  .toggle_area{height:70px; background-color: transparent; width: 50%; float: left; text-align: center;}
