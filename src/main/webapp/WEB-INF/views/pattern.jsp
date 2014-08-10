@@ -33,6 +33,7 @@
     
     <script src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/jquery-ui.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.ui.touch-punch.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/jqcloud/jqcloud-1.0.4.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/jqcloud/jqcloud.css">        
     
@@ -52,90 +53,142 @@
  <style>
 	  #resizable { width: 150px; height: 150px; padding: 0.5em; }
 	  #resizable h3 { text-align: center; margin: 0; }
+	  .candle {width:60px; left:150px; top:150px; background-color: transparent; position: absolute;}
+	  .candle .div_candle{background-color:#3A3A9A;}
+	  .candle .bull{background-color:#990000;}	  
+	  .candle_canvas{width:100%; height:400px; background-color: transparent; border-style: groove;}	  
+	  .stick_high{height:30px; width:15px; background-color: wight; left:32.5px; border-top: solid; border-right: solid; border-left: solid; border-width: 1px;}
+	  .stick_low{height:30px; width:15px; background-color: wight; left:32.5px; border-bottom: solid; border-right: solid; border-left: solid; border-width: 1px;}
+	  .ui-resizable-helper { border: 2px dotted #00F; }
+	  .delete_area{height:70px; background-color: transparent; width: 50%; float: left; text-align: center;}
+	  .toggle_area{height:70px; background-color: transparent; width: 50%; float: left; text-align: center;}
+	  .area_selected{border-style: solid; border-width: 3px;}	  
   </style>
 	
 </head>
 <body>
-
-	<div style="width:100%; height: 400px; background-color: white">	
-
-		<div class="resizable" style="width:60px; height:100px; background-color: white; padding: 5px">
-			<div class="stick_high" style="position:absolute; height:30px; width:30px; background-color: black"></div>
-			<div class="up" style="background-color: red; height:50%">
+	
+	<div id="candle_canvas" class="candle_canvas" style="width:100%; height: 400px; background-color: white;">
+		<div style="display: inline-block; width: 100%">			
+			<div class="delete_area"><h1><span class="glyphicon glyphicon-globe"></h1></span></div>
+			<div class="toggle_area"><h1><span class="glyphicon glyphicon-refresh"></h1></div>
+		</div>
+		
+		<div id="candle_repo" style="visibility: hidden;">
+			<div class="candle"">
+				<div class="stick stick_high"></div>			
+				<div class="div_candle bull" style="height:100px"></div>
+				<div class="stick stick_low"></div>
 			</div>
-			<div class="down" style="background-color: blue; height:50%">
-			</div>
-			<div class="stick_row" style="position:absolute; left:27px; height:30px; width:30px; background-color: black"></div>
 		</div>
 	
 	</div>
 
     <div id="row">
-    
-    	
-			
-    	<div id="editor" style="background-color: green;">    		
-    		<div id="candleControl">
-    		
-    			<div id="row">
-    				<div class="col-md-6">
-			    		<div class="input-group input-group-sm">
-			    			<p>
-							  <label for="spinner">Select a value:</label>
-							  <input id="spinner" name="value">
-							</p>
-			    		</div>
-				    </div>
-			   </div>
-		    
-		    </div>
-    	</div>
+    	<button id="btn_add_candle" type="button" class="btn btn-default">Add Candle</button>
     </div>
     
     <script>
         
         $(function(){
-        	var spinner = $( "#spinner" ).spinner();
+        	EventRefresh();
         	
-        	$(".resizable").resizable({
-        	    maxWidth: 60,
-        	    minHeight: 0,
-        	    minWidth: 60
+        	$('#btn_add_candle').click(function(){
+        		var candleSample = $("#candle_repo").clone();
+        		candleSample.addClass("visibility", "visible");
+        		console.log(candleSample);
+        		$("#candle_canvas").append(candleSample.html());
+        		console.log('캔들추가');
+        	});
+        });
+        
+        function EventRefresh(){
+        	        	
+        	candleWidth = $("#candle_repo > .candle").width();        	
+        	stickWidth = $("#candle_repo > .candle > .stick").width();
+        	
+        	$(".div_candle").resizable({
+        		animate: true,
+        		helper: "ui-resizable-helper",
+        	    maxWidth: candleWidth,
+        	    minWidth: candleWidth,
+        	    minHeight: 0
         	});
         	
-        	$(".stick_row").resizable();
+        	$(".stick_low").resizable({        		
+        		maxWidth:15,
+        		minWidth:15,
+        		minHeight:0
+        	});
         	
-        	$(".resizable").draggable({start: function() {
+        	$(".stick_high").resizable({        		
+        		maxWidth:15,
+        		minWidth:15,
+        		minHeight:0
+        	});
+        	
+        	$(".candle").draggable({        		
+        		start: function() {
         			console.log('start');
 	              },
 	              drag: function() {
-	            	console.log('drag left' + $(this).position().left);
-	            	console.log('drag width' + $(this).width());
-	            	console.log('drag height' + $(this).height());
-	            	
-	            	$(this).children(".stick_low").width(10);
-	            	$(this).children(".stick_low").height(10);
-	            	//$(this).children(".stick_low").css({left : $(this).width() / 2, top : 100});
+	            	$(this).children(".stick_high").offset({top:$(this).position().top, left:$(this).position().left + 40-15/2});
+	            	$(this).children(".stick_low").offset({top:$(this).position().top + $(this).width, left:$(this).position().left + 40-15/2});	            	
+	            	var topBarHeight = $('.delete_area').position().top + $('.delete_area').height();
+	            	var topBarWidth = $('.delete_area').width();	            	
+	            	var x = $(this).position().left + $(this).width()/2;
+	            	var y = $(this).position().top;
+	            	console.log(x + " " + y + " " + topBarWidth);	            	
+	            	if(y <= topBarHeight){
+	            		if (x <= topBarWidth){
+	            			// 삭제	
+	            			$('.delete_area').addClass('area_selected');
+	            			$('.toggle_area').removeClass('area_selected');
+	            		}
+	            		else{
+	            			// 캔들변경
+	            			$('.toggle_area').addClass('area_selected');
+	            			$('.delete_area').removeClass('area_selected');
+	            		}
+	            	}
+	            	else{
+	            		$('.toggle_area').removeClass('area_selected');
+            			$('.delete_area').removeClass('area_selected');
+	            	}
 	            	
 	              },
 	              stop: function() {
-	            	  console.log('stop');  
-	              }});
-        	$(".resizable" ).selectable();
-        	
-        	
-        	$(".down").bind("click", function(){
-        		var div = $(this).parent();        		
-        		console.log('left :' + div.position().left + 'top :' + div.position().top);
-        		
-        		console.log($(this).parent().children(".stick_row").width());
-        		$(this).parent().children(".stick_low").height(100);
-        		$(this).parent().children(".stick_low").width(20);
-        		console.log($(this).parent().children(".stick_row").width());
-        		
-        		return;
-        	});
-        });
+	            	  $(this).children(".stick_high").offset({top:$(this).position().top, left:$(this).position().left + 40-15/2});
+		            	$(this).children(".stick_low").offset({top:$(this).position().top + $(this).width, left:$(this).position().left + 40-15/2});	            	
+		            	var topBarHeight = $('.delete_area').position().top + $('.delete_area').height();
+		            	var topBarWidth = $('.delete_area').width();	            	
+		            	var x = $(this).position().left + $(this).width()/2;
+		            	var y = $(this).position().top;
+		            	console.log(x + " " + y + " " + topBarWidth);	            	
+		            	if(y <= topBarHeight){
+		            		if (x <= topBarWidth){
+		            			// 삭제	
+		            			alert('캔들이 삭제됩니다.');
+		            			$(this).remove();
+		            		}
+		            		else{
+		            			// 캔들변경
+		            			var div = $(this).children(".div_candle");
+		                		var bc = div.css("background-color");
+		                		console.log(bc);
+		                		div.toggleClass('bull');
+		                		return;
+		            		}
+		            	}
+		            	else{
+		            		$('.toggle_area').removeClass('area_selected');
+	            			$('.delete_area').removeClass('area_selected');
+		            	}
+	            	  	console.log('stop');  
+	              },
+	              containment:"parent"	              
+	              });
+        }
     	
     </script>
     
