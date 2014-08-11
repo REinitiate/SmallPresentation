@@ -24,10 +24,8 @@
 	  .ui-resizable-helper { border: 2px dotted #00F; }	  
 	  .modify_area{border-style:outset; border-width: 5px;}
 	  .delete_area{height:70px; background-color: transparent; width: 50%; float: left; text-align: center; border-right-style: inset;}
-	  .toggle_area{height:70px; background-color: transparent; width: 50%; float: left; text-align: center;}
-	  
-	  .area_selected{border-style: inset; border-width: 5px;}	
-	    
+	  .toggle_area{height:70px; background-color: transparent; width: 50%; float: left; text-align: center;}	  
+	  .area_selected{border-style: inset; border-width: 5px;}
   </style>
 	
 </head>
@@ -82,7 +80,6 @@
         	// RUN 버튼
         	$('#btn_run').click(function(){
         		
-        		$("#btn_run > span").addClass("fa-spin");
         		var candleList = $(".candle");
         		var size = candleList.length;
         		console.log(candleList.length);
@@ -133,15 +130,41 @@
         				candleJSON.high = high;
         				candleJSON.low = low;
         				candleJSON.close = close;
+        				candleJSON.type = type;
         				candleJSON.x = origin_left;        				
         				console.log(candleJSON);
-        				
         				candleArray.push(candleJSON);
         				console.log(candleArray);
+        				LoadData(candleArray);
         			}
         		}
         	});
         });
+        
+        function LoadData(candleJSON){
+        	console.log("LoadData start");
+        	$.ajax({
+				type: 'post',				
+				url: '${pageContext.request.contextPath}/pattern/json',
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",				
+				dataType: "json",
+				beforeSend: function(){
+					$("#btn_run > span").addClass("fa-spin");				    
+				},
+				complete: function(){
+					$("#btn_run > span").removeClass("fa-spin");
+				},
+				data: {candle_list : JSON.stringify(candleJSON)},				
+					success: function(data){
+						console.log(data);
+	            },
+	            error: function(XMLHttpRequest, textStatus, errorThrown) {
+	              $("#btn_run > span").removeClass("fa-spin");
+	              alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+	            }
+			});
+        	return ;
+        }
         
         function EventRefresh(candle){
         	
@@ -257,8 +280,7 @@
     
     <!-- /#wrapper -->
 
-    <!-- Core Scripts - Include with every page -->    
-    
+    <!-- Core Scripts - Include with every page -->
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 
@@ -270,8 +292,7 @@
     <script src="${pageContext.request.contextPath}/resources/js/sb-admin.js"></script>
 
     <!-- Page-Level Demo Scripts - Dashboard - Use for reference -->
-    <!-- <script src="/js/demo/dashboard-demo.js"></script>-->
-    
+    <!-- <script src="/js/demo/dashboard-demo.js"></script>-->    
     <script src="${pageContext.request.contextPath}/resources/js/highstock.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/modules/exporting.js"></script>
     
