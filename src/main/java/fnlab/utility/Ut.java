@@ -8,7 +8,7 @@ import java.util.GregorianCalendar;
 
 public class Ut {
 	public static SimpleDateFormat sdf_yyyyMMdd = new SimpleDateFormat("yyyyMMdd");
-	public static SimpleDateFormat sdf_full = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	public static SimpleDateFormat sdf_full = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");	
 	
 	public static String date2str(Date date){
 		return sdf_yyyyMMdd.format(date);
@@ -37,5 +37,10 @@ public class Ut {
 		cal.setTime(dt);
 		cal.add(field, amount);
 		return date2str(cal.getTime());
+	}
+	
+			
+	public static void Log(Object msg){		
+		System.out.println(sdf_full.format(new Date()) + " : " + msg);
 	}
 }
