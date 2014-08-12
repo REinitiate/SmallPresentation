@@ -18,7 +18,7 @@
 	  .candle {width:60px; left:150px; top:150px; background-color: transparent; position: absolute;}	  
 	  .candle .div_candle{background-color:#3A3A9A; border-width: 1px; border-style: solid;}
 	  .candle .bull{background-color:#990000;}	  
-	  .candle_canvas{width:100%; height:400px; background-color: transparent; border-style: groove;}	  	  
+	  .candle_canvas{width:100%; height:600px; background-color: transparent; border-style: groove;}	  	  
 	  .stick_high{height:30px; width:15px; background-color: wight; left:22.5px; border-top: solid; border-right: solid; border-left: solid; border-width: 1px;}
 	  .stick_low{height:30px; width:15px; background-color: wight; left:22.5px; border-bottom: solid; border-right: solid; border-left: solid; border-width: 1px;}	  
 	  .ui-resizable-helper { border: 2px dotted #00F; }	  
@@ -33,31 +33,28 @@
 
 	<div id="wrapper">
         <jsp:include page="nav/nav_top.jsp"/>    <!-- 상단 탑 메뉴 -->
-    </div>    
-	
-	<div id="candle_canvas" class="candle_canvas" style="width:100%; height: 400px; background-color: white;">
+        
+        <div id="candle_canvas" class="candle_canvas">
 		
-		<div class="modify_area" style="display: inline-block; width: 100%; border-bottom-style: inset;">			
-			<div class="toggle_area"><h1><span class="glyphicon glyphicon-refresh"/></h1></div>
-			<div class="delete_area"><h1><span class="glyphicon glyphicon-remove-circle"></span></h1></div>
-		</div>
+			<div class="modify_area" style="display: inline-block; width: 100%; border-bottom-style: inset;">			
+				<div class="toggle_area"><h1><span class="glyphicon glyphicon-refresh"/></h1></div>
+				<div class="delete_area"><h1><span class="glyphicon glyphicon-remove-circle"></span></h1></div>
+			</div>
+			
+			<button id="btn_run" type="button" class="btn btn-success"><span class="fa fa-refresh"></span> 분석</button>
+			<button id="btn_add_candle" type="button" class="btn btn-default"><span class="fa fa-plus"></span> 캔들추가</button>
+			
+			<div id="candle_repo" style="visibility: hidden">
+				<div class="stick stick_high"></div>
+				<div class="div_candle bull" style="height:100px"></div>
+				<div class="stick stick_low"></div>
+			</div>
 		
-		<button id="btn_run" type="button" class="btn btn-success"><span class="fa fa-refresh"></span> 분석</button>
-		<button id="btn_add_candle" type="button" class="btn btn-default"><span class="fa fa-plus"></span> 캔들추가</button>
-		
-		<div id="candle_repo" style="visibility: hidden">
-			<div class="stick stick_high"></div>
-			<div class="div_candle bull" style="height:100px"></div>
-			<div class="stick stick_low"></div>
-		</div>
-		
-	</div>
-
-    <div id="row">
+		</div>        
+        
+        <div id="div_result" class="row">
     	
-    </div>
-    
-    <div id="row">
+    	</div>
     </div>
     
     <script>
@@ -134,9 +131,9 @@
         				candleJSON.x = origin_left;        				
         				console.log(candleJSON);
         				candleArray.push(candleJSON);
-        				console.log(candleArray);
-        				LoadData(candleArray);
+        				console.log(candleArray);        				
         			}
+        			LoadData(candleArray);
         		}
         	});
         });
@@ -147,16 +144,17 @@
 				type: 'post',				
 				url: '${pageContext.request.contextPath}/pattern/json',
 				contentType: "application/x-www-form-urlencoded; charset=UTF-8",				
-				dataType: "json",
+				dataType: "text",
 				beforeSend: function(){
 					$("#btn_run > span").addClass("fa-spin");				    
 				},
-				complete: function(){
+				complete: function(data){
 					$("#btn_run > span").removeClass("fa-spin");
 				},
 				data: {candle_list : JSON.stringify(candleJSON)},				
-					success: function(data){
-						console.log(data);
+				success: function(data){
+					$("#div_result").html(data);
+					alert(data);
 	            },
 	            error: function(XMLHttpRequest, textStatus, errorThrown) {
 	              $("#btn_run > span").removeClass("fa-spin");

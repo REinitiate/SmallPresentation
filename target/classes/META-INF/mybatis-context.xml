@@ -5,7 +5,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 <configuration>
 	<mappers>
-		<mapper resource="META-INF/mapper_news.xml"/>
-		<mapper resource="META-INF/mapper_common.xml"/>
+		<mapper resource="META-INF/mapper/mapper_news.xml"/>
+		<mapper resource="META-INF/mapper/mapper_common.xml"/>
+		<mapper resource="META-INF/mapper/mapper_pattern.xml"/>		
 	</mappers>
 </configuration>

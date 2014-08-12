@@ -7,41 +7,25 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
 import scala.util.control.Exception;
 import fnlab.utility.Ut;
 
 public class Pattern {
 	
-	public static void main(String args[]){
+	SqlSession mSqlSession;
 		
-		Candle c1 = new Candle(1, 2, -1, 2);
-		Ut.Log(c1.toString());		
-		Candle c2 = new Candle(2, 2, -1, 1);
-		Ut.Log(c2.toString());
-		Candle c3 = new Candle(1, 2, -1, 2);
-		Ut.Log(c3.toString());
-		Candle c4 = new Candle(5, 8.7, -6, -6);
-		Ut.Log(c4.toString());
-		
-		CandleSq cq1 = new CandleSq();
-		cq1.Add(c1);
-		cq1.Add(c2);
-		cq1.Add(c3);
-		cq1.SetMaxMin();
-		cq1.Scale();
-		
-		Pattern pat = new Pattern();
-		try {
-			pat.Run(cq1, "20140806");
-		} catch (java.lang.Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return;
+	public Pattern(SqlSession session){
+		mSqlSession = session;
 	}
 	
-	
-	public void Run(CandleSq seq, String dt) throws java.lang.Exception{
+	public String Run(CandleSq seq, String dt){
+		
+		seq.SetOrder();
+		seq.SetMaxMin();
+		seq.Scale();		
 		
 		int candleSize = seq.GetCandleSize();
 		
@@ -49,7 +33,7 @@ public class Pattern {
 		params.put("dt", dt);
 		params.put("cnt", candleSize);
 		
-		HashMap<String, Date> result =  (HashMap<String, Date>) db.Open().selectOne("pattern.selectMaxMinDt", params);
+		HashMap<String, Date> result =  (HashMap<String, Date>)mSqlSession.selectOne("pattern.selectMaxMinDt", params);
 		String t1 = Ut.sdf_yyyyMMdd.format(result.get("max"));
 		String t0 = Ut.sdf_yyyyMMdd.format(result.get("min"));
 		
@@ -60,7 +44,7 @@ public class Pattern {
 		params2.put("t0", t0);
 		params2.put("t1", t1);
 		
-		List<HashMap<String, Object>> data = db.Open().selectList("pattern.selectJdAdj", params2);		
+		List<HashMap<String, Object>> data = mSqlSession.selectList("pattern.selectJdAdj", params2);		
 		ArrayList<CandleSq> csqList = new ArrayList<>();
 		
 		for(int i=0; i<data.size(); i++){
@@ -86,13 +70,21 @@ public class Pattern {
 		for(int i=0; i<csqList.size(); i++){
 			csqList.get(i).SetMaxMin();
 			csqList.get(i).Scale();
-			csqList.get(i).Score = CalculateSeqDeviation(csqList.get(i), seq);
+			
+			try {
+				csqList.get(i).Score = CalculateSeqDeviation(csqList.get(i), seq);
+			} catch (java.lang.Exception e) {
+				// TODO Auto-generated catch block
+				csqList.get(i).Score = 99999999.0;
+				e.printStackTrace();
+			}
+			
 			Ut.Log(csqList.get(i).Score);
 		}
 		
-		Collections.sort(csqList, new NameAscCompare());
+		Collections.sort(csqList, new CandleSqCompare());
 		
-		return ;
+		return csqList.get(0).Gicode + " " + csqList.get(1).Gicode + " " + csqList.get(2).Gicode;
 	}
 	
 	public void Run(){
@@ -124,7 +116,7 @@ public class Pattern {
 		params.put("dt", "20140806");
 		params.put("cnt", 3);
 		
-		HashMap<String, Date> result =  (HashMap<String, Date>) db.Open().selectOne("pattern.selectMaxMinDt", params);
+		HashMap<String, Date> result =  (HashMap<String, Date>) mSqlSession.selectOne("pattern.selectMaxMinDt", params);
 		String t1 = Ut.sdf_yyyyMMdd.format(result.get("max"));
 		String t0 = Ut.sdf_yyyyMMdd.format(result.get("min"));
 		
@@ -139,13 +131,74 @@ public class Pattern {
 		}
 	}
 	
+	/**
+	 * 기능 : 두 캔들 시퀀스가 같은 형태인지 체크한다.
+	 * @param cs1 캔들 1
+	 * @param cs2 캔들 2
+	 * @return
+	 * 아마 여기서 모든 판가름이 날듯...
+	 */
+	private boolean CheckSimilarSquence(CandleSq cs1, CandleSq cs2){
+		
+		int size = cs1.GetCandleSize();
+		boolean result = true;		
+		for(int i=0; i<size; i++){
+			 if((cs1.GetCandle(i).Open - cs1.GetCandle(i).Close) * (cs2.GetCandle(i).Open - cs2.GetCandle(i).Close) <= 0){
+				 // 두 봉의 색깔이 다르다는 의미임
+				 result = false;
+			 }
+		}
+		
+		for(int i=0; i<size-1; i++){
+			
+			// 캔들의 상대적 위치가 일치해야 TRUE 반환!			
+			Candle c1_1 = cs1.GetCandle(i);
+			Candle c1_2 = cs1.GetCandle(i+1);
+			Candle c2_1 = cs2.GetCandle(i);
+			Candle c2_2 = cs2.GetCandle(i+1);
+		}
+		
+		return true;
+	}
+	
+	private HashMap<String, Object> GenearteCode(Candle c1, Candle c2){
+		StringBuilder sb = new StringBuilder();		
+		HashMap<String, Double> map = new HashMap<>();
+		map.put("o1", c1.Open);
+		map.put("h1", c1.High);
+		map.put("l1", c1.Low);
+		map.put("c1", c1.Close);		
+		map.put("o2", c2.Open);
+		map.put("h2", c2.High);
+		map.put("l2", c2.Low);
+		map.put("c2", c2.Close);
+	}
+	
+	static class CandleSqCompare implements Comparator<CandleSq> {
+		@Override
+		public int compare(CandleSq o1, CandleSq o2) {
+			// TODO Auto-generated method stub
+			if(o1.Score >= o2.Score)
+				return 1;
+			else if(o1.Score <= o2.Score)				
+				return -1;
+			else
+				return 0;
+		}
+ 
+	}
+	
 	private Double CalculateSeqDeviation(CandleSq cs1, CandleSq cs2) throws java.lang.Exception{
+		
 		Double result = 0.0;
 		if(cs1.GetCandleSize() != cs2.GetCandleSize()){
 			throw new java.lang.Exception("두 캔들 시퀀스의 사이즈가 다릅니다.");
 		}
 		else{
-			int size = cs1.GetCandleSize();			
+			if(CheckSimilarSquence(cs1, cs2)){
+				result = 9999.0;
+			}
+			int size = cs1.GetCandleSize();
 			for(int i=0; i<size; i++){
 				result = result + GetDev(cs1.GetCandle(i), cs2.GetCandle(i));
 			}
@@ -173,6 +226,7 @@ public class Pattern {
 			DOWN
 		}
 		
+		Double X;
 		Double Open;
 		Double High;
 		Double Low;
@@ -189,7 +243,6 @@ public class Pattern {
 			else
 				type = CandleType.DOWN;
 		}
-		
 				
 		@Override
 		public String toString(){
@@ -199,7 +252,7 @@ public class Pattern {
 			sb.append("[HIGH : " + df.format(High) + "] ");
 			sb.append("[LOW : " + df.format(Low) + "] ");
 			sb.append("[CLOSE : " + df.format(Close) + "]");
-			
+			sb.append("[X : " + df.format(X) + "]");			
 			return sb.toString();
 		}
 	}
@@ -288,9 +341,30 @@ public class Pattern {
 			Min = min;
 			return ;
 		}
+	
+		public void SetOrder(){
+			Collections.sort(candles, new CandleCompare());
+		}
+		static class CandleCompare implements Comparator<Candle> {
+			 
+			/**
+			 * 오름차순(ASC)
+			 */
+			@Override
+			public int compare(Candle o1, Candle o2) {
+				// TODO Auto-generated method stub
+				if(o1.X >= o2.X)
+					return 1;
+				else if(o1.X <= o2.X)				
+					return -1;
+				else
+					return 0;
+			}
+	 
+		}
 	}
 
-	static class NameAscCompare implements Comparator<CandleSq> {
+	static class CandleSqCompare implements Comparator<CandleSq> {
 		 
 		/**
 		 * 오름차순(ASC)

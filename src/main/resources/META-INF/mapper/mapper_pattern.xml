@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pattern">  
+  <select id="selectJdAdj" parameterType="HashMap" resultType="HashMap">
+  	select a.gicode, a.strt_prc, a.high_prc, a.low_prc, a.cls_prc, a.yield
+  	from fnlab_jd_adj a, fnlab_j_mast b
+  	where a.gicode = b.gicode
+  	and a.gicode like 'A_____0'
+  	and a.trd_dt between #{t0} and #{t1}
+  	order by a.gicode
+  </select>
+  
+  <!-- dt일을 포함한 과거 cnt일자의 초기일자 및 마지막 일자를 가져온다.-->
+  <select id="selectMaxMinDt" parameterType="HashMap" resultType="HashMap">
+	<![CDATA[select max(a.trd_dt) max, min(a.trd_dt) min
+	from(
+	select a.trd_dt, @rownum:=@rownum+1 num
+	from fnlab_calendar a, (select @rownum:=0) b
+	where a.open_gb_stock = '0'
+	and trd_dt <= #{dt}
+	order by a.trd_dt desc
+	) a
+	where a.num <= #{cnt}]]>
+  </select>
+</mapper>

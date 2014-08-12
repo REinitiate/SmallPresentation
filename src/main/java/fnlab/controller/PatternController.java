@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import fnlab.service.news.NewsService;
+import fnlab.service.pattern.PatternService;
 import fnlab.utility.Ut;
 
 /**
@@ -35,16 +36,16 @@ public class PatternController {
 	 */
 	
 	@Autowired
-	NewsService newsService;	
+	PatternService patternService;	
 	
 	@RequestMapping(value = "/pattern/json", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String Jenny(@RequestParam(required=false) String candle_list) throws ParseException, org.json.simple.parser.ParseException {		
 		
 		org.json.simple.parser.JSONParser parser = new org.json.simple.parser.JSONParser();
-		JSONArray object = (JSONArray) parser.parse(candle_list);
+		JSONArray candleList = (JSONArray) parser.parse(candle_list);
 		
-		
-		return "dummy";
+		String result = patternService.GetRankedGicode(candleList, "20140812"); 
+		return result;
 	}	
 }
