@@ -15,12 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class SessionController {	
-	private static final Logger logger = LoggerFactory.getLogger(SessionController.class);
-	
+	private static final Logger logger = LoggerFactory.getLogger(SessionController.class);	
 	@RequestMapping(value = "/setdate", method = RequestMethod.GET)	
 	public void setdate(@RequestParam String target_dt, HttpServletRequest request) {		
 		logger.info("날짜 세션 설정" + target_dt);
 		request.getSession().setAttribute("targetdt", target_dt);
-		
 	}
 }

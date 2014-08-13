@@ -22,7 +22,7 @@ public class Pattern {
 		mSqlSession = session;
 	}
 	
-	public String Run(CandleSq seq, String dt){
+	public ArrayList<CandleSq> Run(CandleSq seq, String dt){
 		
 		seq.SetOrder();
 		seq.SetMaxMin();
@@ -31,8 +31,8 @@ public class Pattern {
 		int candleSize = seq.GetCandleSize();
 		
 		HashMap<String, Object> params = new HashMap<>();
-		params.put("dt", dt);
-		params.put("cnt", candleSize);
+		params.put("dt", dt); // 현재 시점
+		params.put("cnt", candleSize); // 캔들 개수
 		
 		HashMap<String, Date> result =  (HashMap<String, Date>)mSqlSession.selectOne("pattern.selectMaxMinDt", params);
 		String t1 = Ut.sdf_yyyyMMdd.format(result.get("max"));
@@ -45,7 +45,7 @@ public class Pattern {
 		params2.put("t0", t0);
 		params2.put("t1", t1);
 		
-		List<HashMap<String, Object>> data = mSqlSession.selectList("pattern.selectJdAdj", params2);		
+		List<HashMap<String, Object>> data = mSqlSession.selectList("pattern.selectJdAdj", params2); // 주가 데이터 로딩		
 		ArrayList<CandleSq> csqList = new ArrayList<>();
 		
 		for(int i=0; i<data.size(); i++){
@@ -61,8 +61,7 @@ public class Pattern {
 			Integer high = (Integer) data.get(i).get("high_prc");
 			Integer low = (Integer) data.get(i).get("low_prc");
 			Integer cls = (Integer) data.get(i).get("cls_prc");			
-			Candle cd = new Candle(open, high, low, cls);
-			
+			Candle cd = new Candle(open, high, low, cls);			
 			csqList.get(csqList.size()-1).Add(cd);
 			
 			gicodeTemp = gicode;
@@ -78,13 +77,11 @@ public class Pattern {
 				csqList.get(i).Score = 99999999.0;
 				e.printStackTrace();
 			}
-			
-			Ut.Log(csqList.get(i).Score);
 		}
 		
 		Collections.sort(csqList, new CandleSqCompare());
 		
-		return csqList.get(0).Gicode + " " + csqList.get(1).Gicode + " " + csqList.get(2).Gicode;
+		return csqList;
 	}
 	
 	/**
@@ -94,7 +91,7 @@ public class Pattern {
 	 * @return
 	 * 아마 여기서 모든 판가름이 날듯...
 	 */
-	private boolean CheckSimilarSquence(CandleSq cs1, CandleSq cs2){
+	private boolean CheckSimilarSquence1(CandleSq cs1, CandleSq cs2){
 		
 		int size = cs1.GetCandleSize();
 		boolean result = true;
@@ -109,7 +106,7 @@ public class Pattern {
 		String c1 = cs1.GenerateCode();
 		String c2 = cs2.GenerateCode();
 		
-		if(c1.compareTo(c2) != 0){
+		if(c1.compareTo(c2) != 0){			
 			result = false;
 		}
 		
@@ -123,7 +120,7 @@ public class Pattern {
 			throw new java.lang.Exception("두 캔들 시퀀스의 사이즈가 다릅니다.");
 		}
 		else{
-			if(CheckSimilarSquence(cs1, cs2)){
+			if(!CheckSimilarSquence1(cs1, cs2)){
 				result = 9999.0;
 			}
 			int size = cs1.GetCandleSize();
@@ -176,11 +173,11 @@ public class Pattern {
 		public String toString(){
 			DecimalFormat df = new DecimalFormat("0.00");
 			StringBuilder sb = new StringBuilder();
-			sb.append("[OPEN : " + df.format(Open) + "] ");
-			sb.append("[HIGH : " + df.format(High) + "] ");
-			sb.append("[LOW : " + df.format(Low) + "] ");
-			sb.append("[CLOSE : " + df.format(Close) + "]");
-			sb.append("[X : " + df.format(X) + "]");			
+			sb.append("[OPEN : " + df.format(Open) + "]\n");
+			sb.append("[HIGH : " + df.format(High) + "]\n ");
+			sb.append("[LOW : " + df.format(Low) + "]\n");
+			sb.append("[CLOSE : " + df.format(Close) + "]\n");
+			//sb.append("[X : " + df.format(X) + "]\n");
 			return sb.toString();
 		}
 	
@@ -211,6 +208,8 @@ public class Pattern {
 	}
 	
 	public static class CandleSq{
+		
+		public Boolean IsAvailable = true;
 		public String Gicode;
 		public Double Score;
 		Double Max;

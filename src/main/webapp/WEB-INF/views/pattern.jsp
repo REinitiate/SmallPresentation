@@ -153,8 +153,7 @@
 				},
 				data: {candle_list : JSON.stringify(candleJSON)},				
 				success: function(data){
-					$("#div_result").html(data);
-					alert(data);
+					$("#div_result").html(data);					
 	            },
 	            error: function(XMLHttpRequest, textStatus, errorThrown) {
 	              $("#btn_run > span").removeClass("fa-spin");

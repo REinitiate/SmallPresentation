@@ -29,17 +29,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/jqcloud/jqcloud.css">
     
     
-    <style>    	
-    	.footer
-    	{
-		  position: absolute;
-		  text-align: center;
-		  bottom: 0;
-		  width: 100%;
-		  /* Set the fixed height of the footer here */
-		  height: 60px;
-		  background-color: #f5f5f5;
-		}
+    <style>   	
+    	
 		.container .text-muted {
 			margin: 20px 0;
 		}		
@@ -63,15 +54,32 @@
 		    padding-bottom: 56.25%;
 		    padding-top: 30px; height: 0; overflow: hidden;
 		}
-		 
-		.video-container iframe,
-		.video-container object,
-		.video-container embed {
-		    position: absolute;
-		    top: 0;
-		    left: 0;
-		    width: 100%;
-		    height: 100%;
+		
+		.jumbotron{
+			text-align: center;
+		}
+		
+		html,
+		body {
+		  height: 100%;
+		  /* The html and body elements cannot have any padding or margin. */
+		}
+		
+		/* Wrapper for page content to push down footer */
+		#wrap {
+		  min-height: 100%;
+		  height: auto !important;
+		  height: 100%;
+		  /* Negative indent footer by its height */
+		  margin: 0 auto -60px;
+		  /* Pad bottom by footer height */
+		  padding: 0 0 60px;
+		}
+		
+		/* Set the fixed height of the footer here */
+		#footer {
+		  height: 60px;
+		  background-color: #f5f5f5;
 		}
 				    	
     </style>
@@ -113,7 +121,7 @@
 				<img width="100px" alt="" src="${pageContext.request.contextPath}/resources/img/anvil.jpg">
 			</div>
 		</div>
-		<div class="row" style="text-align: center">
+		<div class="row">
 			<div class="jumbotron" style="padding-top: 10px; padding-bottom: 10px">
 			  <h1>BlackSmith</h1>
 			  <h3>SMART Finance</h3>
@@ -123,18 +131,28 @@
 		</div> 
 		
 		<div class="jumbotron">
-		  <h1><a href="${pageContext.request.contextPath}/pattern">Smart Candle chart</a></h1>
-		  <p>현재 주가의 상황을 캔들차트의 시선으로 바라봅니다. 원하는 패턴을 찾고, 패턴의 유용함을 파악합니다.</p>
-		  <div class="row">
-		  	<div class="col-md-6">
-			  <div class="video-container">
-			  	<iframe height="400" src="//www.youtube.com/embed/TP-la2j-NPU" frameborder="0" allowfullscreen></iframe>
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3><a href="${pageContext.request.contextPath}/pattern">CANDLE CHART MONITOR</a><br/></h3>		    
+			  </div>
+			   <div class="panel-body" style="text-align: center;">
+				   <div class="row" align="center">
+				  	<div class="col-lg-6 col-lg-offset-3">			  
+					  	<div class="embed-responsive embed-responsive-4by3">
+					  		<iframe width="300" src="//www.youtube.com/embed/TP-la2j-NPU" allowfullscreen></iframe>
+					  	</div>			  
+					</div>
+				  </div>
 			  </div>
 			</div>
-		  </div>
-		  <!-- <p><a href="${pageContext.request.contextPath}/pattern" class="btn btn-primary btn-lg" role="button">Enter</a></p> -->
 		</div>
 		
+		<div id="footer">
+	        <div class="container">
+	            <p class="text-muted credit">BlackSmith <a href="http://martinbean.co.uk">DaeHyun Kim</a> and <a href="http://ryanfait.com/sticky-footer/">HyeSun Noh</a>.</p>
+	        </div>
+	    </div>
+				
 		<div id="loading" style="position:absolute; top:50%; left :0; width:100%; margin-top: -10px; line_height:20px; text-align:center;">
 			<p><img src='${pageContext.request.contextPath}/resources/img/ajax-loader.gif'/>
 		</div>

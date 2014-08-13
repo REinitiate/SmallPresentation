@@ -40,11 +40,10 @@ public class PatternController {
 	
 	@RequestMapping(value = "/pattern/json", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String Jenny(@RequestParam(required=false) String candle_list) throws ParseException, org.json.simple.parser.ParseException {		
-		
+	public String GetPatternJson(@RequestParam(required=false) String candle_list) throws ParseException, org.json.simple.parser.ParseException {
 		org.json.simple.parser.JSONParser parser = new org.json.simple.parser.JSONParser();
 		JSONArray candleList = (JSONArray) parser.parse(candle_list);		
-		String result = patternService.GetRankedGicode(candleList, "20140812"); 
+		String result = patternService.GetRankedGicode(candleList, "20140813"); 
 		return result;
 	}	
 }
