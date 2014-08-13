@@ -25,16 +25,15 @@
     <script src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>   
     <script src="${pageContext.request.contextPath}/resources/js/jqcloud/jqcloud-1.0.4.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/fonts/NanumPenScript/stylesheet.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/jqcloud/jqcloud.css">
     
-    <style>
-    	.footer
-    	{
-    		text-align: center;
-    	}
+    
+    <style>    	
     	.footer
     	{
 		  position: absolute;
+		  text-align: center;
 		  bottom: 0;
 		  width: 100%;
 		  /* Set the fixed height of the footer here */

@@ -25,6 +25,7 @@ public class PatternService extends SqlSessionDaoSupport{
 		CandleSq sq = new CandleSq();
 		
 		for(int i=0; i<candleList.size(); i++){
+			
 			Ut.Log(candleList.get(i).toString());
 			JSONObject c = (JSONObject) candleList.get(i);
 			Double open =  new Double((Long)c.get("open"));

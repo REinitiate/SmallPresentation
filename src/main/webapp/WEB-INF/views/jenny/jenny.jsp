@@ -29,13 +29,13 @@
     <link href="${pageContext.request.contextPath}/resources/css/plugins/timeline/timeline.css" rel="stylesheet">
 
     <!-- SB Admin CSS - Include with every page -->
-    <link href="${pageContext.request.contextPath}/resources/css/sb-admin.css" rel="stylesheet">
-    
     <script src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.js"></script>
-    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>            
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    
+    <link href="${pageContext.request.contextPath}/resources/fonts/NanumPenScript/stylesheet.css" rel="stylesheet">    
+    <link href="${pageContext.request.contextPath}/resources/css/jenny.css" rel="stylesheet">
     
     <script>
-
 	if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
 		  var msViewportStyle = document.createElement("style")
 		  msViewportStyle.appendChild(
@@ -44,18 +44,21 @@
 		  )
 		  document.getElementsByTagName("head")[0].appendChild(msViewportStyle)
 		}
+	</script>
 	
-	</script>	
-	<script src="js/jquery-1.10.2.js"></script>
-	
+	<!-- font-family: 'Nanum Brush Script', cursive; -->
 	<style>
 		h3
-		{
-			font-family: 'Nanum Brush Script', cursive;
+		{	
+			font-family: 'NanumPen',sans-serif;
+			font-size: large;
+			line-height: normal;
 		}
 		h4
-		{
-			font-family: 'Nanum Brush Script', cursive;
+		{			
+			font-family: 'NanumPen',sans-serif;
+			font-size: large;
+			line-height: normal;
 		}
 	</style>
 </head>
