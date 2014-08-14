@@ -33,7 +33,8 @@
     	
 		.container .text-muted {
 			margin: 20px 0;
-		}		
+		}
+				
 		table thead th
 		{
 			text-align: center;
@@ -66,7 +67,7 @@
 		}
 		
 		/* Wrapper for page content to push down footer */
-		#wrap {
+		.wrap {
 		  min-height: 100%;
 		  height: auto !important;
 		  height: 100%;
@@ -74,12 +75,14 @@
 		  margin: 0 auto -60px;
 		  /* Pad bottom by footer height */
 		  padding: 0 0 60px;
+		  max-width: 600px;
 		}
 		
 		/* Set the fixed height of the footer here */
 		#footer {
 		  height: 60px;
 		  background-color: #f5f5f5;
+		  margin-top: 20px;
 		}
 				    	
     </style>
@@ -97,7 +100,8 @@
 	</script>
 	
 </head>
-<body>	
+<body>
+	<div class="wrap">	
 		<div class="row" style="text-align: center; margin-top: 30px">
 			<div align="center">
 				<div id="div_cloud" style="max-width: 600px; height: 450px; text-align: center"></div>
@@ -118,40 +122,38 @@
 		<div align="center">
 			<!-- <div class="row" style="text-align: center; max-width: 600px; border-top-style: solid; border-top-width: 1px"> -->
 			<div>
-				<img width="100px" alt="" src="${pageContext.request.contextPath}/resources/img/anvil.jpg">
+				<img id="img_anvil" width="100px" alt="" src="${pageContext.request.contextPath}/resources/img/anvil.jpg" title="최근에 뉴스가 많이 나온 종목들입니다. 오른종목은 빨간색, 내린종목은 파란색">
 			</div>
 		</div>
+		
 		<div class="row">
 			<div class="jumbotron" style="padding-top: 10px; padding-bottom: 10px">
-			  <h1>BlackSmith</h1>
+			  <h1>BLACK SMITH</h1>
 			  <h3>SMART Finance</h3>
 			  <p><a href="${pageContext.request.contextPath}/pattern" class="btn btn-primary btn-lg" role="button">ENTER</a></p>
-			  <p class="text-muted credit" style="font-size: small;">Daehyun kim <a href="mailto:reinitiate@gmail.com">reinitiate@gmail.com</a></p>			  
+			  <!-- <p class="text-muted credit" style="font-size: small;">Daehyun kim <a href="mailto:reinitiate@gmail.com">reinitiate@gmail.com</a></p> -->			  
 			</div>		
-		</div> 
-		
-		<div class="jumbotron">
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-			    <h3><a href="${pageContext.request.contextPath}/pattern">CANDLE CHART MONITOR</a><br/></h3>		    
-			  </div>
-			   <div class="panel-body" style="text-align: center;">
-				   <div class="row" align="center">
-				  	<div class="col-lg-6 col-lg-offset-3">			  
-					  	<div class="embed-responsive embed-responsive-4by3">
-					  		<iframe width="300" src="//www.youtube.com/embed/TP-la2j-NPU" allowfullscreen></iframe>
-					  	</div>			  
-					</div>
-				  </div>
-			  </div>
-			</div>
 		</div>
 		
-		<div id="footer">
+		<div class="row">
+			<div class="jumbotron">
+				<div class="page-header">		
+					<h1>Candle Chart Monitoring<br/><small>요즘 잘나가는 주가패턴</small></h1>
+				</div>
+				<div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3">			  
+				  	<div class="embed-responsive embed-responsive-4by3">
+				  		<iframe height="300" src="//www.youtube.com/embed/TP-la2j-NPU" allowfullscreen></iframe>
+				  	</div>			  
+				</div>			
+			</div>
+		</div>
+				
+		<div id="footer" class="row">
 	        <div class="container">
 	            <p class="text-muted credit">BlackSmith <a href="http://martinbean.co.uk">DaeHyun Kim</a> and <a href="http://ryanfait.com/sticky-footer/">HyeSun Noh</a>.</p>
 	        </div>
 	    </div>
+		</div>
 				
 		<div id="loading" style="position:absolute; top:50%; left :0; width:100%; margin-top: -10px; line_height:20px; text-align:center;">
 			<p><img src='${pageContext.request.contextPath}/resources/img/ajax-loader.gif'/>
@@ -164,6 +166,9 @@
 <script type="text/javascript">
 	      var word_list = ${cloud};	      
 	      $(function() {
+	    	  
+	    	 // 툴팁초기화
+	    	 $(document).tooltip();
 	    	  
 	    	 // 초기화
 	    	 $("#loading").hide(); 

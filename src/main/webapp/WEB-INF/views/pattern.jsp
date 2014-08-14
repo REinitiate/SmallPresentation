@@ -25,13 +25,13 @@
 	  .modify_area{border-style:outset; border-width: 5px;}
 	  .delete_area{height:70px; background-color: transparent; width: 50%; float: left; text-align: center; border-right-style: inset;}
 	  .toggle_area{height:70px; background-color: transparent; width: 50%; float: left; text-align: center;}	  
-	  .area_selected{border-style: inset; border-width: 5px;}
+	  .area_selected{border-style: inset; border-width: 5px;}	  
   </style>
 	
 </head>
 <body>
 
-	<div id="wrapper">
+	<div class="wrapper col-lg-10 col-lg-offset-1">
         <jsp:include page="nav/nav_top.jsp"/>    <!-- 상단 탑 메뉴 -->
         
         <div id="candle_canvas" class="candle_canvas">
@@ -207,8 +207,8 @@
 	              },
 	              drag: function() {
 	            	
-	            	$(this).children(".stick_high").offset({top:$(this).position().top, left:$(this).position().left + 30-15/2});
-	            	$(this).children(".stick_low").offset({top:$(this).position().top + $(this).width, left:$(this).position().left + 30-15/2});	            	
+	            	//$(this).children(".stick_high").offset({top:$(this).position().top, left:$(this).position().left + 30-15/2});
+	            	//$(this).children(".stick_low").offset({top:$(this).position().top + $(this).width, left:$(this).position().left + 30-15/2});	            	
 	            	
 	            	var topBarHeight = $('.delete_area').position().top + $('.delete_area').height();
 	            	var topBarWidth = $('.delete_area').width();	            	
@@ -235,8 +235,8 @@
 	            	
 	              },
 	              stop: function() {
-	            	    $(this).children(".stick_high").offset({top:$(this).position().top, left:$(this).position().left + 30-15/2});
-		            	$(this).children(".stick_low").offset({top:$(this).position().top + $(this).width, left:$(this).position().left + 30-15/2});	            	
+	            	    //$(this).children(".stick_high").offset({top:$(this).position().top, left:$(this).position().left + 30-15/2});
+		            	//$(this).children(".stick_low").offset({top:$(this).position().top + $(this).width, left:$(this).position().left + 30-15/2});	            	
 		            	var topBarHeight = $('.delete_area').position().top + $('.delete_area').height();
 		            	var topBarWidth = $('.delete_area').width();
 		            	
