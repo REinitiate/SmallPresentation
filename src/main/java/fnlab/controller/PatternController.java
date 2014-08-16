@@ -43,7 +43,7 @@ public class PatternController {
 	public String GetPatternJson(@RequestParam(required=false) String candle_list) throws ParseException, org.json.simple.parser.ParseException {
 		org.json.simple.parser.JSONParser parser = new org.json.simple.parser.JSONParser();
 		JSONArray candleList = (JSONArray) parser.parse(candle_list);		
-		String result = patternService.GetRankedGicode(candleList, "20140813"); 
-		return result;
+		JSONObject result = patternService.GetRankedGicode(candleList, "20140813", 5); 
+		return result.toJSONString();
 	}	
 }

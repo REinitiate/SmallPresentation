@@ -1,15 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="UTF-8"%>
     
-<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0; background-color: black;">            
+<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;">            
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                <!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </button>               
-                <a class="navbar-brand" href="${pageContext.request.contextPath}/index" style="color: white;"><strong>BlackSmith</strong>&nbsp;<small>Smart Finance</small></a>
+                </button>
+                 -->               
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/index" style="color: black; font-size: 20px;"><strong>BlackSmith</strong>&nbsp;<em><small>Creative financial tool</small></em></a>
             </div>
             <!-- /.navbar-header -->
             

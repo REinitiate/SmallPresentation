@@ -22,6 +22,12 @@ public class Pattern {
 		mSqlSession = session;
 	}
 	
+	/**
+	 * 기능 : 
+	 * @param seq  입력되는 캔들 시퀀스
+	 * @param dt   기준시점
+	 * @return     점수상으로 정렬된 캔들 시퀀스
+	 */
 	public ArrayList<CandleSq> Run(CandleSq seq, String dt){
 		
 		seq.SetOrder();
@@ -29,7 +35,6 @@ public class Pattern {
 		seq.Scale();		
 		
 		int candleSize = seq.GetCandleSize();
-		
 		HashMap<String, Object> params = new HashMap<>();
 		params.put("dt", dt); // 현재 시점
 		params.put("cnt", candleSize); // 캔들 개수
@@ -60,7 +65,7 @@ public class Pattern {
 			Integer open = (Integer) data.get(i).get("strt_prc");
 			Integer high = (Integer) data.get(i).get("high_prc");
 			Integer low = (Integer) data.get(i).get("low_prc");
-			Integer cls = (Integer) data.get(i).get("cls_prc");			
+			Integer cls = (Integer) data.get(i).get("cls_prc");
 			Candle cd = new Candle(open, high, low, cls);			
 			csqList.get(csqList.size()-1).Add(cd);
 			
@@ -71,7 +76,8 @@ public class Pattern {
 			csqList.get(i).SetMaxMin();
 			csqList.get(i).Scale();			
 			try {
-				csqList.get(i).Score = CalculateSeqDeviation(csqList.get(i), seq);
+				// 스코어 작성
+				csqList.get(i).Score = CalculateScore(csqList.get(i), seq);
 			} catch (java.lang.Exception e) {
 				// TODO Auto-generated catch block
 				csqList.get(i).Score = 99999999.0;
@@ -103,8 +109,8 @@ public class Pattern {
 			 }
 		}
 		
-		String c1 = cs1.GenerateCode();
-		String c2 = cs2.GenerateCode();
+		String c1 = cs1.GenerateCodeWithOutHighAndLow();
+		String c2 = cs2.GenerateCodeWithOutHighAndLow();
 		
 		if(c1.compareTo(c2) != 0){			
 			result = false;
@@ -113,7 +119,7 @@ public class Pattern {
 		return result;
 	}
 	
-	private Double CalculateSeqDeviation(CandleSq cs1, CandleSq cs2) throws java.lang.Exception{
+	private Double CalculateScore(CandleSq cs1, CandleSq cs2) throws java.lang.Exception{
 		
 		Double result = 0.0;
 		if(cs1.GetCandleSize() != cs2.GetCandleSize()){
@@ -205,13 +211,30 @@ public class Pattern {
 			result.add(c);
 			return result;
 		}
+		
+		public ArrayList<Record> GetRecordSeriesWithOutHighAndLow(int idx){			
+			ArrayList<Record> result = new ArrayList<>();			
+			Record s = new Record();
+			s.code = 1;
+			s.index = idx;
+			s.value = Open;
+			result.add(s);			
+			Record c = new Record();
+			c.code = 4;
+			c.index = idx;
+			c.value = Close;
+			result.add(c);
+			return result;
+		}
 	}
 	
 	public static class CandleSq{
 		
 		public Boolean IsAvailable = true;
 		public String Gicode;
+		public String Itemabbrnm;
 		public Double Score;
+		
 		Double Max;
 		Double Min;
 		ArrayList<Pattern.Candle> candles;		
@@ -298,10 +321,31 @@ public class Pattern {
 			Collections.sort(candles, new CandleCompare());
 		}
 		
-		public String GenerateCode(){
+		/**
+		 * 기능 : 모든 시고저종을 모두 코드로 작성
+		 * @return 코드
+		 */
+		public String GenerateCode(){ 
 			ArrayList<Record> arr = new ArrayList<>();
 			for(int i=0; i<GetCandleSize(); i++){
 				arr.addAll(candles.get(i).GetRecordSeries(i)); // 모든 캔들 코드를 다 갖다 넣어
+			}
+			Collections.sort(arr, new RecordCompare());
+			StringBuilder sb = new StringBuilder();
+			for(int i=0; i<arr.size(); i++){
+				sb.append(arr.get(i).index.toString() + arr.get(i).code.toString());
+			}
+			return sb.toString();
+		}
+		
+		/**
+		 * 기능 : 시가와 종가로만 코드로 작성
+		 * @return 코드
+		 */
+		public String GenerateCodeWithOutHighAndLow(){ 
+			ArrayList<Record> arr = new ArrayList<>();
+			for(int i=0; i<GetCandleSize(); i++){
+				arr.addAll(candles.get(i).GetRecordSeriesWithOutHighAndLow(i)); // 모든 캔들 코드를 다 갖다 넣어
 			}
 			Collections.sort(arr, new RecordCompare());
 			StringBuilder sb = new StringBuilder();
@@ -376,7 +420,7 @@ public class Pattern {
 			// TODO Auto-generated method stub
 			if(o1.Score >= o2.Score)
 				return 1;
-			else if(o1.Score <= o2.Score)				
+			else if(o1.Score < o2.Score)				
 				return -1;
 			else
 				return 0;

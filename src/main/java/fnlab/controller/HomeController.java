@@ -68,18 +68,18 @@ public class HomeController {
 		
 	}
 	
-	@RequestMapping(value = "/jenny", method = RequestMethod.GET)	
+	@RequestMapping(value = "/jiwon", method = RequestMethod.GET)	
 	public String Jenny(@RequestParam(required=false) String dt, HttpServletRequest req, Model model) {
 		
 		logger.info("root 경로로 접속했을 시!");
-		return "jenny/jenny";
+		return "jiwon/jiwon";
 		
 	}
 	
-	@RequestMapping(value = "/jenny/prince", method = RequestMethod.GET)	
+	@RequestMapping(value = "/jiwon/prince", method = RequestMethod.GET)	
 	public String JennyPrince(@RequestParam(required=false) String dt, HttpServletRequest req, Model model) {
 		logger.info("root 경로로 접속했을 시!");
-		return "jenny/prince";
+		return "jiwon/prince";
 		
 	}
 	

@@ -11,7 +11,6 @@
     <!-- Core CSS - Include with every page -->
     <!--  <link href="resources/css/bootstrap.min.css" rel="stylesheet"> -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
     <link href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.css" rel="stylesheet">
 
@@ -29,12 +28,43 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/jqcloud/jqcloud.css">
     
     
-    <style>   	
-    	
-		.container .text-muted {
-			margin: 20px 0;
-		}
-				
+    <style>
+    
+    	html,
+	    body {
+	      height: 100%;
+	       /* The html and body elements cannot have any padding or margin. */
+	    }
+	
+	    /* Wrapper for page content to push down footer */
+	    #wrap {
+	      min-height: 100%;
+	      height: auto !important;
+	      height: 100%;
+	      /* Negative indent footer by it's height */
+	      margin: 0 auto -60px;
+	    }
+	
+	    /* Set the fixed height of the footer here */
+	    #push,
+	    #footer {
+	      height: 60px;
+	    }
+	    #footer {
+	    	padding-top: 30px;
+	    	text-align: center;	      
+	    }
+	
+	    /* Lastly, apply responsive CSS fixes as necessary */
+	    @media (max-width: 767px) {
+	      #footer {
+	        margin-left: -20px;
+	        margin-right: -20px;
+	        padding-left: 20px;
+	        padding-right: 20px;
+	      }
+	    }
+	   				
 		table thead th
 		{
 			text-align: center;
@@ -50,41 +80,10 @@
 			text-align: left;
 			font-size: 12px;
 		}
-		.video-container {
-		    position: relative;
-		    padding-bottom: 56.25%;
-		    padding-top: 30px; height: 0; overflow: hidden;
-		}
-		
+				
 		.jumbotron{
-			text-align: center;
-		}
-		
-		html,
-		body {
-		  height: 100%;
-		  /* The html and body elements cannot have any padding or margin. */
-		}
-		
-		/* Wrapper for page content to push down footer */
-		.wrap {
-		  min-height: 100%;
-		  height: auto !important;
-		  height: 100%;
-		  /* Negative indent footer by its height */
-		  margin: 0 auto -60px;
-		  /* Pad bottom by footer height */
-		  padding: 0 0 60px;
-		  max-width: 600px;
-		}
-		
-		/* Set the fixed height of the footer here */
-		#footer {
-		  height: 60px;
-		  background-color: #f5f5f5;
-		  margin-top: 20px;
-		}
-				    	
+			text-align: center;			
+		}		    	
     </style>
     
     <script>
@@ -101,12 +100,15 @@
 	
 </head>
 <body>
-	<div class="wrap">	
+	<div id="wrap">
+	<div class="container">	
+			
 		<div class="row" style="text-align: center; margin-top: 30px">
 			<div align="center">
-				<div id="div_cloud" style="max-width: 600px; height: 450px; text-align: center"></div>
+				<div id="div_cloud" style="max-width: 800px; height: 450px; text-align: center"></div>
 				<div id="div_table" style="max-width: 550px; height: 450px; overflow:auto; text-align: center">
 				<p style="width: 100px;"><a id="btn_back" class="btn btn-warning" role="button"><span class="fa fa-reply"></span>  Back to the cloud</a></p>
+				<div id="new_link" style="text-align: left"></div>
 				<table class="table table-striped">
 					<thead>
 						<th>뉴스시각</th>
@@ -119,48 +121,54 @@
 				</div>
 			</div>
 		</div>
-		<div align="center">
-			<!-- <div class="row" style="text-align: center; max-width: 600px; border-top-style: solid; border-top-width: 1px"> -->
-			<div>
-				<img id="img_anvil" width="100px" alt="" src="${pageContext.request.contextPath}/resources/img/anvil.jpg" title="최근에 뉴스가 많이 나온 종목들입니다. 오른종목은 빨간색, 내린종목은 파란색">
+		
+		<div class="row">
+			<div align="center">
+				<!-- <div class="row" style="text-align: center; max-width: 600px; border-top-style: solid; border-top-width: 1px"> -->
+				<div>
+					<img id="img_anvil" width="200px" alt="" src="${pageContext.request.contextPath}/resources/img/anvil.jpg"/>
+					<span class="fa fa-question-circle fa-5" title="최근시점으로 화제가 되고 있는 종목들입니다. 오른종목은 빨간색, 내린종목은 파란색이며, 글씨 크기가 클 수록 더 화제가 되고 있는 종목입니다."></span>
+				</div>
 			</div>
 		</div>
 		
 		<div class="row">
 			<div class="jumbotron" style="padding-top: 10px; padding-bottom: 10px">
-			  <h1>BLACK SMITH</h1>
-			  <h3>SMART Finance</h3>
-			  <p><a href="${pageContext.request.contextPath}/pattern" class="btn btn-primary btn-lg" role="button">ENTER</a></p>
+			  <h1>BLACK SMITH</h1>			  
+			  <p><a href="${pageContext.request.contextPath}/pattern" class="btn btn-primary btn-lg" role="button" title="Daehyun 이 만든, 여러가지 금융적 도구를 이용하실 수 있습니다.">ENTER</a></p>
 			  <!-- <p class="text-muted credit" style="font-size: small;">Daehyun kim <a href="mailto:reinitiate@gmail.com">reinitiate@gmail.com</a></p> -->			  
 			</div>		
 		</div>
 		
+		<!-- 
 		<div class="row">
 			<div class="jumbotron">
-				<div class="page-header">		
-					<h1>Candle Chart Monitoring<br/><small>요즘 잘나가는 주가패턴</small></h1>
-				</div>
-				<div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3">			  
-				  	<div class="embed-responsive embed-responsive-4by3">
-				  		<iframe height="300" src="//www.youtube.com/embed/TP-la2j-NPU" allowfullscreen></iframe>
-				  	</div>			  
-				</div>			
+				<div class="page-header">
+					<h2>Candle Chart Monitoring<br/><small>요즘 잘나가는 주가패턴</small></h2>
+				</div>					  
+			  	<div class="embed-responsive embed-responsive-4by3"">
+			  		<iframe height="300" src="//www.youtube.com/embed/TP-la2j-NPU" allowfullscreen></iframe>
+			  	</div>	
 			</div>
 		</div>
-				
-		<div id="footer" class="row">
-	        <div class="container">
-	            <p class="text-muted credit">BlackSmith <a href="http://martinbean.co.uk">DaeHyun Kim</a> and <a href="http://ryanfait.com/sticky-footer/">HyeSun Noh</a>.</p>
-	        </div>
-	    </div>
+		 -->
+		 
+			 		 
 		</div>
-				
-		<div id="loading" style="position:absolute; top:50%; left :0; width:100%; margin-top: -10px; line_height:20px; text-align:center;">
-			<p><img src='${pageContext.request.contextPath}/resources/img/ajax-loader.gif'/>
-		</div>
-		
-		<input id="t0" type="hidden" value="${t0}"/>
-		<input id="t1" type="hidden" value="${t1}"/>   	
+		<div id="push"></div>
+	</div>
+	
+	<div id="footer">
+        <div class="container">
+            <p class="text-muted"><b>BlackSmith</b> Powered by <a href="http://www.daehyeonkim.com">DaeHyun Kim</a>.</p>
+        </div>
+    </div>
+    
+	<input id="t0" type="hidden" value="${t0}"/>
+	<input id="t1" type="hidden" value="${t1}"/>
+	<div id="loading" style="position:absolute; top:50%; left :0; width:100%; margin-top: -10px; line_height:20px; text-align:center;">
+		<p><img src='${pageContext.request.contextPath}/resources/img/ajax-loader.gif'/>
+	</div>   	
 </body>
 
 <script type="text/javascript">
@@ -228,10 +236,10 @@
 					var effect = 'slide';
 		            var options = { direction: 'up'};
 		            var duration = 1000;
+		            
 			            
 			        $("#div_table").toggle(effect, options, duration);
 			        $("#div_cloud").hide();
-			        
 			        var html = '';
 			        
 			        for(i=0; i<data.length; i++){
@@ -242,6 +250,11 @@
 			        	html = html + '</tr>';
 			        }
 					$('#table_contents').html(html);
+					var gicode2 = gicode.substring(1, 7);
+					$('#new_link').html('');
+					$('#new_link').append('<a target="_blank" class="btn btn-link" role="button" href="http://finance.naver.com/item/main.nhn?code=' + gicode2 + '"></span>네이버</a>');
+					$('#new_link').append('<a target="_blank" class="btn btn-link" role="button" href="http://stock.daum.net/item/main.daum?code=' + gicode2 + '"></span>다음</a>');
+					$('#new_link').append('<a target="_blank" class="btn btn-link" role="button" href="http://paxnet.asiae.co.kr/asiae/stockIntro/indCurrent.jsp?code=' + gicode2 + '"></span>팍스넷</a>');
 					
 	            },
 	            error: function(XMLHttpRequest, textStatus, errorThrown) {	            	  

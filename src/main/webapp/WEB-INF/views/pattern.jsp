@@ -15,10 +15,15 @@
 <%@ include file="include.jsp"%>
 <style>
 	  #candle_repo{width:60px; left:150px; top:150px; background-color: transparent; position: absolute;}	  
+	  .candle_canvas{height:400px; background-color: transparent; border-style: groove;}	  	  
 	  .candle {width:60px; left:150px; top:150px; background-color: transparent; position: absolute;}	  
+	  
 	  .candle .div_candle{background-color:#3A3A9A; border-width: 1px; border-style: solid;}
-	  .candle .bull{background-color:#990000;}	  
-	  .candle_canvas{width:100%; height:600px; background-color: transparent; border-style: groove;}	  	  
+	  .candle .bull{background-color:#990000;}
+	  
+	  .candle .div_candle{background-color:transparent; border-width: 3px; border-style: solid; border-color: #0066FF;}
+	  .candle .bull{background-color:transparent; border-color: #FF0000;}	  
+	  
 	  .stick_high{height:30px; width:15px; background-color: wight; left:22.5px; border-top: solid; border-right: solid; border-left: solid; border-width: 1px;}
 	  .stick_low{height:30px; width:15px; background-color: wight; left:22.5px; border-bottom: solid; border-right: solid; border-left: solid; border-width: 1px;}	  
 	  .ui-resizable-helper { border: 2px dotted #00F; }	  
@@ -30,33 +35,35 @@
 	
 </head>
 <body>
-
-	<div class="wrapper col-lg-10 col-lg-offset-1">
-        <jsp:include page="nav/nav_top.jsp"/>    <!-- 상단 탑 메뉴 -->
-        
-        <div id="candle_canvas" class="candle_canvas">
-		
-			<div class="modify_area" style="display: inline-block; width: 100%; border-bottom-style: inset;">			
-				<div class="toggle_area"><h1><span class="glyphicon glyphicon-refresh"/></h1></div>
-				<div class="delete_area"><h1><span class="glyphicon glyphicon-remove-circle"></span></h1></div>
+	<div id	="wrap">
+		<div class="container">	
+		<div class="row">
+			<jsp:include page="nav/nav_top.jsp"/>    <!-- 상단 탑 메뉴 -->
 			</div>
-			
-			<button id="btn_run" type="button" class="btn btn-success"><span class="fa fa-refresh"></span> 분석</button>
-			<button id="btn_add_candle" type="button" class="btn btn-default"><span class="fa fa-plus"></span> 캔들추가</button>
-			
-			<div id="candle_repo" style="visibility: hidden">
-				<div class="stick stick_high"></div>
-				<div class="div_candle bull" style="height:100px"></div>
-				<div class="stick stick_low"></div>
+		    <div class="row">
+		        <div id="candle_canvas" class="candle_canvas">
+					<div class="modify_area" style="display: inline-block; width: 100%; border-bottom-style: inset;">			
+						<div class="toggle_area"><h1><span class="glyphicon glyphicon-refresh"/></h1></div>
+						<div class="delete_area"><h1><span class="glyphicon glyphicon-remove-circle"></span></h1></div>
+					</div>
+					<button id="btn_run" type="button" class="btn btn-success"><span class="fa fa-refresh"></span> 분석</button>
+					<button id="btn_add_candle" type="button" class="btn btn-default"><span class="fa fa-plus"></span> 캔들추가</button>			
+					<div id="candle_repo" style="visibility: hidden">
+						<div class="stick stick_high"></div>
+						<div class="div_candle bull" style="height:100px"></div>
+						<div class="stick stick_low"></div>
+					</div>
+				</div>
 			</div>
-		
-		</div>        
-        
-        <div id="div_result" class="row">
-    	
-    	</div>
-    </div>
-    
+			<div class="row">
+				<iframe src="http://finance.naver.com/item/fchart.nhn?code=155960" width="100%" height="400px"></iframe>
+			</div>
+	        <div id="div_result" class="row">        	
+	    	</div>
+	    </div>
+	    <div id="push"></div>
+	</div>
+	<%@ include file="footer.jsp"%>
     <script>
         
         $(function(){        	
@@ -71,7 +78,7 @@
         		EventRefresh(candleSample);
         		candleSample.css("visibility", "visible");
         		candleSample.hide();
-        		candleSample.show(1000);
+        		candleSample.show(500);
         	});
         	
         	// RUN 버튼
@@ -84,7 +91,7 @@
         		var candleArray = [];        		
         		
         		if(size == 0){
-        			alert('캔들형식의 주가정보가 없습니다.');
+        			alert('캔들형식의 주가정보가 없습니다. 캔들 추가 버튼으로 패턴을 형성하세요.');
         		}
         		else{
         			var jsonResult = {};        			
@@ -211,7 +218,7 @@
 	            	//$(this).children(".stick_low").offset({top:$(this).position().top + $(this).width, left:$(this).position().left + 30-15/2});	            	
 	            	
 	            	var topBarHeight = $('.delete_area').position().top + $('.delete_area').height();
-	            	var topBarWidth = $('.delete_area').width();	            	
+	            	var topBarWidth = $('#candle_canvas').position().left + ($('.delete_area').width() + $('.toggle_area').width()) / 2;	            	
 	            	var x = $(this).position().left + $(this).width()/2;
 	            	var y = $(this).position().top;
 	            	console.log(x + " " + y + " " + topBarWidth);
@@ -238,12 +245,11 @@
 	            	    //$(this).children(".stick_high").offset({top:$(this).position().top, left:$(this).position().left + 30-15/2});
 		            	//$(this).children(".stick_low").offset({top:$(this).position().top + $(this).width, left:$(this).position().left + 30-15/2});	            	
 		            	var topBarHeight = $('.delete_area').position().top + $('.delete_area').height();
-		            	var topBarWidth = $('.delete_area').width();
-		            	
+		            	var topBarWidth = $('#candle_canvas').position().left + ($('.delete_area').width() + $('.toggle_area').width()) / 2;		            	
 		            	var x = $(this).position().left + $(this).width()/2;
 		            	var y = $(this).position().top;
 		            	
-		            	console.log(x + " " + y + " " + topBarWidth);	            	
+		            	console.log(x + " " + y + " " + topBarWidth);		            	
 		            	if(y <= topBarHeight){
 		            		if (x >= topBarWidth){
 		            			// 삭제	
@@ -272,10 +278,9 @@
 	              });
         }
     	
-    </script>
+    </script>        
     
-    
-    <!-- /#wrapper -->
+    </body>
 
     <!-- Core Scripts - Include with every page -->
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
@@ -292,5 +297,3 @@
     <!-- <script src="/js/demo/dashboard-demo.js"></script>-->    
     <script src="${pageContext.request.contextPath}/resources/js/highstock.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/modules/exporting.js"></script>
-    
-    </body>

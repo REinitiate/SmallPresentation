@@ -21,7 +21,7 @@ public class PatternService extends SqlSessionDaoSupport{
 	@Autowired
 	CommonDbService commonDbService;
 	
-	public String GetRankedGicode(JSONArray candleList, String dt){		
+	public JSONObject GetRankedGicode(JSONArray candleList, String dt, int maxCnt){		
 		CandleSq sq = new CandleSq();		
 		for(int i=0; i<candleList.size(); i++){			
 			Ut.Log(candleList.get(i).toString());
@@ -35,25 +35,28 @@ public class PatternService extends SqlSessionDaoSupport{
 			sq.Add(cd);
 		}		
 		Pattern pat = new Pattern(getSqlSession());
-		
 		ArrayList<CandleSq> ordered = null;
-				
 		try {
 		 ordered = pat.Run(sq, dt); // 결과 반환
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		StringBuilder sb = new StringBuilder();
-		for(int i=0; i<10; i++){
-			sb.append("RESULT---------------------------------------------\n");
-			sb.append(ordered.get(i).toString());
-			sb.append("---------------------------------------------------\n");
-			sb.append("\n");
+		JSONObject result = new JSONObject();
+		// 종목별 가지고 오기.. 근데 이거 주가 리턴도 가지고 와라.
+		JSONArray gicodeList = new JSONArray();		
+		for(int i=0; i<maxCnt; i++){
+			if(ordered.get(i).Score <= 10000){
+				String gicode = ordered.get(i).Gicode;
+				Double score = ordered.get(i).Score;				
+				JSONObject item = new JSONObject();
+				item.put("gicode", gicode);
+				item.put("score", score);
+				//item.put("time_series", 데이터);
+				gicodeList.add(item);			
+			}
 		}
-		
-		return sb.toString();
+		result.put("gicode_list", gicodeList);
+		return result;
 	}
 }
