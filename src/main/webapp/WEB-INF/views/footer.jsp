@@ -3,6 +3,6 @@
 
 <div id="footer">
         <div class="container">
-            <p class="text-muted"><b>BlackSmith</b> Powered by <a href="http://www.daehyeonkim.com">DaeHyun Kim</a>.</p>
+            <p class="text-muted"><b>BlackSmith</b> powered by <a href="${pageContext.request.contextPath}/resume">DaeHyun Kim</a>.</p>
         </div>
 </div>

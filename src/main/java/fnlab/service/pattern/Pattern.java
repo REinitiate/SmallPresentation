@@ -85,8 +85,18 @@ public class Pattern {
 			}
 		}
 		
-		Collections.sort(csqList, new CandleSqCompare());
+		for(int i=0; i<csqList.size(); i++){
+			if(csqList.get(i).Score == null)
+				try {
+					throw new java.lang.Exception();
+				} catch (java.lang.Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
 		
+		// 점수로 정렬
+		Collections.sort(csqList, new CandleSqCompare());		
 		return csqList;
 	}
 	
@@ -418,7 +428,7 @@ public class Pattern {
 		@Override
 		public int compare(CandleSq o1, CandleSq o2) {
 			// TODO Auto-generated method stub
-			if(o1.Score >= o2.Score)
+			if(o1.Score > o2.Score)
 				return 1;
 			else if(o1.Score < o2.Score)				
 				return -1;

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	
-    <title>똑똑한 금융공학 FnBlackSmith</title>
+    <title>BLACK SMITH</title>
 
     <!-- Core CSS - Include with every page -->
     <!--  <link href="resources/css/bootstrap.min.css" rel="stylesheet"> -->
@@ -160,7 +160,7 @@
 	
 	<div id="footer">
         <div class="container">
-            <p class="text-muted"><b>BlackSmith</b> Powered by <a href="http://www.daehyeonkim.com">DaeHyun Kim</a>.</p>
+            <p class="text-muted"><b>BlackSmith</b> Powered by <a href="${pageContext.request.contextPath}/resume">DaeHyun Kim</a>.</p>
         </div>
     </div>
     

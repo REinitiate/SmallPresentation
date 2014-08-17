@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import fnlab.service.common.CommonDbService;
 import fnlab.service.news.NewsService;
 import fnlab.service.pattern.PatternService;
 import fnlab.utility.Ut;
@@ -36,14 +37,19 @@ public class PatternController {
 	 */
 	
 	@Autowired
-	PatternService patternService;	
+	PatternService patternService;
+	
+	@Autowired
+	CommonDbService commonDbService;
 	
 	@RequestMapping(value = "/pattern/json", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String GetPatternJson(@RequestParam(required=false) String candle_list) throws ParseException, org.json.simple.parser.ParseException {
+	public String GetPatternJson(@RequestParam(required=false) String candle_list) throws ParseException, org.json.simple.parser.ParseException {		
+		String trd_dt = commonDbService.GetlatestTrdDt4StkPrice(new Date()); // 오늘을 포함한 이전에 가장 최신 jd date를 가지고 온다.
 		org.json.simple.parser.JSONParser parser = new org.json.simple.parser.JSONParser();
 		JSONArray candleList = (JSONArray) parser.parse(candle_list);		
-		JSONObject result = patternService.GetRankedGicode(candleList, "20140813", 5); 
+		JSONObject result = patternService.GetRankedGicode(candleList, trd_dt, 5); 
 		return result.toJSONString();
-	}	
+		
+	}
 }

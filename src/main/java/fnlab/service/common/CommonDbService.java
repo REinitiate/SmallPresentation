@@ -17,7 +17,21 @@ public class CommonDbService extends SqlSessionDaoSupport{
 	 * @return
 	 */
 	public String GetlatestTrdDt4StkPrice(Date dt){
-		String result = (String) getSqlSession().selectOne("common.selectGetNewByCnt", dt);		
+		String result = (String) getSqlSession().selectOne("common.selectMaxDtFromJd", dt);		
 		return result;
 	}
+	
+	
+	
+	/**
+	 * 기능 : 종목 코드로 종목이름 반환
+	 * @param gicode 종목 코드
+	 * @return 종목 이름
+	 */
+	public String GetItemabbrnmByGicode(String gicode){
+		String result = (String) getSqlSession().selectOne("common.selectItemabbrnmByGicode", gicode);		
+		return result;
+	}
+	
+	
 }

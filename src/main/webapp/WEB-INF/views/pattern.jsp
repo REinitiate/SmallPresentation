@@ -16,57 +16,134 @@
 <style>
 	  #candle_repo{width:60px; left:150px; top:150px; background-color: transparent; position: absolute;}	  
 	  .candle_canvas{height:400px; background-color: transparent; border-style: groove;}	  	  
-	  .candle {width:60px; left:150px; top:150px; background-color: transparent; position: absolute;}	  
-	  
+	  .candle {width:60px; left:150px; top:150px; background-color: transparent; position: absolute;}
 	  .candle .div_candle{background-color:#3A3A9A; border-width: 1px; border-style: solid;}
 	  .candle .bull{background-color:#990000;}
-	  
-	  .candle .div_candle{background-color:transparent; border-width: 3px; border-style: solid; border-color: #0066FF;}
-	  .candle .bull{background-color:transparent; border-color: #FF0000;}	  
-	  
+	  .candle .div_candle{background-color:rgb(127, 141, 169); border-style: none; border-color: #0066FF;}
+	  .candle .bull{background-color:rgb(219, 76, 60);}
 	  .stick_high{height:30px; width:15px; background-color: wight; left:22.5px; border-top: solid; border-right: solid; border-left: solid; border-width: 1px;}
 	  .stick_low{height:30px; width:15px; background-color: wight; left:22.5px; border-bottom: solid; border-right: solid; border-left: solid; border-width: 1px;}	  
 	  .ui-resizable-helper { border: 2px dotted #00F; }	  
 	  .modify_area{border-style:outset; border-width: 5px;}
 	  .delete_area{height:70px; background-color: transparent; width: 50%; float: left; text-align: center; border-right-style: inset;}
 	  .toggle_area{height:70px; background-color: transparent; width: 50%; float: left; text-align: center;}	  
-	  .area_selected{border-style: inset; border-width: 5px;}	  
-  </style>
+	  .area_selected{border-style: inset; border-width: 5px;}
+</style>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/amcharts/style.css" type="text/css">
 	
 </head>
-<body>
+
+<body>	
 	<div id	="wrap">
 		<div class="container">	
 		<div class="row">
 			<jsp:include page="nav/nav_top.jsp"/>    <!-- 상단 탑 메뉴 -->
-			</div>
-		    <div class="row">
-		        <div id="candle_canvas" class="candle_canvas">
-					<div class="modify_area" style="display: inline-block; width: 100%; border-bottom-style: inset;">			
+		</div>
+		
+		<nav class="navbar navbar-default" role="navigation" style="margin-bottom: 0px; border-style: none;">
+		  	<div class="container-fluid">
+		    <!-- Brand and toggle get grouped for better mobile display -->
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+		      <a class="navbar-brand" href="#">캔들 차트 분석기</a>
+		    </div>
+		
+		    <!-- Collect the nav links, forms, and other content for toggling -->
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		      <ul class="nav navbar-nav">
+		        <li class="active"><a href="#">패턴 종목 찾기</a></li>	        
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown">고정패턴 <span class="caret"></span></a>
+		          <ul class="dropdown-menu" role="menu">
+		            <li><a href="#">적삼</a></li>
+		            <li><a href="#">도지</a></li>
+		            <li><a href="#">흑역삼</a></li>
+		            <li class="divider"></li>
+		            <li><a href="#">적삼</a></li>
+		            <li class="divider"></li>
+		            <li><a href="#">어깨</a></li>
+		          </ul>
+		        </li>
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown">추천패턴 <span class="caret"></span></a>
+		          <ul class="dropdown-menu" role="menu">
+		            <li><a href="#">적삼</a></li>
+		            <li><a href="#">도지</a></li>
+		            <li><a href="#">흑역삼</a></li>
+		            <li class="divider"></li>
+		            <li><a href="#">적삼</a></li>
+		            <li class="divider"></li>
+		            <li><a href="#">어깨</a></li>
+		          </ul>
+		        </li>
+		      </ul>
+		      <ul class="nav navbar-nav navbar-right">
+		        <li><a href="#">도움말</a></li>	        
+		      </ul>
+		    </div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>
+	
+	
+		<div class="row" style="margin-bottom: 30px;">
+			<div id="candle_canvas" class="candle_canvas">
+				<div class="modify_area" style="display: inline-block; width: 100%; border-bottom-style: inset;">			
 						<div class="toggle_area"><h1><span class="glyphicon glyphicon-refresh"/></h1></div>
 						<div class="delete_area"><h1><span class="glyphicon glyphicon-remove-circle"></span></h1></div>
-					</div>
-					<button id="btn_run" type="button" class="btn btn-success"><span class="fa fa-refresh"></span> 분석</button>
-					<button id="btn_add_candle" type="button" class="btn btn-default"><span class="fa fa-plus"></span> 캔들추가</button>			
-					<div id="candle_repo" style="visibility: hidden">
-						<div class="stick stick_high"></div>
-						<div class="div_candle bull" style="height:100px"></div>
-						<div class="stick stick_low"></div>
-					</div>
+				</div>
+				<button id="btn_run" type="button" class="btn btn-success"><span class="fa fa-refresh"></span> 분석</button>
+				<button id="btn_add_candle" type="button" class="btn btn-default"><span class="fa fa-plus"></span> 캔들추가</button>			
+				<div id="candle_repo" style="visibility: hidden">
+					<div class="stick stick_high"></div>
+					<div class="div_candle bull" style="height:100px"></div>
+					<div class="stick stick_low"></div>
 				</div>
 			</div>
-			<div class="row">
-				<iframe src="http://finance.naver.com/item/fchart.nhn?code=155960" width="100%" height="400px"></iframe>
+		</div>
+		
+		<div class="panel panel-default">
+		  <div class="panel-heading"><button type="button" class="btn btn-default">삼성전자</button>일치율 : 98%</div>		  
+		  <div class="panel-body">		  
+			<div id="div_chart"  style="width:100%; height:300px;">
 			</div>
-	        <div id="div_result" class="row">        	
-	    	</div>
-	    </div>
+			<div style="float:right;margin-right:10px;">
+			    <input onChange="changeZoomDates()" style="width:100px; text-align:center" type="text" id="startDate">
+			    <input onChange="changeZoomDates()" style="width:100px; text-align:center" type="text" id="endDate">
+		    </div>
+		  </div>
+		</div>
+		
+		<div class="panel panel-default">
+		  <div class="panel-heading"><button type="button" class="btn btn-default">현대차</button>일치율 : 98%</div>		  
+		  <div class="panel-body">		  
+			<div id="div_chart2"  style="width:100%; height:300px;">
+			</div>
+			<div style="float:right;margin-right:10px;">
+			    <input onChange="changeZoomDates()" style="width:100px; text-align:center" type="text" id="startDate">
+			    <input onChange="changeZoomDates()" style="width:100px; text-align:center" type="text" id="endDate">
+		    </div>
+		  </div>
+		</div>
+		
+		
+		
 	    <div id="push"></div>
 	</div>
-	<%@ include file="footer.jsp"%>
+	
+	
+	<%@ include file="footer.jsp"%>       
+    
+    
     <script>
-        
-        $(function(){        	
+    
+        $(function(){
+        	        	
         	// 초기화
         	
         	// 캔들 추가 버튼
@@ -140,6 +217,7 @@
         				candleArray.push(candleJSON);
         				console.log(candleArray);        				
         			}
+        			
         			LoadData(candleArray);
         		}
         	});
@@ -160,7 +238,10 @@
 				},
 				data: {candle_list : JSON.stringify(candleJSON)},				
 				success: function(data){
-					$("#div_result").html(data);					
+					$("#div_result").html(data);
+										
+					DrawChart2("div_chart");
+					DrawChart2("div_chart2");
 	            },
 	            error: function(XMLHttpRequest, textStatus, errorThrown) {
 	              $("#btn_run > span").removeClass("fa-spin");
@@ -175,9 +256,10 @@
         	// 캔들 위치 선택
         	var canvas_width = $("#candle_canvas").width();
         	var canvas_height = $("#candle_canvas").height();
+        	var canvas_top = $("#candle_canvas").position().top;
             var canvas_left = $("#candle_canvas").position().left;
             
-            candle.offset({top:canvas_height/2, left:(canvas_width/2) + canvas_left - 30});
+            candle.offset({top:canvas_top + canvas_height/2, left:(canvas_width/2) + canvas_left - 30});
         	        	
         	candleWidth = $("#candle_repo").width();        	
         	stickWidth = $("#candle_repo").width();
@@ -286,14 +368,21 @@
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 
-    <!-- Page-Level Plugin Scripts - Dashboard -->
+    <!-- Page-Level Plugin Scripts - Dashboard 
     <script src="${pageContext.request.contextPath}/resources/js/plugins/morris/raphael-2.1.0.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/plugins/morris/morris.js"></script>
+    -->  
+    
+    <!-- Am Chart -->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/amcharts/amcharts.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/amcharts/serial.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/amcharts/amstock.js"></script>
 
     <!-- SB Admin Scripts - Include with every page -->
     <script src="${pageContext.request.contextPath}/resources/js/sb-admin.js"></script>
 
     <!-- Page-Level Demo Scripts - Dashboard - Use for reference -->
-    <!-- <script src="/js/demo/dashboard-demo.js"></script>-->    
+    <!-- <script src="/js/demo/dashboard-demo.js"></script>-->
     <script src="${pageContext.request.contextPath}/resources/js/highstock.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/modules/exporting.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/modules/exporting.js"></script>    
+    <script src="${pageContext.request.contextPath}/resources/js_custom/pattern_chart.js"></script>

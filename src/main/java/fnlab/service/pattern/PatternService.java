@@ -31,7 +31,12 @@ public class PatternService extends SqlSessionDaoSupport{
 			Double low = new Double((Long) c.get("low"));
 			Double close = new Double((Long) c.get("close"));
 			Candle cd = new Candle(open, high, low, close);
-			cd.X = new Double((Long)c.get("x"));
+			if(c.get("x").getClass().equals(Long.class)){
+				cd.X = new Double((Long)c.get("x"));
+			}else{
+				cd.X = new Double((Double)c.get("x"));
+			}	
+			
 			sq.Add(cd);
 		}		
 		Pattern pat = new Pattern(getSqlSession());
@@ -52,6 +57,7 @@ public class PatternService extends SqlSessionDaoSupport{
 				JSONObject item = new JSONObject();
 				item.put("gicode", gicode);
 				item.put("score", score);
+				item.put("itemabbrnm", commonDbService.GetItemabbrnmByGicode(gicode));
 				//item.put("time_series", 데이터);
 				gicodeList.add(item);			
 			}

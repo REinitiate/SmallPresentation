@@ -43,13 +43,12 @@ public class HomeController {
 		
 		String t1 = Ut.sdf_full.format(targetDt);		
 		Calendar cal = new GregorianCalendar();
-		cal.setTime(targetDt);	
+		cal.setTime(targetDt);
 		
-		
-		if(cal.DAY_OF_WEEK == Calendar.SATURDAY)
-			cal.add(Calendar.DATE, -2);
-		else if(cal.DAY_OF_WEEK == Calendar.SUNDAY)
-			cal.add(Calendar.DATE, - 3);
+		if(cal.DAY_OF_WEEK == 7)
+			cal.add(Calendar.DATE, -3);
+		else if(cal.DAY_OF_WEEK == 6)
+			cal.add(Calendar.DATE, - 2);
 		else
 			cal.add(Calendar.DATE, -1);
 		
@@ -65,6 +64,14 @@ public class HomeController {
 	public String Main(@RequestParam(required=false) String dt, HttpServletRequest req, Model model) {
 		
 		return "template";
+		
+	}
+	
+	@RequestMapping(value = "/resume", method = RequestMethod.GET)	
+	public String Resume(@RequestParam(required=false) String contents_path, HttpServletRequest req, Model model) {
+		
+		model.addAttribute("contents_path", contents_path);
+		return "resume/template";
 		
 	}
 	

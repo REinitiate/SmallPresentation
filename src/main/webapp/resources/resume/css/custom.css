@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+
+p
+{
+	font-size: small;
+	font-family: 'Nanum Gothic', sans-serif;
+}
+
+table
+{
+	font-size: small;
+	font-family: 'Nanum Gothic', sans-serif;
+}
+
+.page_header  
+{
+	font-family: 'Nanum Gothic', sans-serif;
+}
+
+ul
+{
+	font-size: small;
+	font-family: 'Nanum Gothic', sans-serif;
+}
+
+li
+{
+	font-size: small;
+	font-family: 'Nanum Gothic', sans-serif;
+}
+
+.caption{font-size: small; font-family: 'Nanum Gothic', sans-serif;}
