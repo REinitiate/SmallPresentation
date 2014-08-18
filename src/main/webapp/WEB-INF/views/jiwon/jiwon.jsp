@@ -223,14 +223,7 @@
 		
 	</div>
 	
-	</div>
-	 
-	<audio class="audio_player" autoplay="autoplay" loop="loop" controls>
-		<source src="${pageContext.request.contextPath}/resources/audio/SleepAway.wav" type="audio/wav">
-		<source src="${pageContext.request.contextPath}/resources/audio/SleepAway.oog" type="audio/ogg">
-		<source src="${pageContext.request.contextPath}/resources/audio/SleepAway.mp3" type="audio/mpeg">	
-	</audio>
-		
+	</div>	
 	
 	<script>
 	$(function(){

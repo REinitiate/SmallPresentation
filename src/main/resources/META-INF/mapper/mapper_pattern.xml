@@ -25,4 +25,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	) a
 	where a.num <= #{cnt}]]>
   </select>
+  
+  <!-- dt일을 포함한 과거 cnt일자의 초기일자 및 마지막 일자를 가져온다.-->
+  <select id="selectPriceData" parameterType="HashMap" resultType="HashMap">
+	<![CDATA[select trd_dt, strt_prc, high_prc, low_prc, cls_prc, yield
+			from fnlab_jd_adj a
+			where a.trd_dt between #{t0} and #{t1}
+			and a.gicode = #{gicode}
+			order by trd_dt asc]]>
+  </select>
+  
+  
 </mapper>

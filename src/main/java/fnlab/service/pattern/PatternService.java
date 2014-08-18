@@ -1,7 +1,11 @@
 package fnlab.service.pattern;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -58,11 +62,54 @@ public class PatternService extends SqlSessionDaoSupport{
 				item.put("gicode", gicode);
 				item.put("score", score);
 				item.put("itemabbrnm", commonDbService.GetItemabbrnmByGicode(gicode));
-				//item.put("time_series", 데이터);
+				
+				// 날자 세팅
+				Calendar cal = new GregorianCalendar();
+				try {
+					cal.setTime(Ut.sdf_yyyyMMdd.parse(dt));
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				cal.add(Calendar.DATE, -30);
+				String t0 = Ut.sdf_yyyyMMdd.format(cal.getTime());
+								
+				JSONArray timeSeries = GetPriceDataIntoJsonObjectByGocide(gicode, t0, dt);
+				item.put("timeseries", timeSeries);
+				
 				gicodeList.add(item);			
 			}
 		}
-		result.put("gicode_list", gicodeList);
+		result.put("items", gicodeList);
+		return result;
+	}
+
+	public JSONArray GetPriceDataIntoJsonObjectByGocide(String gicode, String t0, String t1){
+		JSONArray result = new JSONArray();		
+		HashMap<String, Object> param = new HashMap<>();
+		param.put("gicode", gicode);
+		param.put("t0", t0);
+		param.put("t1", t1);
+		List<HashMap<String, Object>> dataSet = getSqlSession().selectList("pattern.selectPriceData", param);
+		
+		for(int i=0; i<dataSet.size(); i++){
+			JSONObject item = new JSONObject();
+			item.put("date", Ut.sdf_yyyyMMdd2.format(dataSet.get(i).get("trd_dt")));
+			item.put("open", dataSet.get(i).get("strt_prc"));
+			item.put("high", dataSet.get(i).get("high_prc"));
+			item.put("low", dataSet.get(i).get("low_prc"));
+			item.put("close", dataSet.get(i).get("cls_prc"));
+			result.add(item);
+		}
+		
+//		date: date,
+//      open: open,
+//      high: high,
+//      low: low,
+//      close: close
+		
+		//trd_dt, strt_prc, high_prc, low_prc, cls_prc, yield
+		         
 		return result;
 	}
 }

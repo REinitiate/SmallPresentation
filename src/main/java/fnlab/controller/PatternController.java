@@ -49,7 +49,6 @@ public class PatternController {
 		org.json.simple.parser.JSONParser parser = new org.json.simple.parser.JSONParser();
 		JSONArray candleList = (JSONArray) parser.parse(candle_list);		
 		JSONObject result = patternService.GetRankedGicode(candleList, trd_dt, 5); 
-		return result.toJSONString();
-		
+		return result.toString();
 	}
 }

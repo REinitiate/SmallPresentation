@@ -29,7 +29,7 @@
     
     
     <style>
-    
+        
     	html,
 	    body {
 	      height: 100%;
@@ -54,17 +54,7 @@
 	    	padding-top: 30px;
 	    	text-align: center;	      
 	    }
-	
-	    /* Lastly, apply responsive CSS fixes as necessary */
-	    @media (max-width: 767px) {
-	      #footer {
-	        margin-left: -20px;
-	        margin-right: -20px;
-	        padding-left: 20px;
-	        padding-right: 20px;
-	      }
-	    }
-	   				
+	       				
 		table thead th
 		{
 			text-align: center;
@@ -101,8 +91,7 @@
 </head>
 <body>
 	<div id="wrap">
-	<div class="container">	
-			
+	<div class="container">
 		<div class="row" style="text-align: center; margin-top: 30px">
 			<div align="center">
 				<div id="div_cloud" style="max-width: 800px; height: 450px; text-align: center"></div>
@@ -133,7 +122,7 @@
 		</div>
 		
 		<div class="row">
-			<div class="jumbotron" style="padding-top: 10px; padding-bottom: 10px">
+			<div class="jumbotron">
 			  <h1>BLACK SMITH</h1>			  
 			  <p><a href="${pageContext.request.contextPath}/pattern" class="btn btn-primary btn-lg" role="button" title="Daehyun 이 만든, 여러가지 금융적 도구를 이용하실 수 있습니다.">ENTER</a></p>
 			  <!-- <p class="text-muted credit" style="font-size: small;">Daehyun kim <a href="mailto:reinitiate@gmail.com">reinitiate@gmail.com</a></p> -->			  
@@ -156,20 +145,22 @@
 			 		 
 		</div>
 		<div id="push"></div>
+		
+		<div id="footer">	        
+            <p class="text-muted"><b>BlackSmith</b> Powered by <a href="${pageContext.request.contextPath}/resume">DaeHyun Kim</a>.</p>	        
+	    </div>
+	    
 	</div>
-	
-	<div id="footer">
-        <div class="container">
-            <p class="text-muted"><b>BlackSmith</b> Powered by <a href="${pageContext.request.contextPath}/resume">DaeHyun Kim</a>.</p>
-        </div>
-    </div>
     
 	<input id="t0" type="hidden" value="${t0}"/>
 	<input id="t1" type="hidden" value="${t1}"/>
-	<div id="loading" style="position:absolute; top:50%; left :0; width:100%; margin-top: -10px; line_height:20px; text-align:center;">
-		<p><img src='${pageContext.request.contextPath}/resources/img/ajax-loader.gif'/>
+	<div class="container">
+		<div id="loading" style="position:absolute; top:50%; left :0; width:100%; margin-top: -10px; line_height:20px; text-align:center;">
+			<p><img src='${pageContext.request.contextPath}/resources/img/ajax-loader.gif'/>
+		</div>
 	</div>   	
 </body>
+
 
 <script type="text/javascript">
 	      var word_list = ${cloud};	      

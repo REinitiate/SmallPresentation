@@ -110,7 +110,7 @@
 		<div class="panel panel-default">
 		  <div class="panel-heading"><button type="button" class="btn btn-default">삼성전자</button>일치율 : 98%</div>		  
 		  <div class="panel-body">		  
-			<div id="div_chart"  style="width:100%; height:300px;">
+			<div id="div_chart"  style="width:100%; height:600px;">
 			</div>
 			<div style="float:right;margin-right:10px;">
 			    <input onChange="changeZoomDates()" style="width:100px; text-align:center" type="text" id="startDate">
@@ -130,6 +130,8 @@
 		    </div>
 		  </div>
 		</div>
+		
+		<div id="div_result"></div>
 		
 		
 		
@@ -229,7 +231,7 @@
 				type: 'post',				
 				url: '${pageContext.request.contextPath}/pattern/json',
 				contentType: "application/x-www-form-urlencoded; charset=UTF-8",				
-				dataType: "text",
+				dataType: "json",
 				beforeSend: function(){
 					$("#btn_run > span").addClass("fa-spin");				    
 				},
@@ -238,10 +240,11 @@
 				},
 				data: {candle_list : JSON.stringify(candleJSON)},				
 				success: function(data){
+					console.log("success");
+					console.log(data);
 					$("#div_result").html(data);
-										
-					DrawChart2("div_chart");
-					DrawChart2("div_chart2");
+					DrawChart2("div_chart", data.items[0]);
+					DrawChart2("div_chart2", data.items[1]);
 	            },
 	            error: function(XMLHttpRequest, textStatus, errorThrown) {
 	              $("#btn_run > span").removeClass("fa-spin");
@@ -367,22 +370,10 @@
     <!-- Core Scripts - Include with every page -->
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-
-    <!-- Page-Level Plugin Scripts - Dashboard 
-    <script src="${pageContext.request.contextPath}/resources/js/plugins/morris/raphael-2.1.0.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/plugins/morris/morris.js"></script>
-    -->  
     
-    <!-- Am Chart -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/amcharts/amcharts.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/amcharts/serial.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/amcharts/amstock.js"></script>
-
     <!-- SB Admin Scripts - Include with every page -->
     <script src="${pageContext.request.contextPath}/resources/js/sb-admin.js"></script>
-
-    <!-- Page-Level Demo Scripts - Dashboard - Use for reference -->
-    <!-- <script src="/js/demo/dashboard-demo.js"></script>-->
-    <script src="${pageContext.request.contextPath}/resources/js/highstock.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/modules/exporting.js"></script>    
     <script src="${pageContext.request.contextPath}/resources/js_custom/pattern_chart.js"></script>
+    
+    <script src="http://code.highcharts.com/stock/highstock.js"></script>
+	<script src="http://code.highcharts.com/stock/modules/exporting.js"></script>

@@ -124,7 +124,10 @@
         
         word_span = $('<span>').attr(word.html).addClass('w' + weight + " " + custom_class);
         
-        if(word.yield < -2.0){
+        if(word.yield == 0.0){
+        	word_span.addClass('q0'); // 수익률이 일때 회색으로 처리 2014.08.18
+        }
+        else if(word.yield < -2.0){
         	word_span.addClass('q1');
         }
         else if(word.yield >= -2.0 && word.yield < -1.5){

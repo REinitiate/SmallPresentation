@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 
 public class Ut {
 	public static SimpleDateFormat sdf_yyyyMMdd = new SimpleDateFormat("yyyyMMdd");
+	public static SimpleDateFormat sdf_yyyyMMdd2 = new SimpleDateFormat("yyyy-MM-dd");
 	public static SimpleDateFormat sdf_full = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");	
 	
 	public static String date2str(Date date){
