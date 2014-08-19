@@ -107,31 +107,16 @@
 			</div>
 		</div>
 		
-		<div class="panel panel-default">
-		  <div class="panel-heading"><button type="button" class="btn btn-default">삼성전자</button>일치율 : 98%</div>		  
-		  <div class="panel-body">		  
-			<div id="div_chart"  style="width:100%; height:600px;">
-			</div>
-			<div style="float:right;margin-right:10px;">
-			    <input onChange="changeZoomDates()" style="width:100px; text-align:center" type="text" id="startDate">
-			    <input onChange="changeZoomDates()" style="width:100px; text-align:center" type="text" id="endDate">
-		    </div>
-		  </div>
+		<div id="div_result">
+			
 		</div>
 		
-		<div class="panel panel-default">
-		  <div class="panel-heading"><button type="button" class="btn btn-default">현대차</button>일치율 : 98%</div>		  
-		  <div class="panel-body">		  
-			<div id="div_chart2"  style="width:100%; height:300px;">
-			</div>
-			<div style="float:right;margin-right:10px;">
-			    <input onChange="changeZoomDates()" style="width:100px; text-align:center" type="text" id="startDate">
-			    <input onChange="changeZoomDates()" style="width:100px; text-align:center" type="text" id="endDate">
-		    </div>
-		  </div>
+		<div class="panel panel-default panel_repo">
+			  <div class="panel-heading"><button type="button" class="btn btn-default">삼성전자</button> 일치율 : 98%</div>		  
+			  <div class="panel-body">		  
+				<div id="div_chart"  style="width:100%; height:400px;"></div>			
+			  </div>
 		</div>
-		
-		<div id="div_result"></div>
 		
 		
 		
@@ -144,15 +129,14 @@
     
     <script>
     
-        $(function(){
-        	        	
+        $(function(){        	        	
         	// 초기화
         	
         	// 캔들 추가 버튼
         	$('#btn_add_candle').click(function(){
         		var candleSample = $("#candle_repo").clone();
         		candleSample.addClass("candle");
-        		console.log(candleSample);
+        		//console.log(candleSample);
         		$("#candle_canvas").append(candleSample);
         		EventRefresh(candleSample);
         		candleSample.css("visibility", "visible");
@@ -165,7 +149,7 @@
         		
         		var candleList = $(".candle");
         		var size = candleList.length;
-        		console.log(candleList.length);
+        		//console.log(candleList.length);
         		
         		var candleArray = [];        		
         		
@@ -177,7 +161,7 @@
         			for(i=0; i<size; i++){
         				
         				var canvas_height = $("#candle_canvas").height();
-        				console.log("전체높이" + canvas_height);
+        				//console.log("전체높이" + canvas_height);
         				
         				var candle = $(candleList.get(i));
         				var div_candle = $(candleList.get(i)).children(".div_candle");
@@ -206,7 +190,7 @@
         				var high = canvas_height - origin_top;
         				var low = canvas_height - (origin_top + candle.height());
         				
-        				console.log("open:" + open + " high:" + high + " low:" + low + " close:" + close + " origin_top:" + origin_top + " canvas_height:" + canvas_height + " origin_left:" + origin_left);
+        				//console.log("open:" + open + " high:" + high + " low:" + low + " close:" + close + " origin_top:" + origin_top + " canvas_height:" + canvas_height + " origin_left:" + origin_left);
         				
         				var candleJSON = {};
         				candleJSON.open = open;
@@ -215,9 +199,9 @@
         				candleJSON.close = close;
         				candleJSON.type = type;
         				candleJSON.x = origin_left;        				
-        				console.log(candleJSON);
+        				//console.log(candleJSON);
         				candleArray.push(candleJSON);
-        				console.log(candleArray);        				
+        				//console.log(candleArray);        				
         			}
         			
         			LoadData(candleArray);
@@ -240,11 +224,21 @@
 				},
 				data: {candle_list : JSON.stringify(candleJSON)},				
 				success: function(data){
-					console.log("success");
-					console.log(data);
+					console.log("success");					
 					$("#div_result").html(data);
-					DrawChart2("div_chart", data.items[0]);
-					DrawChart2("div_chart2", data.items[1]);
+					// 차트 생성
+					
+					size = data.items.length;
+					for(i=0; i<size; i++){
+						var panel = $(".panel_repo").clone();
+						panel.removeClass("panel_repo");
+						console.log(panel[0]);
+						panel.select('button').text(data.items[i].itemabbrnm);						
+						$("#div_result").append(panel);
+					}
+					
+					//DrawChart3($('#div_chart'), data.items[0]);
+					//DrawChart3($('#div_chart2'), data.items[1]);					
 	            },
 	            error: function(XMLHttpRequest, textStatus, errorThrown) {
 	              $("#btn_run > span").removeClass("fa-spin");
@@ -267,13 +261,13 @@
         	candleWidth = $("#candle_repo").width();        	
         	stickWidth = $("#candle_repo").width();
         	
-        	console.log(candle);
+        	//console.log(candle);
         	
         	var div_candle = candle.children(".div_candle");
         	var stick_low = candle.children(".stick_low");
         	var stick_high = candle.children(".stick_high");
         	
-        	console.log(candleWidth);
+        	//console.log(candleWidth);
         	
         	div_candle.resizable({
         	    maxWidth: candleWidth,
@@ -295,7 +289,7 @@
         	
         	candle.draggable({        		
         		start: function() {
-        			console.log('start');
+        			//console.log('start');
 	              },
 	              drag: function() {
 	            	
@@ -306,7 +300,7 @@
 	            	var topBarWidth = $('#candle_canvas').position().left + ($('.delete_area').width() + $('.toggle_area').width()) / 2;	            	
 	            	var x = $(this).position().left + $(this).width()/2;
 	            	var y = $(this).position().top;
-	            	console.log(x + " " + y + " " + topBarWidth);
+	            	//console.log(x + " " + y + " " + topBarWidth);
 	            	
 	            	if(y <= topBarHeight){
 	            		if (x >= topBarWidth){
@@ -334,7 +328,7 @@
 		            	var x = $(this).position().left + $(this).width()/2;
 		            	var y = $(this).position().top;
 		            	
-		            	console.log(x + " " + y + " " + topBarWidth);		            	
+		            	//console.log(x + " " + y + " " + topBarWidth);		            	
 		            	if(y <= topBarHeight){
 		            		if (x >= topBarWidth){
 		            			// 삭제	
@@ -346,7 +340,7 @@
 		            			// 캔들변경
 		            			var div = $(this).children(".div_candle");
 		                		var bc = div.css("background-color");
-		                		console.log(bc);
+		                		//console.log(bc);
 		                		div.toggleClass('bull');
 		                		return;
 		            		}
@@ -356,8 +350,8 @@
 	            			$('.delete_area').removeClass('area_selected');
 		            	}
 		            	
-		            	console.log($(this).children(".div_candle"));
-	            	  	console.log('stop'); 
+		            	//console.log($(this).children(".div_candle"));
+	            	  	//console.log('stop'); 
 	              },
 	              containment:"parent"	              
 	              });

@@ -48,7 +48,7 @@ public class PatternController {
 		String trd_dt = commonDbService.GetlatestTrdDt4StkPrice(new Date()); // 오늘을 포함한 이전에 가장 최신 jd date를 가지고 온다.
 		org.json.simple.parser.JSONParser parser = new org.json.simple.parser.JSONParser();
 		JSONArray candleList = (JSONArray) parser.parse(candle_list);		
-		JSONObject result = patternService.GetRankedGicode(candleList, trd_dt, 5); 
+		org.json.JSONObject result = patternService.GetRankedGicode(candleList, trd_dt, 5);		
 		return result.toString();
 	}
 }

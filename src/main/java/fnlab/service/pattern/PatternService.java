@@ -3,12 +3,14 @@ package fnlab.service.pattern;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -25,7 +27,7 @@ public class PatternService extends SqlSessionDaoSupport{
 	@Autowired
 	CommonDbService commonDbService;
 	
-	public JSONObject GetRankedGicode(JSONArray candleList, String dt, int maxCnt){		
+	public org.json.JSONObject GetRankedGicode(JSONArray candleList, String dt, int maxCnt){		
 		CandleSq sq = new CandleSq();		
 		for(int i=0; i<candleList.size(); i++){			
 			Ut.Log(candleList.get(i).toString());
@@ -51,14 +53,15 @@ public class PatternService extends SqlSessionDaoSupport{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		JSONObject result = new JSONObject();
+		org.json.JSONObject result = new org.json.JSONObject();
 		// 종목별 가지고 오기.. 근데 이거 주가 리턴도 가지고 와라.
 		JSONArray gicodeList = new JSONArray();		
 		for(int i=0; i<maxCnt; i++){
 			if(ordered.get(i).Score <= 10000){
+				
 				String gicode = ordered.get(i).Gicode;
 				Double score = ordered.get(i).Score;				
-				JSONObject item = new JSONObject();
+				org.json.JSONObject item = new org.json.JSONObject();
 				item.put("gicode", gicode);
 				item.put("score", score);
 				item.put("itemabbrnm", commonDbService.GetItemabbrnmByGicode(gicode));
@@ -74,18 +77,18 @@ public class PatternService extends SqlSessionDaoSupport{
 				cal.add(Calendar.DATE, -30);
 				String t0 = Ut.sdf_yyyyMMdd.format(cal.getTime());
 								
-				JSONArray timeSeries = GetPriceDataIntoJsonObjectByGocide(gicode, t0, dt);
+				ArrayList<Object[]> timeSeries = GetPriceDataIntoArrayByGicode(gicode, t0, dt);
 				item.put("timeseries", timeSeries);
 				
 				gicodeList.add(item);			
 			}
-		}
+		}		
 		result.put("items", gicodeList);
 		return result;
 	}
-
-	public JSONArray GetPriceDataIntoJsonObjectByGocide(String gicode, String t0, String t1){
-		JSONArray result = new JSONArray();		
+	
+	public ArrayList<Object[]> GetPriceDataIntoArrayByGicode(String gicode, String t0, String t1){
+		ArrayList<Object[]> result = new ArrayList<>();
 		HashMap<String, Object> param = new HashMap<>();
 		param.put("gicode", gicode);
 		param.put("t0", t0);
@@ -93,23 +96,15 @@ public class PatternService extends SqlSessionDaoSupport{
 		List<HashMap<String, Object>> dataSet = getSqlSession().selectList("pattern.selectPriceData", param);
 		
 		for(int i=0; i<dataSet.size(); i++){
-			JSONObject item = new JSONObject();
-			item.put("date", Ut.sdf_yyyyMMdd2.format(dataSet.get(i).get("trd_dt")));
-			item.put("open", dataSet.get(i).get("strt_prc"));
-			item.put("high", dataSet.get(i).get("high_prc"));
-			item.put("low", dataSet.get(i).get("low_prc"));
-			item.put("close", dataSet.get(i).get("cls_prc"));
+			Object[] item = new Object[5];
+			item[0] = Ut.GetUtc((Date)dataSet.get(i).get("trd_dt"));
+			item[1] = dataSet.get(i).get("strt_prc");
+			item[2] = dataSet.get(i).get("high_prc");
+			item[3] = dataSet.get(i).get("low_prc");
+			item[4] = dataSet.get(i).get("cls_prc");			
 			result.add(item);
 		}
 		
-//		date: date,
-//      open: open,
-//      high: high,
-//      low: low,
-//      close: close
-		
-		//trd_dt, strt_prc, high_prc, low_prc, cls_prc, yield
-		         
 		return result;
 	}
 }

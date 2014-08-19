@@ -40,8 +40,34 @@ public class Ut {
 		return date2str(cal.getTime());
 	}
 	
+	
 			
 	public static void Log(Object msg){		
 		System.out.println(sdf_full.format(new Date()) + " : " + msg);
 	}
+	
+	public static Long GetUtc(String dt){		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Calendar cal = new GregorianCalendar();
+		try {
+			cal.setTime(sdf.parse(dt));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();			
+		}
+		return cal.getTimeInMillis() + 1000*60*60*24;
+	}
+	
+	public static Long GetUtc(Date dt){
+		Calendar cal = new GregorianCalendar();		
+		cal.setTime(dt);		
+		return cal.getTimeInMillis() + 1000*60*60*24;
+	}
+	
+	public static String Date2Date(String dt, String conj){
+		String result = dt.substring(0, 4) + conj + dt.substring(4, 6) + conj + dt.substring(6, 8);
+		
+		return result;
+	}
+	
 }

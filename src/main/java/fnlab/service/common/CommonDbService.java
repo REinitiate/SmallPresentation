@@ -17,7 +17,8 @@ public class CommonDbService extends SqlSessionDaoSupport{
 	 * @return
 	 */
 	public String GetlatestTrdDt4StkPrice(Date dt){
-		String result = (String) getSqlSession().selectOne("common.selectMaxDtFromJd", dt);		
+		String result = (String) getSqlSession().selectOne("common.selectMaxDtFromJd", dt);
+		result = result.replaceAll("-", "");
 		return result;
 	}
 	

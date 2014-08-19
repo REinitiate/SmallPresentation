@@ -303,8 +303,9 @@
 	        }
     }
     
-    $(function () {
-        $.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-ohlcv.json&callback=?', function (data) {
+    function DrawChart3(div, jsonData) {
+        data = jsonData.timeseries;
+        console.log(data);
 
             // split the data set into ohlc and volume
             var ohlc = [],
@@ -321,7 +322,7 @@
 
                 i = 0;
 
-            for (i; i < 60; i += 1) {
+            for (i; i < data.length; i += 1) {
                 ohlc.push([
                     data[i][0], // the date
                     data[i][1], // open
@@ -330,21 +331,22 @@
                     data[i][4] // close
                 ]);
 
-                volume.push([
-                    data[i][0], // the date
-                    data[i][5] // the volume
-                ]);
+//                volume.push([
+//                    data[i][0], // the date
+//                    data[i][5] // the volume
+//                ]);
             }
             
             console.log(ohlc);
 
 
             // create the chart
-            $('#div_chart').highcharts('StockChart', {
-            	 
+            div.highcharts('StockChart', {
+            	exporting: { enabled: false },
                 rangeSelector: {
                     inputEnabled: $('#div_chart').width() > 600,
-                    selected: 1
+                    selected: 1,
+                    enabled: false
                 },
                 credits: {
                     enabled: false
@@ -352,11 +354,16 @@
                 plotOptions: {
                 	 candlestick: {
                 	            color: 'rgb(127, 141, 169)',
-                	            upColor: 'rgb(219, 76, 60)'
+                	            upColor: 'rgb(219, 76, 60)',
+                	            point:{
+                	            	events:{
+                	            		click:'function(){alert("gg")}'
+                	            	}
+                	            }
                 	        }
                 	    },
                 title: {
-                    text: '삼성전자'
+                    text: ''
                 },
 
                 yAxis: [{
@@ -365,14 +372,24 @@
                         x: -3
                     },
                     title: {
-                        text: 'OHLC'
+                        text: ''
                     },
                     height: '100%',
                     lineWidth: 2
                 }],
                 
                 xAxis: {
-                    min: Date.UTC(2006, 5, 1)
+                    min: Date.UTC(2006, 7, 1),
+	                type: 'datetime',	                
+	                dateTimeLabelFormats: {
+	                    second: '%Y-%m-%d<br/>%H:%M:%S',
+	                    minute: '%Y-%m-%d<br/>%H:%M',
+	                    hour: '%Y-%m-%d<br/>%H:%M',
+	                    day: '%Y/%m/%d',
+	                    week: '%Y<br/>%m-%d',
+	                    month: '%Y-%m',
+	                    year: '%Y'
+	                }
                 },
 
                 series: [{
@@ -382,7 +399,21 @@
                     dataGrouping: {
                         units: groupingUnits
                     }
-                }]
-            });
-        });
-    });
+                }],
+                
+                navigator: {
+                    xAxis: {
+                    	type: 'datetime',	                
+    	                dateTimeLabelFormats: {
+    	                    second: '%Y-%m-%d<br/>%H:%M:%S',
+    	                    minute: '%Y-%m-%d<br/>%H:%M',
+    	                    hour: '%Y-%m-%d<br/>%H:%M',
+    	                    day: '%Y-%m-%d',
+    	                    week: '%Y/%m/%d',
+    	                    month: '%Y-%m',
+    	                    year: '%Y'
+    	                }
+                    }
+                },
+            });        
+    };
