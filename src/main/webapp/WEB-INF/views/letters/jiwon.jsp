@@ -32,8 +32,8 @@
     <script src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     
-    <link href="${pageContext.request.contextPath}/resources/fonts/NanumPenScript/stylesheet.css" rel="stylesheet">    
-    <link href="${pageContext.request.contextPath}/resources/css/jenny.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/fonts/NanumPenScript/stylesheet.css" rel="stylesheet">   
+    
     
     <script>
 	if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
@@ -81,7 +81,7 @@
 		</div>
 		
 		<div id="page_1" class="col-md-6 col-md-offset-3" role="main">
-			<img src='${pageContext.request.contextPath}/resources/img_jiwon/angry.jpg' width="70%"/>			
+			<img src='${pageContext.request.contextPath}/resources/img_letters/angry.jpg' width="70%"/>			
 			<h4>어떻게 이럴수가 있어?</h4>
 			<h4>꼴랑 이틀을 못기다려서.. 딴 남자한테 가버리냐?</h4>		
 			<h4>미친거 아니야? 정신나갔어?</h4>			
@@ -92,7 +92,7 @@
 		</div>
 		
 		<div id="page_2" class="col-md-6 col-md-offset-3" role="main">
-			<img src='${pageContext.request.contextPath}/resources/img_jiwon/melona.jpg' width="50%">			
+			<img src='${pageContext.request.contextPath}/resources/img_letters/melona.jpg' width="50%">			
 			<h4>...</h4>
 			<h4>너무 편했던 동생이 갑자기 여자로 보인게</h4>
 			<h4>그게 언제였냐하면..</h4>					
@@ -103,7 +103,7 @@
 		</div>
 		
 		<div id="page_3" class="col-md-6 col-md-offset-3" role="main">
-			<img src='${pageContext.request.contextPath}/resources/img_jiwon/rose.png' width="50%">
+			<img src='${pageContext.request.contextPath}/resources/img_letters/rose.png' width="50%">
 			<h4>당장이라도 151번 타고</h4>
 			<h4>장미꽃이라도 사들고 가서 진지하게 고백하고 싶지만</h4>
 			<h4>지금 내가 너무 약해져 있는데</h4>
@@ -114,7 +114,7 @@
 		</div>
 		
 		<div id="page_4" class="col-md-6 col-md-offset-3" role="main">		
-			<img src='${pageContext.request.contextPath}/resources/img_jiwon/dream.jpg' width="50%">
+			<img src='${pageContext.request.contextPath}/resources/img_letters/dream.jpg' width="50%">
 			<h4>먼저, 오빠는 니가 꼭</h4>
 			<h4>하고 싶은 일 찾았으면 좋겠어.</h4>					
 			<h4>회사라는게 하루에 보내는 시간의 대부분인데</h4>
@@ -126,7 +126,7 @@
 		</div>
 		
 		<div id="page_5" class="col-md-6 col-md-offset-3" role="main">		
-			<img src='${pageContext.request.contextPath}/resources/img_jiwon/phone.jpg' width="50%">
+			<img src='${pageContext.request.contextPath}/resources/img_letters/phone.jpg' width="50%">
 			<h4>그리고 그 동안..</h4>
 			<h4>갑자기 대뜸 전화해서</h4>
 			<h4>퉁명스럽고, 시비걸고</h4>
@@ -139,7 +139,7 @@
 		</div>
 		
 		<div id="page_6" class="col-md-6 col-md-offset-3" role="main">		
-			<img src='${pageContext.request.contextPath}/resources/img_jiwon/sad.jpg' width="30%">								
+			<img src='${pageContext.request.contextPath}/resources/img_letters/sad.jpg' width="30%">								
 			<h4>상황이 이렇게 되서</h4>			
 			<h4>상처 위에 상처가 난 것 같아서 쓰리고 아파.</h4>
 			<h4>엄청 외롭고..</h4>
@@ -150,7 +150,7 @@
 		</div>
 		
 		<div id="page_7" class="col-md-6 col-md-offset-3" role="main">		
-			<img src='${pageContext.request.contextPath}/resources/img_jiwon/meet.jpg' width="50%">			
+			<img src='${pageContext.request.contextPath}/resources/img_letters/meet.jpg' width="50%">			
 			<h4>이렇게 내 마음을 스스로 알아버려서</h4>
 			<h4>당분간은 연락 못하겠지만</h4>
 			<h4>3년만에 우리 이렇게 다시 연락한것 처럼</h4>
@@ -161,7 +161,7 @@
 		</div>
 		
 		<div id="page_8" class="col-md-6 col-md-offset-3" role="main">		
-			<!-- <img src='${pageContext.request.contextPath}/resources/img_jiwon/meet.jpg' width="50%">  -->
+			<!-- <img src='${pageContext.request.contextPath}/resources/img_letters/meet.jpg' width="50%">  -->
 			<h4>하지만. 지금은,</h4>			
 			<h4>진심으로, 진심으로 너의 새 출발을 응원해.</h4>
 			<h4>그리고 꼭 행복했으면 좋겠어.</h4>
@@ -183,7 +183,7 @@
 		
 		<div id="page_10" class="col-md-6 col-md-offset-3" role="main">
 		
-			<img src='${pageContext.request.contextPath}/resources/img_jiwon/jiwon2.jpg' width="50%">
+			<img src='${pageContext.request.contextPath}/resources/img_letters/jiwon2.jpg' width="50%">
 				<h4>넌 이 사진이 제일 이쁘니까</h4>
 				<h4>이 사진 카톡사진으로 해..</h4>			
 				<div class="btn-group" style="margin-top: 50px;">
@@ -192,7 +192,7 @@
 		</div>
 		
 		<div id="page_11" class="col-md-6 col-md-offset-3" role="main">
-			<img src='${pageContext.request.contextPath}/resources/img_jiwon/jiwon1.jpg' width="50%">
+			<img src='${pageContext.request.contextPath}/resources/img_letters/jiwon1.jpg' width="50%">
 			<h4>룸메랑 같이 찍은 사진도 이뻐</h4>
 			<h4>나 오지랍 또 작렬한다..</h4>			
 			<div class="btn-group" style="margin-top: 50px;">
@@ -213,7 +213,7 @@
 		</div>
 		
 		<div id="page_2_1" class="col-md-6 col-md-offset-3" role="main">
-			<img src='${pageContext.request.contextPath}/resources/img_jiwon/forgive.jpg'/ width="50%">			
+			<img src='${pageContext.request.contextPath}/resources/img_letters/forgive.jpg'/ width="50%">			
 			<h4>잘못했어요.. 제발요..</h4>
 			<h4>뒤로가기를 눌러주세요</h4>
 			<div class="btn-group" style="margin-top: 50px;">

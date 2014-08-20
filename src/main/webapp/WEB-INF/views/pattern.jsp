@@ -15,7 +15,7 @@
 <%@ include file="include.jsp"%>
 <style>
 	  #candle_repo{width:60px; left:150px; top:150px; background-color: transparent; position: absolute;}	  
-	  .candle_canvas{height:400px; background-color: transparent; border-style: groove;}	  	  
+	  .candle_canvas{height:400px; background-color: white; border-style: groove;}	  	  
 	  .candle {width:60px; left:150px; top:150px; background-color: transparent; position: absolute;}
 	  .candle .div_candle{background-color:#3A3A9A; border-width: 1px; border-style: solid;}
 	  .candle .bull{background-color:#990000;}
@@ -28,9 +28,8 @@
 	  .delete_area{height:70px; background-color: transparent; width: 50%; float: left; text-align: center; border-right-style: inset;}
 	  .toggle_area{height:70px; background-color: transparent; width: 50%; float: left; text-align: center;}	  
 	  .area_selected{border-style: inset; border-width: 5px;}
+	  .panel_repo{visibility: hidden; display: none;}
 </style>
-
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/amcharts/style.css" type="text/css">
 	
 </head>
 
@@ -112,20 +111,21 @@
 		</div>
 		
 		<div class="panel panel-default panel_repo">
-			  <div class="panel-heading"><button type="button" class="btn btn-default">삼성전자</button> 일치율 : 98%</div>		  
+			  <div class="panel-heading"><button type="button" class="btn btn-default">$itemabbrnm</button> 스코어 : $score</div>		  
 			  <div class="panel-body">		  
-				<div id="div_chart"  style="width:100%; height:400px;"></div>			
+				<div id="$div_id"  style="width:100%; height:400px;"></div>			
 			  </div>
 		</div>
 		
 		
-		
-	    <div id="push"></div>
+	    
 	</div>
 	
-	
-	<%@ include file="footer.jsp"%>       
+		<div id="push"></div>	       
     
+    </div>
+    
+    <%@ include file="footer.jsp"%>
     
     <script>
     
@@ -224,21 +224,25 @@
 				},
 				data: {candle_list : JSON.stringify(candleJSON)},				
 				success: function(data){
-					console.log("success");					
-					$("#div_result").html(data);
-					// 차트 생성
-					
+					console.log("success");
 					size = data.items.length;
+					$("#div_result").html("");
 					for(i=0; i<size; i++){
-						var panel = $(".panel_repo").clone();
-						panel.removeClass("panel_repo");
-						console.log(panel[0]);
-						panel.select('button').text(data.items[i].itemabbrnm);						
-						$("#div_result").append(panel);
+						console.log($(".panel_repo").clone().removeClass("panel_repo").html());						
+						$("#div_result").append(
+								$(".panel_repo")
+								.clone()
+								.removeClass("panel_repo")
+								.html()
+								.replace("$itemabbrnm", data.items[i].itemabbrnm)
+								.replace("$score", data.items[i].score)
+								.replace("$div_id", "div_chart_" + i)
+								);
 					}
 					
-					//DrawChart3($('#div_chart'), data.items[0]);
-					//DrawChart3($('#div_chart2'), data.items[1]);					
+					for(i=0; i<size; i++){
+						DrawChart3($('#div_chart_' + i), data.items[i]);
+					}
 	            },
 	            error: function(XMLHttpRequest, textStatus, errorThrown) {
 	              $("#btn_run > span").removeClass("fa-spin");
@@ -367,7 +371,7 @@
     
     <!-- SB Admin Scripts - Include with every page -->
     <script src="${pageContext.request.contextPath}/resources/js/sb-admin.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js_custom/pattern_chart.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js_custom/pattern.js"></script>
     
     <script src="http://code.highcharts.com/stock/highstock.js"></script>
 	<script src="http://code.highcharts.com/stock/modules/exporting.js"></script>

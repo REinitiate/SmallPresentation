@@ -23,16 +23,11 @@
     <!--  <link href="resources/css/bootstrap.min.css" rel="stylesheet"> -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">    
     <link href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.css" rel="stylesheet">
-
-    <!-- Page-Level Plugin CSS - Dashboard -->
-    <link href="${pageContext.request.contextPath}/resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/plugins/timeline/timeline.css" rel="stylesheet">
-
-    <!-- SB Admin CSS - Include with every page -->
-    <link href="${pageContext.request.contextPath}/resources/css/sb-admin.css" rel="stylesheet">
     
     <script src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.js"></script>
-    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>            
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>     
+    
+    <link href="${pageContext.request.contextPath}/resources/fonts/NanumPenScript/stylesheet.css" rel="stylesheet">       
     
     <script>
 
@@ -49,13 +44,23 @@
 	<script src="js/jquery-1.10.2.js"></script>
 	
 	<style>
+		h2
+		{	
+			font-family: 'NanumPen',sans-serif;
+			font-size: xx-large;
+			line-height: normal;
+		}
 		h3
-		{
-			font-family: 'Nanum Brush Script', cursive;
+		{	
+			font-family: 'NanumPen',sans-serif;
+			font-size: large;
+			line-height: normal;
 		}
 		h4
-		{
-			font-family: 'Nanum Brush Script', cursive;
+		{			
+			font-family: 'NanumPen',sans-serif;
+			font-size: large;
+			line-height: normal;
 		}
 	</style>
 </head>
@@ -64,7 +69,7 @@
 	<div class="row" align="center" style="margin-top: 50px;">
 	
 		<div id="page_1" class="col-md-6" role="main">
-			<img src='${pageContext.request.contextPath}/resources/img_jenny/concern.jpg'/>			
+			<img src='${pageContext.request.contextPath}/resources/img_letters/concern.jpg'/>			
 			<h4>언니..아프시다면서요...</h4>
 			<h4>걱정되서 찾아왔어요</h4>
 			<h4>빈손으로 온건 아니고..</h4>
@@ -75,7 +80,7 @@
 		</div>
 		
 		<div id="page_2" class="col-md-6" role="main">
-			<img src='${pageContext.request.contextPath}/resources/img_jenny/prince1.jpg' width="50%">			
+			<img src='${pageContext.request.contextPath}/resources/img_letters/prince1.jpg' width="50%">			
 			<h4>제니 아프다면서 빨리 나아야지..</h4>					
 			<h4>다 나으면 오빠랑 독사과 한잔 하지 않으련?</h4>
 			<h4>-백설공주 왕자(이름모름)</h4>			
@@ -85,7 +90,7 @@
 		</div>
 		
 		<div id="page_3" class="col-md-6" role="main">
-			<img src='${pageContext.request.contextPath}/resources/img_jenny/prince2.jpg' width="50%">			
+			<img src='${pageContext.request.contextPath}/resources/img_letters/prince2.jpg' width="50%">			
 			<h4>걱정되서 라푼젤도 버리고 왔어!</h4>					
 			<h4>혼나기 전에 빨리 돌아가야겠다 빨리 나아!</h4>
 			<h4>-라푼젤 왕자(이름모름)</h4>			
@@ -96,7 +101,7 @@
 		</div>
 		
 		<div id="page_4" class="col-md-6" role="main">
-			<img src='${pageContext.request.contextPath}/resources/img_jenny/prince3.jpg' width="50%">			
+			<img src='${pageContext.request.contextPath}/resources/img_letters/prince3.jpg' width="50%">			
 			<h4>빨리 나아서 같이 놀자!</h4>
 			<h4><small>나는 보물을 찾아야되서 바쁘겠지만 김대현이 놀아줄지도..</small></h4>
 			<h4>-알라딘</h4>			
@@ -106,7 +111,7 @@
 		</div>
 		
 		<div id="page_5" class="col-md-6" role="main">
-			<img src='${pageContext.request.contextPath}/resources/img_jenny/prince4.jpg' width="50%">			
+			<img src='${pageContext.request.contextPath}/resources/img_letters/prince4.jpg' width="50%">			
 			<h4>나는 어디서 나오는지 왕자인지 알수가 없어..</h4>
 			<h4>다만 나는 성룡이랑 좀 닮은거 같아..</h4>
 			<h4>뭐 어찌되었건.. 기운내자</h4>
@@ -117,7 +122,7 @@
 		</div>
 		
 		<div id="page_6" class="col-md-6" role="main">
-			<img src='${pageContext.request.contextPath}/resources/img_jenny/prince_multi.jpg' width="100%">			
+			<img src='${pageContext.request.contextPath}/resources/img_letters/prince_multi.jpg' width="100%">			
 			<h4><strong>디즈니 왕자님들이 Jenny의 쾌유를 기원합니다!</strong></h4>						
 			<div class="btn-group" style="margin-top: 50px;">
 			  <button id="btn_ok_6" type="button" class="btn btn-default">마지막 손님</button>			  		  
@@ -125,7 +130,7 @@
 		</div>
 		
 		<div id="page_7" class="col-md-6" role="main">
-			<img src='${pageContext.request.contextPath}/resources/img_jenny/sgt.jpg' width="50%">			
+			<img src='${pageContext.request.contextPath}/resources/img_letters/sgt.jpg' width="50%">			
 			<h3>언니 저도 있어요...</h3>						
 			<h3><small>항상 기다릴게요...</small></h3>
 			<div class="btn-group" style="margin-top: 50px;">

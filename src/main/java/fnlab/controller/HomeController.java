@@ -68,31 +68,35 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/resume", method = RequestMethod.GET)	
-	public String Resume(@RequestParam(required=false) String contents_path, HttpServletRequest req, Model model) {
-		
+	public String Resume(@RequestParam(required=false) String contents_path, HttpServletRequest req, Model model) {		
 		model.addAttribute("contents_path", contents_path);
 		return "resume/template";
 		
 	}
 	
-	@RequestMapping(value = "/jiwon", method = RequestMethod.GET)	
-	public String Jenny(@RequestParam(required=false) String dt, HttpServletRequest req, Model model) {
-		
-		logger.info("root 경로로 접속했을 시!");
-		return "jiwon/jiwon";
+	@RequestMapping(value = "jiwon", method = RequestMethod.GET)	
+	public String Jiwon(@RequestParam(required=false) String dt, HttpServletRequest req, Model model) {
+		return "letters/jiwon";		
+	}
+	
+	@RequestMapping(value = "letter/jenny", method = RequestMethod.GET)	
+	public String Jenny(@RequestParam(required=false) String dt, HttpServletRequest req, Model model) {		
+		return "letters/jenny";
 		
 	}
 	
-	@RequestMapping(value = "/jiwon/prince", method = RequestMethod.GET)	
-	public String JennyPrince(@RequestParam(required=false) String dt, HttpServletRequest req, Model model) {
-		logger.info("root 경로로 접속했을 시!");
-		return "jiwon/prince";
-		
+	@RequestMapping(value = "letter/jenny/prince", method = RequestMethod.GET)	
+	public String JennyPrince(@RequestParam(required=false) String dt, HttpServletRequest req, Model model) {		
+		return "letters/prince";		
+	}
+	
+	@RequestMapping(value = "/hyeyoung", method = RequestMethod.GET)	
+	public String Lucy(@RequestParam(required=false) String dt, HttpServletRequest req, Model model) {		
+		return "letters/hyeyoung";		
 	}
 	
 	@RequestMapping(value = "/pattern", method = {RequestMethod.GET, RequestMethod.POST})	
-	public String Pattern(@RequestParam(required=false) String dt, HttpServletRequest req, Model model) {
-		logger.info("root 경로로 접속했을 시!");
+	public String Pattern(@RequestParam(required=false) String dt, HttpServletRequest req, Model model) {		
 		return "pattern";
 		
 	}

@@ -93,11 +93,13 @@
 	<div id="wrap">
 	<div class="container">
 		<div class="row" style="text-align: center; margin-top: 30px">
-			<div align="center">
+			<div align="center">				
 				<div id="div_cloud" style="max-width: 800px; height: 450px; text-align: center"></div>
 				<div id="div_table" style="max-width: 550px; height: 450px; overflow:auto; text-align: center">
-				<p style="width: 100px;"><a id="btn_back" class="btn btn-warning" role="button"><span class="fa fa-reply"></span>  Back to the cloud</a></p>
-				<div id="new_link" style="text-align: left"></div>
+				<div>				
+				<p style="width: 100%; text-align: center;"><a id="btn_back" class="btn btn-warning" role="button" style="width: 200px;"><span class="fa fa-reply"></span>  Back to the cloud</a></p>
+				<div id="new_link" style="text-align: left; text-align: center; margin-bottom: 20px; border-bottom-style:double; border-bottom-width:1px;"></div>
+				</div>				
 				<table class="table table-striped">
 					<thead>
 						<th>뉴스시각</th>
@@ -124,10 +126,11 @@
 		<div class="row">
 			<div class="jumbotron">
 			  <h1>BLACK SMITH</h1>			  
-			  <p><a href="${pageContext.request.contextPath}/pattern" class="btn btn-primary btn-lg" role="button" title="Daehyun 이 만든, 여러가지 금융적 도구를 이용하실 수 있습니다.">ENTER</a></p>
+			  <p><a href="${pageContext.request.contextPath}/pattern" class="btn btn-default btn-lg" role="button" title="Daehyun 이 만든, 여러가지 금융적 도구를 이용하실 수 있습니다.">Anonymous Login</a></p>
 			  <!-- <p class="text-muted credit" style="font-size: small;">Daehyun kim <a href="mailto:reinitiate@gmail.com">reinitiate@gmail.com</a></p> -->			  
 			</div>		
 		</div>
+		
 		
 		<!-- 
 		<div class="row">
@@ -145,12 +148,10 @@
 			 		 
 		</div>
 		<div id="push"></div>
-		
-		<div id="footer">	        
-            <p class="text-muted"><b>BlackSmith</b> Powered by <a href="${pageContext.request.contextPath}/resume">DaeHyun Kim</a>.</p>	        
-	    </div>
 	    
 	</div>
+	
+	<%@ include file="footer.jsp"%>
     
 	<input id="t0" type="hidden" value="${t0}"/>
 	<input id="t1" type="hidden" value="${t1}"/>
