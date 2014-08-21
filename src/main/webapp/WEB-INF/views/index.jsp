@@ -95,7 +95,7 @@
 		<div class="row" style="text-align: center; margin-top: 30px">
 			<div align="center">				
 				<div id="div_cloud" style="max-width: 800px; height: 450px; text-align: center"></div>
-				<div id="div_table" style="max-width: 550px; height: 450px; overflow:auto; text-align: center">
+				<div id="div_table" style="max-width: 800px; height: 450px; overflow:auto; text-align: center">
 				<div>				
 				<p style="width: 100%; text-align: center;"><a id="btn_back" class="btn btn-warning" role="button" style="width: 200px;"><span class="fa fa-reply"></span>  Back to the cloud</a></p>
 				<div id="news_header">					
