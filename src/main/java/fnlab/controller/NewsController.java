@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +52,15 @@ public class NewsController {
 		else
 			cal.add(Calendar.DATE, -1);
 		
-		String t0 = Ut.sdf_full.format(cal.getTime());
+		String t0 = Ut.sdf_full.format(cal.getTime());	
 		
-		JSONArray result = newsService.GetNewsDetail(t0, t1, gicode);
+		JSONArray news_list = newsService.GetNewsDetail(t0, t1, gicode);
+		JSONObject header = newsService.GetNewsHeader(gicode);
+		
+		JSONObject result = new JSONObject();
+		result.put("news_list", news_list);
+		result.put("header", header);
+		
 		return result.toString();
 	}	
 }

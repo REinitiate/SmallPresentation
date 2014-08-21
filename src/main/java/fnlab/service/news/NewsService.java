@@ -46,7 +46,6 @@ public class NewsService extends SqlSessionDaoSupport{
 		}
 		
 		JSONArray result = new JSONArray();
-			
 		
 		for(int i=0; i<maxCnt; i++){
 			JSONObject object = new JSONObject();
@@ -81,7 +80,6 @@ public class NewsService extends SqlSessionDaoSupport{
 	    }
 
 	}
-
 	
 	public JSONArray GetNewsDetail(String t0, String t1, String gicode){
 		
@@ -106,5 +104,21 @@ public class NewsService extends SqlSessionDaoSupport{
 		}		
 		return result;
 		
+	}
+
+	public JSONObject GetNewsHeader(String gicode){
+		JSONObject result = new JSONObject();
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("gicode", gicode);
+		
+		HashMap<String, Object> headerData = (HashMap<String, Object>) getSqlSession().selectOne("news.selectNewsListHeader", params);
+		
+		result.put("gicode", headerData.get("gicode"));
+		result.put("itemabbrnm", headerData.get("itemabbrnm"));
+		result.put("u_gb", headerData.get("u_gb_kse"));
+		result.put("yield", headerData.get("yield"));
+		result.put("trd_dt", headerData.get("trd_dt"));
+		
+		return result;
 	}
 }

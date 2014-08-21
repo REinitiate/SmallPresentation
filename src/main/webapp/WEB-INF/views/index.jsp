@@ -98,7 +98,12 @@
 				<div id="div_table" style="max-width: 550px; height: 450px; overflow:auto; text-align: center">
 				<div>				
 				<p style="width: 100%; text-align: center;"><a id="btn_back" class="btn btn-warning" role="button" style="width: 200px;"><span class="fa fa-reply"></span>  Back to the cloud</a></p>
-				<div id="new_link" style="text-align: left; text-align: center; margin-bottom: 20px; border-bottom-style:double; border-bottom-width:1px;"></div>
+				<div id="news_header">					
+					<span id="header_itemabbrnm">삼성전자</span><small>(<span id="header_gicode">005930</span>)</small><br/>
+					<small><span id="header_trd_dt">2014.08.21</span></small><br/>
+					<span id="header_yield_color"><strong><span id="header_yield">+14%</span></strong></span>
+					</div>
+				<div id="gicode_link" style="text-align: left; text-align: center; margin-bottom: 20px; border-bottom-style:inset; border-bottom-width:1px;"></div>
 				</div>				
 				<table class="table table-striped">
 					<thead>
@@ -225,29 +230,50 @@
 				data: {gicode : gicode, t0 : $('#t0').val(), t1 : $('#t1').val()},				
 				success: function(data){
 					
+					console.log(data);					
+					var news_list = data.news_list;
+					console.log(news_list);
+					
 					var effect = 'slide';
 		            var options = { direction: 'up'};
 		            var duration = 1000;
-		            
 			            
 			        $("#div_table").toggle(effect, options, duration);
 			        $("#div_cloud").hide();
 			        var html = '';
 			        
-			        for(i=0; i<data.length; i++){
+			        for(i=0; i<news_list.length; i++){
 			        	html = html + '<tr>';
-			        	html = html + '<td>' + data[i].pub_dt + '</td>';
-			        	html = html + "<td><a target='_blank' href='" + data[i].url + "'>" + data[i].title + '</a></td>';
-			        	html = html + '<td>' + data[i].provider + '</td>';			        	
+			        	html = html + '<td>' + news_list[i].pub_dt + '</td>';
+			        	html = html + "<td><a target='_blank' href='" + news_list[i].url + "'>" + news_list[i].title + '</a></td>';
+			        	html = html + '<td>' + news_list[i].provider + '</td>';			        	
 			        	html = html + '</tr>';
 			        }
 					$('#table_contents').html(html);
-					var gicode2 = gicode.substring(1, 7);
-					$('#new_link').html('');
-					$('#new_link').append('<a target="_blank" class="btn btn-link" role="button" href="http://finance.naver.com/item/main.nhn?code=' + gicode2 + '"></span>네이버</a>');
-					$('#new_link').append('<a target="_blank" class="btn btn-link" role="button" href="http://stock.daum.net/item/main.daum?code=' + gicode2 + '"></span>다음</a>');
-					$('#new_link').append('<a target="_blank" class="btn btn-link" role="button" href="http://paxnet.asiae.co.kr/asiae/stockIntro/indCurrent.jsp?code=' + gicode2 + '"></span>팍스넷</a>');
 					
+					
+					// 종목 사이트 링크 설정
+					var gicode2 = gicode.substring(1, 7);
+					$('#gicode_link').html('');
+					$('#gicode_link').append('<a target="_blank" class="btn btn-link" role="button" href="http://finance.naver.com/item/main.nhn?code=' + gicode2 + '"></span>네이버</a>');
+					$('#gicode_link').append('<a target="_blank" class="btn btn-link" role="button" href="http://stock.daum.net/item/main.daum?code=' + gicode2 + '"></span>다음</a>');
+					$('#gicode_link').append('<a target="_blank" class="btn btn-link" role="button" href="http://paxnet.asiae.co.kr/asiae/stockIntro/indCurrent.jsp?code=' + gicode2 + '"></span>팍스넷</a>');
+					
+					// 종목 최신 정보 설정
+					var header = data.header;
+					$('#header_trd_dt').html(header.trd_dt);
+					$('#header_gicode').html(header.gicode);
+					$('#header_itemabbrnm').html(header.itemabbrnm);
+					$('#header_yield').html(header.yield + "%");
+					if(header.yield == 0){
+						$("#header_yield_color").css("color", "grey");
+					}
+					else if(header.yield > 0){
+						$("#header_yield_color").css("color", "red");
+					}
+					else if(header.yield < 0){
+						$("#header_yield_color").css("color", "blue");
+					}
 	            },
 	            error: function(XMLHttpRequest, textStatus, errorThrown) {	            	  
 	              alert("Status: " + textStatus); alert("Error: " + errorThrown); 

@@ -27,4 +27,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by pub_dt desc;
 	</select>
 	
+	<select id="selectMaxTdFromAdjPrc" resultType="String" parameterType="String">
+		select trd_dt, yield
+		from fnlab_jd_adj a
+		where a.trd_dt = (select max(trd_dt))
+	</select>
+	
+	<select id="selectNewsListHeader" resultType="HashMap" parameterType="HashMap">
+		select a.trd_dt, a.gicode, a.yield, b.itemabbrnm, b.u_gb_kse
+		from fnlab_jd_adj a, fnlab_j_mast b
+		where a.trd_dt = (select max(trd_dt) from fnlab_jd_adj where gicode = #{gicode})
+		and a.gicode = #{gicode}
+		and a.gicode = b.gicode;
+	</select>
+	
+	
 </mapper>
