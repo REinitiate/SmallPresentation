@@ -159,12 +159,7 @@
 	<%@ include file="footer.jsp"%>
     
 	<input id="t0" type="hidden" value="${t0}"/>
-	<input id="t1" type="hidden" value="${t1}"/>
-	<div class="container">
-		<div id="loading" style="position:absolute; top:50%; left :0; width:100%; margin-top: -10px; line_height:20px; text-align:center;">
-			<p><img src='${pageContext.request.contextPath}/resources/img/ajax-loader.gif'/>
-		</div>
-	</div>   	
+	<input id="t1" type="hidden" value="${t1}"/>	   	
 </body>
 
 
@@ -175,8 +170,7 @@
 	    	 // 툴팁초기화
 	    	 $(document).tooltip();
 	    	  
-	    	 // 초기화
-	    	 $("#loading").hide(); 
+	    	 // 초기화	    	  
 	    	 $("#div_table").hide();
 	    	 $("#div_cloud").jQCloud(word_list, {shape: 'rectangular'});
 	         $("#datepicker").datepicker(

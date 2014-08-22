@@ -43,8 +43,8 @@ public class PatternController {
 	public String GetPatternJson(@RequestParam(required=false) String candle_list) throws ParseException, org.json.simple.parser.ParseException {		
 		String trd_dt = commonDbService.GetlatestTrdDt4StkPrice(new Date()); // 오늘을 포함한 이전에 가장 최신 jd date를 가지고 온다.
 		org.json.simple.parser.JSONParser parser = new org.json.simple.parser.JSONParser();
-		JSONArray candleList = (JSONArray) parser.parse(candle_list);		
-		org.json.JSONObject result = patternService.GetRankedGicode(candleList, trd_dt, 5);		
+		JSONObject candleList = (JSONObject) parser.parse(candle_list); // 캔들 파싱		
+		org.json.JSONObject result = patternService.GetRankedGicode((JSONArray)candleList.get("candle_list"), trd_dt, 5);		
 		return result.toString();
 	}
 }

@@ -28,7 +28,9 @@ public class PatternService extends SqlSessionDaoSupport{
 	CommonDbService commonDbService;
 	
 	public org.json.JSONObject GetRankedGicode(JSONArray candleList, String dt, int maxCnt){		
-		CandleSq sq = new CandleSq();		
+		
+		CandleSq sq = new CandleSq();
+		
 		for(int i=0; i<candleList.size(); i++){			
 			Ut.Log(candleList.get(i).toString());
 			JSONObject c = (JSONObject) candleList.get(i);
@@ -78,7 +80,7 @@ public class PatternService extends SqlSessionDaoSupport{
 				String t0 = Ut.sdf_yyyyMMdd.format(cal.getTime());
 								
 				ArrayList<Object[]> timeSeries = GetPriceDataIntoArrayByGicode(gicode, t0, dt);
-				item.put("timeseries", timeSeries);
+				item.put("timeseries", timeSeries);				
 				
 				gicodeList.add(item);			
 			}

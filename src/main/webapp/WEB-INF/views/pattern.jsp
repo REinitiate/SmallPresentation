@@ -21,8 +21,8 @@
 	  .candle .bull{background-color:#990000;}
 	  .candle .div_candle{background-color:rgb(127, 141, 169); border-style: none; border-color: #0066FF;}
 	  .candle .bull{background-color:rgb(219, 76, 60);}
-	  .stick_high{height:30px; width:15px; background-color: wight; left:22.5px; border-top: solid; border-right: solid; border-left: solid; border-width: 1px;}
-	  .stick_low{height:30px; width:15px; background-color: wight; left:22.5px; border-bottom: solid; border-right: solid; border-left: solid; border-width: 1px;}	  
+	  .stick_high{height:30px; width:15px; background-color: #E6E6FF; left:22.5px; border-top: solid; border-right: solid; border-left: solid; border-width: 1px;}
+	  .stick_low{height:30px; width:15px; background-color: #E6E6FF; left:22.5px; border-bottom: solid; border-right: solid; border-left: solid; border-width: 1px;}	  
 	  .ui-resizable-helper { border: 2px dotted #00F; }	  
 	  .modify_area{border-style:outset; border-width: 5px;}
 	  .delete_area{height:70px; background-color: transparent; width: 50%; float: left; text-align: center; border-right-style: inset;}
@@ -204,7 +204,9 @@
         				//console.log(candleArray);        				
         			}
         			
-        			LoadData(candleArray);
+        			var candleInfo = {};
+        			candleInfo.candle_list = candleArray;
+        			LoadData(candleInfo);
         		}
         	});
         });
@@ -217,10 +219,14 @@
 				contentType: "application/x-www-form-urlencoded; charset=UTF-8",				
 				dataType: "json",
 				beforeSend: function(){
-					$("#btn_run > span").addClass("fa-spin");				    
+					$("#btn_run > span").addClass("fa-spin");
+					 $("#loading").show();
+					 $("#mask").show();
 				},
 				complete: function(data){
 					$("#btn_run > span").removeClass("fa-spin");
+					$("#loading").hide();
+					$("#mask").hide();
 				},
 				data: {candle_list : JSON.stringify(candleJSON)},				
 				success: function(data){
@@ -324,18 +330,14 @@
 	            	}
 	            	
 	              },
-	              stop: function() {
-	            	    //$(this).children(".stick_high").offset({top:$(this).position().top, left:$(this).position().left + 30-15/2});
-		            	//$(this).children(".stick_low").offset({top:$(this).position().top + $(this).width, left:$(this).position().left + 30-15/2});	            	
+	              stop: function() {	            	    	            	
 		            	var topBarHeight = $('.delete_area').position().top + $('.delete_area').height();
 		            	var topBarWidth = $('#candle_canvas').position().left + ($('.delete_area').width() + $('.toggle_area').width()) / 2;		            	
 		            	var x = $(this).position().left + $(this).width()/2;
-		            	var y = $(this).position().top;
-		            	
-		            	//console.log(x + " " + y + " " + topBarWidth);		            	
+		            	var y = $(this).position().top;		            	
 		            	if(y <= topBarHeight){
 		            		if (x >= topBarWidth){
-		            			// 삭제	
+		            			console.log('캔들 삭제');	
 		            			alert('캔들이 삭제됩니다.');
 		            			$(this).remove();
 		            			$('.delete_area').removeClass('area_selected');
@@ -343,8 +345,7 @@
 		            		else{
 		            			// 캔들변경
 		            			var div = $(this).children(".div_candle");
-		                		var bc = div.css("background-color");
-		                		//console.log(bc);
+		                		var bc = div.css("background-color");		                		
 		                		div.toggleClass('bull');
 		                		return;
 		            		}
@@ -352,10 +353,7 @@
 		            	else{
 		            		$('.toggle_area').removeClass('area_selected');
 	            			$('.delete_area').removeClass('area_selected');
-		            	}
-		            	
-		            	//console.log($(this).children(".div_candle"));
-	            	  	//console.log('stop'); 
+		            	} 
 	              },
 	              containment:"parent"	              
 	              });
