@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>fnlab</groupId>
+	<groupId>sp</groupId>
 	<name>mvc</name>
 	<packaging>war</packaging>
 	<version>1.0.0</version>
@@ -33,12 +33,40 @@
 		
 	<dependencies>
 	
+		<!-- Apache Commons File Upload -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2</version>
+		</dependency>
+		
+		<!-- Apache Commons IO 추가 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.12</version>
+		</dependency>
+		
+        <dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>1.9.12</version>
+		</dependency>
+		
 		<!-- json -->
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20140107</version>
 		</dependency>
+		
+		
 		
 		<dependency>
     		<groupId>com.googlecode.json-simple</groupId>
@@ -257,6 +285,7 @@
 	</dependencies>
     <build>
         <plugins>
+            
             <plugin>
                 <artifactId>maven-eclipse-plugin</artifactId>
                 <version>2.9</version>
@@ -295,15 +324,17 @@
             
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
+                <artifactId>tomcat-maven-plugin</artifactId>
+                <version>1.1</version>
                 <configuration>
-                	<url>http://localhost</url>
-                    <mainClass>org.test.int1.Main</mainClass>
+                    <url>http://58.229.6.72/manager</url>
+                    <path>/</path>
+                    <username>admin</username>
+                    <password>1234</password>
                 </configuration>
             </plugin>            
             
         </plugins>
     </build>
-    <artifactId>web</artifactId>
+    <artifactId>sp</artifactId>
 </project>

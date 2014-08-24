@@ -3,7 +3,7 @@
 
 <div id="footer">
         <div class="container">
-            <p class="text-muted"><b>BlackSmith</b> powered by <a href="${pageContext.request.contextPath}/resume">DaeHyun Kim</a>.</p>
+            <p class="text-muted"><b>Cherish Presentation</b> powered by <a href="${pageContext.request.contextPath}/resume">TEAM gran</a>.</p>
         </div>
 </div>
 

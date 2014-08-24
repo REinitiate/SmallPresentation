@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	
-    <title>BLACK SMITH</title>
+    <title>작은 프레젠테이션을 선물하세요</title>
 
     <!-- Core CSS - Include with every page -->
     <!--  <link href="resources/css/bootstrap.min.css" rel="stylesheet"> -->
@@ -17,63 +17,39 @@
     <!-- Page-Level Plugin CSS - Dashboard -->
     <link href="${pageContext.request.contextPath}/resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/plugins/timeline/timeline.css" rel="stylesheet">
-
-    <!-- SB Admin CSS - Include with every page -->
-    <!-- <link href="${pageContext.request.contextPath}/resources/css/sb-admin.css" rel="stylesheet"> -->
-    
-    <script src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.js"></script>
-    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>   
-    <script src="${pageContext.request.contextPath}/resources/js/jqcloud/jqcloud-1.0.4.js"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/fonts/NanumPenScript/stylesheet.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/jqcloud/jqcloud.css">
-    
-    
-    <style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/fonts/NanumPenScript/stylesheet.css">    
         
-    	html,
-	    body {
-	      height: 100%;
-	       /* The html and body elements cannot have any padding or margin. */
-	    }
-	
-	    /* Wrapper for page content to push down footer */
-	    #wrap {
-	      min-height: 100%;
-	      height: auto !important;
-	      height: 100%;
-	      /* Negative indent footer by it's height */
-	      margin: 0 auto -60px;
-	    }
-	
-	    /* Set the fixed height of the footer here */
-	    #push,
-	    #footer {
-	      height: 60px;
-	    }
-	    #footer {
-	    	padding-top: 30px;
-	    	text-align: center;	      
-	    }
-	       				
-		table thead th
-		{
-			text-align: center;
+    <style>
+    
+    	h1{font-family: 'NanumPen',sans-serif;  line-height: normal; font-size: xx-large;}
+    	h2{font-family: 'NanumPen',sans-serif;  line-height: normal; font-size: x-large;}
+    	
+    	#dropzone {
+		    background: #ccccc;
+		    width: 150px;
+		    height: 50px;
+		    line-height: 50px;
+		    text-align: center;
+		    font-weight: bold;
 		}
-		
-		table tbody tr td:first-child
-		{
-			
+		#dropzone.in {
+		    width: 600px;
+		    height: 200px;
+		    line-height: 200px;
+		    font-size: larger;
 		}
-		
-		table tbody tr td
-		{
-			text-align: left;
-			font-size: 12px;
+		#dropzone.hover {
+		    background: lawngreen;
 		}
-				
-		.jumbotron{
-			text-align: center;			
-		}		    	
+		#dropzone.fade {
+		    -webkit-transition: all 0.3s ease-out;
+		    -moz-transition: all 0.3s ease-out;
+		    -ms-transition: all 0.3s ease-out;
+		    -o-transition: all 0.3s ease-out;
+		    transition: all 0.3s ease-out;
+		    opacity: 1;
+		}
+    
     </style>
     
     <script>
@@ -89,192 +65,85 @@
 	</script>
 	
 </head>
-<body>
-	<div id="wrap">
-	<div class="container">
-		<div class="row" style="text-align: center; margin-top: 30px">
-			<div align="center">				
-				<div id="div_cloud" style="max-width: 800px; height: 450px; text-align: center"></div>
-				<div id="div_table" style="max-width: 800px; height: 450px; overflow:auto; text-align: center">
-				<div>				
-				<p style="width: 100%; text-align: center;"><a id="btn_back" class="btn btn-warning" role="button" style="width: 200px;"><span class="fa fa-reply"></span>  Back to the cloud</a></p>
-				<div id="news_header">					
-					<span id="header_itemabbrnm">삼성전자</span><small>(<span id="header_gicode">005930</span>)</small><br/>
-					<small><span id="header_trd_dt">2014.08.21</span></small><br/>
-					<span id="header_yield_color"><strong><span id="header_yield">+14%</span></strong></span>
-					</div>
-				<div id="gicode_link" style="text-align: left; text-align: center; margin-bottom: 20px; border-bottom-style:inset; border-bottom-width:1px;"></div>
-				</div>				
-				<table class="table table-striped">
-					<thead>
-						<th>뉴스시각</th>
-						<th>뉴스제목</th>
-						<th>제공처</th>
-					</thead>
-					<tbody id="table_contents">
-					</tbody>
-				</table>						
-				</div>
-			</div>
+<body>			
+	<div id="wrap">		
+		<div class="container">
+			<h1>작은 프레젠테이션을 선물하세요</h1>
+		    <h2 class="lead"><small>그림과 글조각들로 마음을 전하세요</small></h2>
+		    <blockquote>
+		        <p>File Upload widget with multiple file selection, drag&amp;drop support, progress bars, validation and preview images, audio and video for jQuery.<br>
+		        Supports cross-domain, chunked and resumable file uploads and client-side image resizing.<br>
+		        Works with any server-side platform (PHP, Python, Ruby on Rails, Java, Node.js, Go etc.) that supports standard HTML form file uploads.</p>
+		    </blockquote>    
 		</div>
 		
-		<div class="row">
-			<div align="center">
-				<!-- <div class="row" style="text-align: center; max-width: 600px; border-top-style: solid; border-top-width: 1px"> -->
-				<div>
-					<img id="img_anvil" width="200px" alt="" src="${pageContext.request.contextPath}/resources/img/anvil.jpg"/>
-					<span class="fa fa-question-circle fa-5" title="최근시점으로 화제가 되고 있는 종목들입니다. 오른종목은 빨간색, 내린종목은 파란색이며, 글씨 크기가 클 수록 더 화제가 되고 있는 종목입니다."></span>
-				</div>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="jumbotron">
-			  <h1>BLACK SMITH</h1>			  
-			  <p><a href="${pageContext.request.contextPath}/pattern" class="btn btn-default btn-lg" role="button" title="Daehyun 이 만든, 여러가지 금융적 도구를 이용하실 수 있습니다.">Anonymous Login</a></p>
-			  <!-- <p class="text-muted credit" style="font-size: small;">Daehyun kim <a href="mailto:reinitiate@gmail.com">reinitiate@gmail.com</a></p> -->			  
-			</div>		
-		</div>
-		
-		
-		<!-- 
-		<div class="row">
-			<div class="jumbotron">
-				<div class="page-header">
-					<h2>Candle Chart Monitoring<br/><small>요즘 잘나가는 주가패턴</small></h2>
-				</div>					  
-			  	<div class="embed-responsive embed-responsive-4by3"">
-			  		<iframe height="300" src="//www.youtube.com/embed/TP-la2j-NPU" allowfullscreen></iframe>
-			  	</div>	
-			</div>
-		</div>
-		 -->
+		<div style="width:500px;padding:20px">
+ 
+		    <input id="fileupload" type="file" name="files[]" data-url="rest/controller/upload" multiple/>
 		 
-			 		 
+		    <div id="dropzone">Drop files here</div>
+		 
+		    <div id="progress">
+		        <div style="width: 0%;"></div>
+		    </div>
+		 
+		    <table id="uploaded-files">
+		        <tr>
+		            <th>File Name</th>
+		            <th>File Size</th>
+		            <th>File Type</th>
+		            <th>Download</th>
+		        </tr>
+		    </table>
+ 
 		</div>
-		<div id="push"></div>
-	    
-	</div>
+	</div>	
 	
-	<%@ include file="footer.jsp"%>
-    
-	<input id="t0" type="hidden" value="${t0}"/>
-	<input id="t1" type="hidden" value="${t1}"/>	   	
+	<%@ include file="footer.jsp"%>   	
 </body>
+	
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.ui.widget.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.iframe-transport.js"></script>	
+	<script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>	
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-ui-touch-punch.min.js"></script>	
+	<script src="${pageContext.request.contextPath}/resources/upload/js/jquery.fileupload.js"></script>
 
+	<script type="text/javascript">
+		$('#fileupload').fileupload({
+	        dataType: 'json',	 
+	        done: function (e, data) {
+	            $("tr:has(td)").remove();
+	            $.each(data.result, function (index, file) {	 
+	                $("#uploaded-files").append(
+	                        $('<tr/>')
+	                        .append($('<td/>').text(file.fileName))
+	                        .append($('<td/>').text(file.fileSize))
+	                        .append($('<td/>').text(file.fileType))
+	                        .append($('<td/>').html("<a href='rest/controller/get/"+index+"'>Click</a>"))
+	                        )//end $("#uploaded-files").append()
+	            }); 
+	        },
+	 
+	        progressall: function (e, data) {
+	            var progress = parseInt(data.loaded / data.total * 100, 10);
+	            $('#progress .bar').css(
+	                'width',
+	                progress + '%'
+	            );
+	        },
+	 
+	        dropZone: $('#dropzone')
+	    });   
+	</script>
 
-<script type="text/javascript">
-	      var word_list = ${cloud};	      
-	      $(function() {
-	    	  
-	    	 // 툴팁초기화
-	    	 $(document).tooltip();
-	    	  
-	    	 // 초기화	    	  
-	    	 $("#div_table").hide();
-	    	 $("#div_cloud").jQCloud(word_list, {shape: 'rectangular'});
-	         $("#datepicker").datepicker(
-	        		 	{
-	        		 		dateFormat: 'yymmdd',
-	        		 		onSelect: function(){
-	        		 			$("form").submit();
-	        		 		}
-	        			 }
-	        		 );
-	         $("#datepicker").val("<%=request.getAttribute("dt")%>");
-	         var type = $("#type_input").val();
-	         $("button[class='btn btn-success']").attr("class", "btn btn-default");
-	         
-	         if(type == "a") {
-	        	 $("#btn_a").attr("class", "btn btn-success");
-	        } else if(type == "b") {
-	        	 $("#btn_b").attr("class", "btn btn-success");
-	        };
-	        
-	        $("#btn_back").bind('click', function(){
-	        	
-	            var effect = 'slide';
-	            var options = { direction: 'down'};
-	            var duration = 1000;
-	            
-	        	$("#div_table").hide();
-	        	$("#div_cloud").toggle(effect, options, duration);
-	        });
-	        
-	       });
-	      
-	      $(function(){		
-	  		$("li").removeClass("active");
-	  		$("#li_snc").addClass("active");
-	  		$("#div_news").hide();
-	  	});
-	      
-	    function loadData(gicode){
-	    	$.ajax({
-				type: 'post',				
-				url: '${pageContext.request.contextPath}/news/json',
-				contentType: "application/x-www-form-urlencoded; charset=UTF-8",				
-				dataType: "json",
-				beforeSend: function(){
-				     $("#loading").show();
-				},
-				complete: function(){
-				     $("#loading").hide();
-				},
-				data: {gicode : gicode, t0 : $('#t0').val(), t1 : $('#t1').val()},				
-				success: function(data){
-					
-					console.log(data);					
-					var news_list = data.news_list;
-					console.log(news_list);
-					
-					var effect = 'slide';
-		            var options = { direction: 'up'};
-		            var duration = 1000;
-			            
-			        $("#div_table").toggle(effect, options, duration);
-			        $("#div_cloud").hide();
-			        var html = '';
-			        
-			        for(i=0; i<news_list.length; i++){
-			        	html = html + '<tr>';
-			        	html = html + '<td>' + news_list[i].pub_dt + '</td>';
-			        	html = html + "<td><a target='_blank' href='" + news_list[i].url + "'>" + news_list[i].title + '</a></td>';
-			        	html = html + '<td>' + news_list[i].provider + '</td>';			        	
-			        	html = html + '</tr>';
-			        }
-					$('#table_contents').html(html);
-					
-					
-					// 종목 사이트 링크 설정
-					var gicode2 = gicode.substring(1, 7);
-					$('#gicode_link').html('');
-					$('#gicode_link').append('<a target="_blank" class="btn btn-link" role="button" href="http://finance.naver.com/item/main.nhn?code=' + gicode2 + '"></span>네이버</a>');
-					$('#gicode_link').append('<a target="_blank" class="btn btn-link" role="button" href="http://stock.daum.net/item/main.daum?code=' + gicode2 + '"></span>다음</a>');
-					$('#gicode_link').append('<a target="_blank" class="btn btn-link" role="button" href="http://paxnet.asiae.co.kr/asiae/stockIntro/indCurrent.jsp?code=' + gicode2 + '"></span>팍스넷</a>');
-					
-					// 종목 최신 정보 설정
-					var header = data.header;
-					$('#header_trd_dt').html(header.trd_dt);
-					$('#header_gicode').html(header.gicode);
-					$('#header_itemabbrnm').html(header.itemabbrnm);
-					$('#header_yield').html(header.yield + "%");
-					if(header.yield == 0){
-						$("#header_yield_color").css("color", "grey");
-					}
-					else if(header.yield > 0){
-						$("#header_yield_color").css("color", "red");
-					}
-					else if(header.yield < 0){
-						$("#header_yield_color").css("color", "blue");
-					}
-	            },
-	            error: function(XMLHttpRequest, textStatus, errorThrown) {	            	  
-	              alert("Status: " + textStatus); alert("Error: " + errorThrown); 
-	            }
-			});
-	    	
-	    	return ;
-	    }
-	 </script>
+	<!-- The template to display files available for upload -->
+	<!-- The Templates plugin is included to render the upload/download listings -->
+	<script src="http://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+	<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+	<script src="http://blueimp.github.io/JavaScript-Load-Image/js/load-image.min.js"></script>
+	<!-- The Canvas to Blob plugin is included for image resizing functionality -->
+	<script src="http://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+		
+
 </html>

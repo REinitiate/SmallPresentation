@@ -5,8 +5,7 @@
         
     	itemabbrnm = jsonData.gicode;
     	
-    	data = jsonData.timeseries;
-        console.log(data);
+    	data = jsonData.timeseries;        
 
             // split the data set into ohlc and volume
             var ohlc = [],
@@ -31,15 +30,7 @@
                     data[i][3], // low
                     data[i][4] // close
                 ]);
-
-//                volume.push([
-//                    data[i][0], // the date
-//                    data[i][5] // the volume
-//                ]);
             }
-            
-            console.log(ohlc);
-
 
             // create the chart
             div.highcharts('StockChart', {
