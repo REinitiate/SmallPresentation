@@ -12,6 +12,8 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,11 +55,26 @@ public class ImageUploadController {
 	/**
 	 * 이미지 업로드 페이지의 폼에서 전송 시 받게 되는 메서드 
 	 */
-	@RequestMapping(value="/upload2", method=RequestMethod.POST)
-	private String upload(@RequestParam MultipartFile imageFile, Model modelMap) {
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/upload", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json; charset=utf-8")
+	private String upload(@RequestParam MultipartFile imageFile) {
 		ImageFile fileInfo = imageService.save(imageFile);		
-		//modelMap.put("imageFile", fileInfo);		
-		return "uploadComplete";
+		//modelMap.put("imageFile", fileInfo);
+		
+		JSONObject result = new JSONObject();
+		JSONObject file1 = new JSONObject();
+		file1.put("name", "name");
+		file1.put("size", 902604);
+		file1.put("url", "image/" + fileInfo.getId());
+		file1.put("deleteUrl", "deleteUrl");
+		file1.put("deleteType", "DELETE");
+		
+		JSONArray files = new JSONArray();
+		files.put(file1);
+		result.put("files", files);		
+		return result.toString();
 	}
 	
 //	@RequestMapping("/image/{imageId}")
@@ -68,12 +85,12 @@ public class ImageUploadController {
 //	}
 	
 	@RequestMapping(value="/image/{imageId}", method={RequestMethod.GET}, produces="image/jpg")
-	@ResponseBody public byte[] getImage(HttpServletRequest request, HttpServletResponse resp) throws IOException {
+	@ResponseBody public byte[] getImage(HttpServletRequest request, @PathVariable String imageId, HttpServletResponse resp) throws IOException {
 		//curl -v http://localhost:8080/mydomain/image/get/xxx &gt; /dev/null
 //        String realPath =
 //                request.getSession().getServletContext().getRealPath(&quot;/resources/images/static/thumbs/&quot; + name);
-		
-		String realPath = "C:/Users/REinitiate/workspace_java/SmallPresentation/upload_images/de062a63-7443-4742-b303-1af2a4986073.jpg";
+				
+		String realPath = "C:/workspace/SmallPresentation/upload_images/" + imageId + ".jpg";
  
         try {
             InputStream is = new FileInputStream(realPath);

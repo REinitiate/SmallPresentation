@@ -29,7 +29,7 @@ public class FileController {
      * @param response : HttpServletResponse auto passed
      * @return LinkedList<FileMeta> as json format
      ****************************************************/
-    @RequestMapping(value="/upload", method = RequestMethod.POST)
+    @RequestMapping(value="/upload2", method = RequestMethod.POST)
     public @ResponseBody LinkedList<FileMeta> upload(MultipartHttpServletRequest request, HttpServletResponse response) {
  
         //1. build an iterator

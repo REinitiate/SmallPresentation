@@ -34,10 +34,7 @@ public class ImageService {
 	/**
 	 * ID로 이미지 파일 가져오기
 	 */
-	public ImageFile get(String id) {
-		
-		
-		
+	public ImageFile get(String id) {		
 		return (ImageFile) imageFilesMap.get(id);
 	}
 	

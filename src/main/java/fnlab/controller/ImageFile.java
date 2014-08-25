@@ -4,8 +4,10 @@ public class ImageFile {
 	/**
 	 * 업로드한 이미지 파일이 저장될 경로
 	 */
-	public static final String IMAGE_DIR = "C:/Users/REinitiate/workspace_java/SmallPresentation/upload_images/";
-
+	//public static final String IMAGE_DIR = "C:/Users/REinitiate/workspace_java/SmallPresentation/upload_images/";
+	
+	public static final String IMAGE_DIR = "C:/workspace/SmallPresentation/upload_images/";
+	
 	private String id;
 	private String contentType;
 	private int contentLength;

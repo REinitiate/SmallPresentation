@@ -99,7 +99,7 @@
 		</div>
 	</div>	
 	
-	<%@ include file="footer.jsp"%>   	
+	<%@ include file="footer.jsp"%>
 </body>
 	
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.js"></script>
@@ -110,9 +110,15 @@
 	<script src="${pageContext.request.contextPath}/resources/upload/js/jquery.fileupload.js"></script>
 
 	<script type="text/javascript">
-		$('#fileupload').fileupload({
-	        dataType: 'json',	 
+		$('#fileupload').fileupload({			
+			dataType: 'json',
+			add: function (e, data) {
+				console.log('add');
+	            $('#loading').show();
+	        },
 	        done: function (e, data) {
+	        	console.log('done');
+	        	$('#loading').hide();
 	            $("tr:has(td)").remove();
 	            $.each(data.result, function (index, file) {	 
 	                $("#uploaded-files").append(
