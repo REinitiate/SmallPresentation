@@ -16,6 +16,8 @@ import javax.imageio.ImageIO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import fnlab.utility.Ut;
+
 @Service
 public class ImageService {
 	private Map imageFilesMap;
@@ -53,8 +55,6 @@ public class ImageService {
 					multipartFile.getContentType(),
 					(int)multipartFile.getSize(),
 					savedFileName);
-			
-			imageFilesMap.put(genId, imageFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -67,14 +67,16 @@ public class ImageService {
 	 */
 	private String saveToFile(MultipartFile src, String id) throws IOException {
 		
+		if(src.getContentType().compareTo("image/png") == 0){
+			Ut.Log("png");
+		}
+		
 		String fileName = src.getOriginalFilename();
 		byte[] bytes = src.getBytes(); // 이미지 바이트
-		Image img = ImageIO.read(src.getInputStream());		
-		img.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-		
 		
 		final float FACTOR  = 4f;
 		BufferedImage bufferedImage = ImageIO.read(src.getInputStream()); //이미지 갖고오기
+		
 		
 		double width = (double)(bufferedImage.getWidth() * FACTOR);
 		double height = (double)(bufferedImage.getHeight() * FACTOR);
@@ -86,7 +88,8 @@ public class ImageService {
 		BufferedImage resizeImage = resizeImage(bufferedImage, type, (int)(width * 500), (int)(height * 500));
 		
 		
-		String saveFileName = id + "." + getExtension(fileName);
+		//String saveFileName = id + "." + getExtension(fileName);
+		String saveFileName = id + "." + "jpg";
 		String savePath = ImageFile.IMAGE_DIR + saveFileName;
 		
 		File outputfile = new File(savePath);

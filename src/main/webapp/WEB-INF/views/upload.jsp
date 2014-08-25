@@ -19,6 +19,13 @@
 	<style>    
     	h1{font-family: 'NanumPen',sans-serif;  line-height: normal; font-size: xx-large;}
     	h2{font-family: 'NanumPen',sans-serif;  line-height: normal; font-size: x-large;}
+    	.rotate90 {
+		    -webkit-transform: rotate(90deg);
+		    -moz-transform: rotate(90deg);
+		    -o-transform: rotate(90deg);
+		    -ms-transform: rotate(90deg);
+		    transform: rotate(90deg);
+		}
     </style>
 
 </head>
@@ -38,12 +45,11 @@
 		
 		<div style="width:500px;padding:20px">
 			<form action="${pageContext.request.contextPath}/upload" method="post" enctype="multipart/form-data">
-				<input id="fileupload" type="file" name="imageFile"><br>
-				<input type="submit" value="전송">
+				<input id="fileupload" type="file" name="imageFile"><br>				
 			</form>
 			<div id="uploaded-files"></div>
 			<div id="progress" class="bar" style="background: green; height: 10px;"></div>		
-			<div id="result"></div>
+			<div id="result"></div>			
 		</div>
 	</div>
 	
@@ -80,7 +86,7 @@ $('#fileupload').fileupload({
 	        $.each(data.result.files, function (index, file) {
 	        	console.log(file);
 	            $('<p/>').text(file.name).appendTo(document.body);
-	            var img = "<img src='${pageContext.request.contextPath}/$src'/>"
+	            var img = "<img src='${pageContext.request.contextPath}/$src' class='rotate90'/>"
 	            img = img.replace('$src', file.url);
 	            console.log(img);
 	            $('#uploaded-files').append(img);

@@ -2,10 +2,13 @@ package fnlab.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -18,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.apache.commons.io.IOUtils;
+
+import fnlab.utility.Ut;
 
 /**
  * 
@@ -67,13 +74,14 @@ public class ImageUploadController {
 		JSONObject file1 = new JSONObject();
 		file1.put("name", "name");
 		file1.put("size", 902604);
-		file1.put("url", "image/" + fileInfo.getId());
+		file1.put("url", "image/" + fileInfo.getFileName());
 		file1.put("deleteUrl", "deleteUrl");
 		file1.put("deleteType", "DELETE");
 		
 		JSONArray files = new JSONArray();
 		files.put(file1);
-		result.put("files", files);		
+		result.put("files", files);	
+		Ut.Log(result.toString());
 		return result.toString();
 	}
 	
@@ -84,14 +92,14 @@ public class ImageUploadController {
 //		return imageView;
 //	}
 	
-	@RequestMapping(value="/image/{imageId}", method={RequestMethod.GET}, produces="image/jpg")
+	@RequestMapping(value="/image/{imageId}", method={RequestMethod.GET}, produces={"image/jpg"})
 	@ResponseBody public byte[] getImage(HttpServletRequest request, @PathVariable String imageId, HttpServletResponse resp) throws IOException {
 		//curl -v http://localhost:8080/mydomain/image/get/xxx &gt; /dev/null
 //        String realPath =
 //                request.getSession().getServletContext().getRealPath(&quot;/resources/images/static/thumbs/&quot; + name);
 				
-		String realPath = "C:/workspace/SmallPresentation/upload_images/" + imageId + ".jpg";
- 
+		String realPath = ImageFile.IMAGE_DIR + imageId + ".jpg";
+		
         try {
             InputStream is = new FileInputStream(realPath);
             BufferedImage img = ImageIO.read(is);
@@ -104,4 +112,84 @@ public class ImageUploadController {
             return null;  //todo: return safe photo instead
         }
 	}
+	
+	
+	@RequestMapping(value = "/helloWorld.web", method = RequestMethod.GET)
+    public String printWelcome(ModelMap model, HttpServletRequest
+        request, HttpServletResponse response) {
+
+    model.addAttribute("message", "Spring MVC Multi File upload");
+    return "helloWorld";
+    }
+
+    @RequestMapping(value = "/upload2", method = RequestMethod.POST)
+    public String save(@ModelAttribute("multiFileUpload")
+    MultiFileUpload multiFileUpload,BindingResult bindingResult, Model model) throws IOException {
+	    List<MultipartFile> files = multiFileUpload
+	        .getMultiUploadedFileList();
+	    StringBuffer uploadedfile = 
+	        new StringBuffer("Below files uploaded successfully");
+	    
+	    if (files.isEmpty() ) {
+	        bindingResult.reject("noFile", "Please select file to upload");
+	        return "helloWorld";
+	    }
+	    
+	    if (null != files && files.size() > 0) {
+	        
+	        
+	        for (MultipartFile multipartFile : files) {
+	        
+	        ByteArrayOutputStream baos = 
+	            new ByteArrayOutputStream();
+	        FileOutputStream output = null;
+	        File outputfile = null;     
+	        String fileName = multipartFile.getOriginalFilename();
+	        uploadedfile.append("<h4>"+fileName+"</h4>");
+	        String extensionOfFileName = fileName.
+	            substring(fileName.indexOf(".")+1,
+	                fileName.length());
+	        outputfile = new File("C:/Users/REinitiate/workspace_java/SmallPresentation/upload_images/2" + fileName);
+	        InputStream inputStream = multipartFile
+	            .getInputStream();
+	        
+	        if (null!=extensionOfFileName && 
+	            extensionOfFileName.equalsIgnoreCase("pdf")) {
+	            if (!outputfile.isDirectory()) {
+	            try {
+	                output = new FileOutputStream(outputfile);
+	                IOUtils.copy(inputStream, output);
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            } finally {
+	                baos.close();
+	                output.close();
+
+	            }
+	            }
+	        } else if (null != extensionOfFileName 
+	            && extensionOfFileName
+	            .equalsIgnoreCase("png")) {
+	            BufferedImage imBuff = ImageIO.read(multipartFile
+	                .getInputStream());
+	            ImageIO.write(imBuff, extensionOfFileName,
+	                outputfile);
+	        } else if (null != extensionOfFileName 
+	            && extensionOfFileName
+	            .equalsIgnoreCase("jpg")) {
+	            BufferedImage imBuff = ImageIO
+	                .read(multipartFile.getInputStream());
+	            ImageIO.write(imBuff, extensionOfFileName,
+	                outputfile);
+	        }else {
+	            System.out.println("Unknown file extension"
+	        +extensionOfFileName);
+	        }
+
+	        }
+	    }
+
+	    model.addAttribute("message", uploadedfile);
+	    return "Upload";
+	    }
 }
