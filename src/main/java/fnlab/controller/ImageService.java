@@ -1,5 +1,6 @@
 package fnlab.controller;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -50,7 +51,7 @@ public class ImageService {
 		
 		try {
 			String savedFileName = saveToFile(multipartFile, genId);
-			
+			genId = savedFileName.replace(".", "|");
 			imageFile = new ImageFile(genId, 
 					multipartFile.getContentType(),
 					(int)multipartFile.getSize(),
@@ -67,6 +68,7 @@ public class ImageService {
 	 */
 	private String saveToFile(MultipartFile src, String id) throws IOException {
 		
+		// 이슈 1. pong일 경우에 파일 이미지 음영이 이상해짐
 		if(src.getContentType().compareTo("image/png") == 0){
 			Ut.Log("png");
 		}
@@ -75,7 +77,8 @@ public class ImageService {
 		byte[] bytes = src.getBytes(); // 이미지 바이트
 		
 		final float FACTOR  = 4f;
-		BufferedImage bufferedImage = ImageIO.read(src.getInputStream()); //이미지 갖고오기
+		
+		BufferedImage bufferedImage = ImageIO.read(src.getInputStream()); //이미지 갖고오기	
 		
 		
 		double width = (double)(bufferedImage.getWidth() * FACTOR);
@@ -84,16 +87,26 @@ public class ImageService {
 		height = height / width;
 		width = 1;
 		
-		int type = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
-		BufferedImage resizeImage = resizeImage(bufferedImage, type, (int)(width * 500), (int)(height * 500));
+		int type = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();		
+		BufferedImage resizeImage = null;
 		
+		resizeImage = resizeImage(bufferedImage, type, (int)(width * 500), (int)(height * 500));
+		//resizeImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
 		
-		//String saveFileName = id + "." + getExtension(fileName);
-		String saveFileName = id + "." + "jpg";
+		String saveFileName = id + "." + getExtension(fileName);
+		//String saveFileName = id + "." + "jpg";
 		String savePath = ImageFile.IMAGE_DIR + saveFileName;
 		
 		File outputfile = new File(savePath);
-		ImageIO.write(resizeImage, "jpg", outputfile);		
+		
+		if(src.getContentType().compareTo("image/png") == 0){
+			Ut.Log("png");
+			ImageIO.write(resizeImage, "png", outputfile);
+		}else if(src.getContentType().compareTo("image/jpg") == 0){
+			ImageIO.write(resizeImage, "jpg", outputfile);
+		}else if(src.getContentType().compareTo("image/jpeg") == 0){
+			ImageIO.write(resizeImage, "jpg", outputfile);
+		}
 		
 		return saveFileName;
 	}

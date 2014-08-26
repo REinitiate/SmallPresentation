@@ -54,6 +54,11 @@ public class ImageUploadController {
 	/**
 	 * 이미지 업로드를 위한 페이지 매핑 
 	 */
+	@RequestMapping(value={"", "/"})
+	private String upload() {
+		return "upload";
+	}
+	
 	@RequestMapping("/uploadPage")
 	private String uploadView() {
 		return "upload";
@@ -72,6 +77,7 @@ public class ImageUploadController {
 		
 		JSONObject result = new JSONObject();
 		JSONObject file1 = new JSONObject();
+		file1.put("id", fileInfo.getId());
 		file1.put("name", "name");
 		file1.put("size", 902604);
 		file1.put("url", "image/" + fileInfo.getFileName());
@@ -92,19 +98,20 @@ public class ImageUploadController {
 //		return imageView;
 //	}
 	
-	@RequestMapping(value="/image/{imageId}", method={RequestMethod.GET}, produces={"image/jpg"})
+	@RequestMapping(value="/image/{imageId}", method={RequestMethod.GET}, produces={"image/jpg", "image/png"})
 	@ResponseBody public byte[] getImage(HttpServletRequest request, @PathVariable String imageId, HttpServletResponse resp) throws IOException {
-		//curl -v http://localhost:8080/mydomain/image/get/xxx &gt; /dev/null
-//        String realPath =
-//                request.getSession().getServletContext().getRealPath(&quot;/resources/images/static/thumbs/&quot; + name);
-				
-		String realPath = ImageFile.IMAGE_DIR + imageId + ".jpg";
+
+		//String realPath = ImageFile.IMAGE_DIR + imageId + ".jpg";
+		
+		String realPath = ImageFile.IMAGE_DIR + imageId.replace("|", ".");
+		String[] types = imageId.split("|");
+		String type = imageId.split("\\|")[1];
 		
         try {
             InputStream is = new FileInputStream(realPath);
             BufferedImage img = ImageIO.read(is);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            ImageIO.write(img, "jpg", bos);
+            ImageIO.write(img, type, bos);
             return bos.toByteArray();
         } catch (FileNotFoundException e) {
             return null; //todo: return safe photo instead
