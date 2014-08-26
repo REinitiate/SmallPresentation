@@ -6,6 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	
+	
+	<script>
+	if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+	  var msViewportStyle = document.createElement('style')
+	  msViewportStyle.appendChild(
+	    document.createTextNode(
+	      '@-ms-viewport{width:auto!important}'
+	    )
+	  )
+	  document.querySelector('head').appendChild(msViewportStyle)
+	}
+	</script>
+	
+	
     <title>작은 프레젠테이션을 선물하세요</title>
 
     <!-- Core CSS - Include with every page -->
@@ -21,8 +35,8 @@
         
     <style>
     
-    	h1{font-family: 'NanumPen',sans-serif;  line-height: normal; font-size: xx-large;}
-    	h2{font-family: 'NanumPen',sans-serif;  line-height: normal; font-size: x-large;}
+    	h1{font-family: 'NanumPen',sans-serif;  line-height: normal}
+    	h2{font-family: 'NanumPen',sans-serif;  line-height: normal}
     	
     	#dropzone {
 		    background: #ccccc;
@@ -66,8 +80,8 @@
 	
 </head>
 <body>			
-	<div id="wrap">		
-		<div class="container">
+				
+		<div class="page-header">
 			<h1>작은 프레젠테이션을 선물하세요</h1>
 		    <h2 class="lead"><small>그림과 글조각들로 마음을 전하세요</small></h2>
 		    <blockquote>
@@ -96,8 +110,7 @@
 		        </tr>
 		    </table>
  
-		</div>
-	</div>	
+		</div>	
 	
 	<%@ include file="footer.jsp"%>
 </body>

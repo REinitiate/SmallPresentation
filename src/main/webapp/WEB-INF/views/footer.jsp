@@ -3,7 +3,7 @@
 
 <div id="footer">
         <div class="container">
-            <p class="text-muted"><b>Cherish Presentation</b> powered by <a href="${pageContext.request.contextPath}/resume">TEAM gran</a>.</p>
+            <p class="text-muted"><b>Cherish Message</b> powered by <a href="http://www.daehyeonkim.com/resume">DaehyunKim</a></p>
         </div>
 </div>
 
