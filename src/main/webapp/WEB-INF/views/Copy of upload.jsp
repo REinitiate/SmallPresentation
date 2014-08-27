@@ -44,7 +44,6 @@
     	h2{font-family: 'Jeju Gothic', serif;  line-height: normal; font-size: x-large;}
     	*/
     	
-    	img{margin-bottom: 20px; width: 80%;}
     	    	
     	.rotate90 {
 		    -webkit-transform: rotate(90deg);
@@ -60,32 +59,6 @@
 		#page_list{margin-top: 30px; text-align: center;}
 		
 		#page_list{}
-
-		.fileinput-button {
-		  position: relative;
-		  overflow: hidden;
-		}
-		.fileinput-button input {
-		  position: absolute;
-		  top: 0;
-		  right: 0;
-		  margin: 0;
-		  opacity: 0;
-		  -ms-filter: 'alpha(opacity=0)';
-		  font-size: 200px;
-		  direction: ltr;
-		  cursor: pointer;
-		}
-		
-		/* Fixes for IE < 8 */
-		@media screen\9 {
-		  .fileinput-button input {
-		    filter: alpha(opacity=0);
-		    font-size: 100%;
-		    height: 100%;
-		  }
-}
-		
     </style>
 
 </head>
@@ -107,36 +80,37 @@
 		    </div>
 		    
 		    <div id="page_list">
+		    	
+		    <div style="height: 30px;">
+		    </div>
 		    
 		    <div class="row page_repo">
 		    	<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-				    <div class="panel panel-default">
-				  		<div class="panel-heading" style="text-align: left;">
-				  			<span class="btn btn-success fileinput-button">							        
-							        <span class="fa fa-picture-o"></span>
-									<input id="fileupload" type="file" name="imageFile" data-url="${pageContext.request.contextPath}/upload" multiple style="">
-							</span>
-				  			<button type="button" class="btn btn-default"><span class="fa fa-repeat"></span></button>
-				  			<button type="button" class="btn btn-warning" onclick="deletePage(this)"><span class="fa fa-trash-o"></span></button>
-				  		</div>
+				    <div id="page_repo2" class="panel panel-default">
+				  		<div class="panel-heading"><button type="button" class="btn btn-default"><span class="fa fa-repeat"></span></button></div>
 				  		<div class="panel-body">		  		
 							<div>
-								
+								<form action="${pageContext.request.contextPath}/upload" method="post" enctype="multipart/form-data">
+								<span class="btn btn-success fileinput-button">
+						        <i class="glyphicon glyphicon-plus"></i>
+						        <span>Add files...</span>
+									<input id="fileupload" type="file" name="imageFile"><br>
+								</span>								
+								</form>
 								<div id="result"></div>
 								<div id="uploaded_files" style="text-align: center;"></div>
 								<div style="text-align: left">
 									
 								</div>
-								<small><textarea class="form-control text-muted" rows="2" onclick="$(this).html('');">간단한 멘트를 입력하세요. 3줄 이내가 좋습니다.</textarea></small>
+								<small><textarea class="form-control" rows="3" onclick="$(this).html('');">간단한 멘트를 입력하세요</textarea></small>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>	
 		</div>
-		<div style="height: 30px;"></div> <!-- 푸터가 지워지지 않게 하는 간격 -->
 	</div>	
-	</div>	
+	</div>
 	<%@ include file="footer.jsp"%>
 	
 </body>
@@ -162,12 +136,6 @@ if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
 	
 <script type="text/javascript">
 
-	function deletePage(div){
-		console.log(div);
-		var target = $(div).parent("div").parent("div").parent("div").parent("div").remove();
-		console.log(target);
-	}
-	
 	function addPage(){
 		var page = $(".page_repo")
 					.clone()
@@ -179,16 +147,14 @@ if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
 	}
 	
 	function fileUploadBind(page){		
-		console.log(page);		 
-		var fileuploaddiv = page.children('.panel-heading').children('span').children('#fileupload');
+		console.log(page);
+		var fileuploaddiv = page.children('.panel-body').children('div').children('form').children('#fileupload');
 		var uploaded_files = page.children('.panel-body').children('div').children('#uploaded_files');
 		console.log(uploaded_files);
 		
 		fileuploaddiv.fileupload({
 		    dataType: 'json',
-		    send: function (e, data) {
-		    	var image = page.children('.panel-body').children('.div').children('img'); // 이미지 버튼
-		    	image.remove();
+		    send: function (e, data) {		    	
 		        $('#loading').show();
 		    },
 		    done: function (e, data) {
@@ -196,7 +162,7 @@ if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
 		    	$('#uploaded-files').hide();
 		        $.each(data.result.files, function (index, file) {		        	
 		        	$('img').hide();		            
-		            var img = "<img src='${pageContext.request.contextPath}/image/$id'/>";		            
+		            var img = "<img src='${pageContext.request.contextPath}/image/$id' style='width:50%'/>";		            
 		            img = img.replace('$id', file.id);		            
 		            uploaded_files.append(img);		            
 		            $('img').show();
