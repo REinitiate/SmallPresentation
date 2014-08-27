@@ -68,6 +68,18 @@ public class ImageUploadController {
 	 * 이미지 업로드 페이지의 폼에서 전송 시 받게 되는 메서드 
 	 */
 	
+	@ResponseBody
+	@RequestMapping(value = "/post", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json; charset=utf-8")
+	private String upload(@RequestParam String page_list) {
+		
+		
+		
+		
+		
+		return "";		
+	}
+	
+	
 	
 	@ResponseBody
 	@RequestMapping(value = "/upload", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json; charset=utf-8")

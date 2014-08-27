@@ -102,13 +102,15 @@
 		    <div id="control_box" class="row">
 		    	<div class="btn-group">		    		
 					<button id="btn_page_add" type="button" class="btn btn-default">페이지 추가</button>
-					<button id="btn_image_add" type="button" class="btn btn-success">완성본 보기</button>
+					<button id="btn_post" type="button" class="btn btn-success">완성본 보기</button>
 				</div>				  					
 		    </div>
 		    
 		    <div id="page_list">
-		    
-		    <div class="row page_repo">
+		    	
+			</div>
+			
+			<div class="row page_repo">
 		    	<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
 				    <div class="panel panel-default">
 				  		<div class="panel-heading" style="text-align: left;">
@@ -123,7 +125,7 @@
 							<div>
 								
 								<div id="result"></div>
-								<div id="uploaded_files" style="text-align: center;"></div>
+								<div id="uploaded_files" class="uploaded_files" style="text-align: center;"></div>
 								<div style="text-align: left">
 									
 								</div>
@@ -132,8 +134,9 @@
 						</div>
 					</div>
 				</div>
-			</div>	
-		</div>
+			</div>
+		
+		
 		<div style="height: 30px;"></div> <!-- 푸터가 지워지지 않게 하는 간격 -->
 	</div>	
 	</div>	
@@ -178,8 +181,66 @@ if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
 		fileUploadBind(page.children("div").children("div"));
 	}
 	
+	function postData(){
+		
+		
+		//Json 형태의 데이터로 추출..		
+		var post_data = {};
+		post_data.page_list = [];
+		var page_list = $('#page_list').children("div");
+		
+		page_cnt = page_list.length;
+		
+		var uploaded_files = $('#page_list .uploaded_files');
+		var text_areas = $('#page_list textarea');
+		
+		for(i=0; i<page_cnt; i++){
+			var page = {};			
+			var img = $(uploaded_files[i]).children('img');
+			console.log(img);
+			if(img.length == 0){
+				page.img_url = '';
+			}
+			else{
+				console.log(img.attr('src'));
+				page.img_url = img.attr('src');
+				// 이미지 존재
+			}
+			//console.log(text_areas[i]);
+			console.log($(text_areas[i]).text());
+			
+			var page = {}
+			page.contents = $(text_areas[i]).text();
+			page.img_url = img.attr('src');
+			post_data.page_list.push(page);
+		}
+		
+		
+		
+		$.ajax({			
+			type: 'post',				
+			url: '${pageContext.request.contextPath}/post',
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",				
+			dataType: "json",
+			beforeSend: function(){
+			     $("#loading").show();
+			},
+			complete: function(){
+			     $("#loading").hide();
+			},
+			data: {page_list : JSON.stringify(post_data)},				
+			success: function(data){
+				//console.log(data);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {	            	  
+              alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+            }
+		});
+		
+	}
+	
 	function fileUploadBind(page){		
-		console.log(page);		 
+		//console.log(page);		 
 		var fileuploaddiv = page.children('.panel-heading').children('span').children('#fileupload');
 		var uploaded_files = page.children('.panel-body').children('div').children('#uploaded_files');
 		console.log(uploaded_files);
@@ -192,7 +253,7 @@ if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
 		        $('#loading').show();
 		    },
 		    done: function (e, data) {
-		    	console.log($(this).parent("#uploaded-files"));		    			    	
+		    	//console.log($(this).parent("#uploaded-files"));		    			    	
 		    	$('#uploaded-files').hide();
 		        $.each(data.result.files, function (index, file) {		        	
 		        	$('img').hide();		            
@@ -217,7 +278,8 @@ if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
 	
 	$(function(){
 		$('#btn_page_add').bind('click', function(){addPage();});		
-		
+		$('#btn_post').bind('click', function(){postData();})
+		$('#btn_page_add').click();
 		
 	});
 </script>
