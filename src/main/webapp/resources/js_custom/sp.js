@@ -43,10 +43,10 @@ function deletePage(div){
 				// 이미지 존재
 			}
 			//console.log(text_areas[i]);
-			console.log($(text_areas[i]).text());
+			console.log($(text_areas[i]).val());
 			
 			var page = {}
-			page.contents = $(text_areas[i]).text();
+			page.contents = $(text_areas[i]).val();
 			page.img_url = img.attr('src');
 			post_data.page_list.push(page);
 		}

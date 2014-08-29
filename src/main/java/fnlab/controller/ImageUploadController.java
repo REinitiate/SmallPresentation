@@ -56,12 +56,12 @@ public class ImageUploadController {
 	 * 이미지 업로드를 위한 페이지 매핑 
 	 */
 	@RequestMapping(value={"", "/"})
-	private String upload() {
+	private String upload() {		
 		return "upload";
 	}
 	
 	@RequestMapping("/uploadPage")
-	private String uploadView() {
+	private String uploadView() {		
 		return "upload";
 	}
 	
@@ -76,6 +76,8 @@ public class ImageUploadController {
 		JSONTokener tokener = new JSONTokener(page_list);
 		JSONObject data = new JSONObject(tokener);
 		String jsonString = data.toString();
+		Ut.Log(jsonString);
+		
 		return data.toString();		
 	}
 	

@@ -128,7 +128,7 @@
 									<div style="text-align: left">
 										
 									</div>
-									<small><textarea class="form-control text-muted" rows="2" onclick="$(this).html('');">간단한 멘트를 입력하세요. 3줄 이내가 좋습니다.</textarea></small>
+									<small><textarea class="form-control text-muted" rows="2" placeholder="간결한 메시지를 입력하세요. 3줄 이내가 좋습니다." ></textarea></small>
 								</div>
 							</div>
 						</div>
