@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,11 +73,10 @@ public class ImageUploadController {
 	@RequestMapping(value = "/post", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json; charset=utf-8")
 	private String upload(@RequestParam String page_list) {
 		
-		
-		
-		
-		
-		return "";		
+		JSONTokener tokener = new JSONTokener(page_list);
+		JSONObject data = new JSONObject(tokener);
+		String jsonString = data.toString();
+		return data.toString();		
 	}
 	
 	

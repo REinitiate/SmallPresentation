@@ -93,10 +93,14 @@ public class ImageService {
 		resizeImage = resizeImage(bufferedImage, type, (int)(width * 500), (int)(height * 500));
 		//resizeImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
 		
-		String saveFileName = id + "." + getExtension(fileName);
-		//String saveFileName = id + "." + "jpg";
-		String savePath = ImageFile.IMAGE_DIR + saveFileName;
+		String extension = getExtension(fileName);
+		if(extension.compareTo("")==0){
+			extension = "jpg";
+		}
 		
+		String saveFileName = id + "." + extension;
+		
+		String savePath = ImageFile.IMAGE_DIR + saveFileName;
 		File outputfile = new File(savePath);
 		
 		if(src.getContentType().compareTo("image/png") == 0){
@@ -105,6 +109,8 @@ public class ImageService {
 		}else if(src.getContentType().compareTo("image/jpg") == 0){
 			ImageIO.write(resizeImage, "jpg", outputfile);
 		}else if(src.getContentType().compareTo("image/jpeg") == 0){
+			ImageIO.write(resizeImage, "jpg", outputfile);
+		}else{
 			ImageIO.write(resizeImage, "jpg", outputfile);
 		}
 		
