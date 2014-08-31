@@ -1,4 +1,4 @@
-package fnlab.controller;
+package cm.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -8,7 +8,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -32,6 +37,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.apache.commons.io.IOUtils;
 
+import cm.service.LetterService;
+import cm.service.LetterService.Letter;
+import cm.service.LoginService;
 import fnlab.utility.Ut;
 
 /**
@@ -39,7 +47,7 @@ import fnlab.utility.Ut;
  * Handles requests for the application home page.
  */
 @Controller
-public class ImageUploadController {
+public class SpController {
 	/*
 	 * ImageView는 파일 시스템에 있는 이미지 파일을 응답으로 돌려주는 역할을 합니다.
 	 * 뒷 부분에서 ImageView 클래스를 작성하게 됩니다.
@@ -51,37 +59,77 @@ public class ImageUploadController {
 	 * 서비스 클래스를 따라하는 모양만 서비스인 클래스입니다.
 	 */
 	@Autowired ImageService imageService;
+	@Autowired LoginService loginService;
+	@Autowired LetterService letterService;
 	
 	/**
 	 * 이미지 업로드를 위한 페이지 매핑 
 	 */
-	@RequestMapping(value={"", "/"})
-	private String upload() {		
-		return "upload";
+	
+	@RequestMapping(value={"", "/"}, method = {RequestMethod.GET})
+	private String home() {
+		return "login";
 	}
 	
-	@RequestMapping("/uploadPage")
-	private String uploadView() {		
-		return "upload";
+	// 로그인
+	@RequestMapping(value={"/login"}, method = {RequestMethod.POST})
+	private String home(@RequestParam String email, @RequestParam String pass, HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		Ut.Log(email);
+		Ut.Log(pass);
+		
+		String id = loginService.CheckIdExist(email);
+		if(id == null){
+			// 아이디 등록
+			loginService.RegisterUser(email, pass);
+			request.getSession().setAttribute("id", email);
+			request.getSession().setAttribute("id", email);
+			return "upload";
+		}
+		else{
+			// 아이디 원래 있음
+			String passDb = loginService.GetPassword(id);
+			if(pass.compareTo(passDb) == 0){
+				request.getSession().setAttribute("id", email);				
+				List<HashMap> letters = letterService.GetLetterHashListById(email);
+				
+				model.addAttribute("letter_list", letters);				
+				return "upload";
+			}
+			else{
+				return "/";
+			}			
+		}
 	}
 	
 	/**
 	 * 이미지 업로드 페이지의 폼에서 전송 시 받게 되는 메서드 
-	 */
-	
-	@ResponseBody
-	@RequestMapping(value = "/post", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json; charset=utf-8")
-	private String upload(@RequestParam String page_list) {
+	 */	
+	@RequestMapping(value = "/letter", method = RequestMethod.POST)
+	private String upload(@RequestParam String page_list, HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		String temp = request.getParameter("page_list");
 		
 		JSONTokener tokener = new JSONTokener(page_list);
 		JSONObject data = new JSONObject(tokener);
 		String jsonString = data.toString();
-		Ut.Log(jsonString);
+		jsonString = jsonString.replace("\\n", "|");
+		Ut.Log(jsonString);		
+		String title = data.getString("title");		
 		
-		return data.toString();		
+		String id = (String) request.getSession().getAttribute("id");
+		if(id == null){
+			return "login";
+		}
+		else
+		{
+			String page_id = "page-" + UUID.randomUUID().toString();
+			letterService.ReplaceLetter(id, title, jsonString, page_id);
+		}
+		// DB에 저장
+		model.addAttribute("page_list", jsonString);
+		return "letter";
 	}
-	
-	
 	
 	@ResponseBody
 	@RequestMapping(value = "/upload", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json; charset=utf-8")
@@ -133,13 +181,4 @@ public class ImageUploadController {
             return null;  //todo: return safe photo instead
         }
 	}
-	
-	
-	@RequestMapping(value = "/helloWorld.web", method = RequestMethod.GET)
-    public String printWelcome(ModelMap model, HttpServletRequest
-        request, HttpServletResponse response) {
-
-    model.addAttribute("message", "Spring MVC Multi File upload");
-    return "helloWorld";
-    }    
 }

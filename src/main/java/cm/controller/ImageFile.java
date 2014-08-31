@@ -1,12 +1,12 @@
-package fnlab.controller;
+package cm.controller;
 
 public class ImageFile {
 	/**
 	 * 업로드한 이미지 파일이 저장될 경로
 	 */
 	//public static final String IMAGE_DIR = "C:/Users/REinitiate/workspace_java/upload_images/";	
-	public static final String IMAGE_DIR = "C:/workspace/SmallPresentation/upload_images/";
-	//public static final String IMAGE_DIR = "/fnlab/upload_images/";
+	//public static final String IMAGE_DIR = "C:/workspace/SmallPresentation/upload_images/";
+	public static final String IMAGE_DIR = "/fnlab/upload_images/";
 	
 	private String id;
 	private String contentType;

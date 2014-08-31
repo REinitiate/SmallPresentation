@@ -1,4 +1,4 @@
-package fnlab.controller;
+package cm.controller;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;

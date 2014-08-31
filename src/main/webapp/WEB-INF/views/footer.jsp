@@ -3,12 +3,12 @@
 
 <div id="footer">
         <div class="container">
-            <p class="text-muted"><b>Cherish Message</b> powered by <a href="http://www.daehyeonkim.com/resume">DaehyunKim</a></p>
+            <p class="text-muted"><b>Cherish Message</b> powered by <a style='color:black;' href="http://www.daehyeonkim.com/resume">DaehyunKim</a></p>
         </div>
 </div>
 
 <div class="container">
-		<div id="loading" style="position:absolute; top:50%; left :0; width:100%; margin-top: -10px; line_height:20px; text-align:center; display: none;">
+		<div id="loading" style="position:absolute; top:50%; left :0; width:100%; line_height:20px; text-align:center; display: none;">
 			<p><img src='${pageContext.request.contextPath}/resources/img/ajax-loader2.gif' style="width:128px;"/>
 		</div>
 		

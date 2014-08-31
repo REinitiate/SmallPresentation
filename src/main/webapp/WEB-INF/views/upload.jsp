@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,6 +78,8 @@
 		  cursor: pointer;
 		}
 		
+		textarea{text-align: center;}
+		
 		/* Fixes for IE < 8 */
 		@media screen\9 {
 		  .fileinput-button input {
@@ -84,25 +87,50 @@
 		    font-size: 100%;
 		    height: 100%;
 		  }
-}
+		}
+		
+		#wrap
+		{
+			background-image: url('${pageContext.request.contextPath}/resources/img/background.jpg');
+			background-size: 100%;
+			background-repeat: no-repeat;    		    		
+		}
 		
     </style>
 
 </head>
-<body>	
-	
+<body>
+	<div class='background'></div>
 	<div id="wrap">
 		<div id="make">
 			<div class="container">		
 				<div class="page-header">
-				  <h1>소중한 사람에게<br/>작은 모바일 프레젠테이션을 선물하세요<br/><small>그림과 글조각들로 마음을 전하세요</small></h1>
-				</div>
+				  <h1>소중한 사람에게<br/>작은 모바일 프레젠테이션을 선물하세요<br/><small>그림과 글조각들로 마음을 전하세요</small></h1>				</div>
 			    
+			    <div class="row" style="text-align: center; margin-bottom: 15px;">
+			    	<button class="btn btn-default" onclick="$('#pre_pages').toggle(500);">작성한 메시지</button>
+			    </div>
+			    
+			    <div class="row" style="text-align: center; margin-bottom: 15px;">			    	
+			    	<div id="pre_pages" class="btn-group" style="display: none;">
+				        <c:forEach var="dish" items="${letter_list}">
+				              <button class="btn btn-default" onclick="resetPage('${dish['page_id']}')">
+				              ${dish['title']}
+				              </button>
+				        </c:forEach>
+			        </div>
+		        </div>
+		        
+			    	
 			    <div id="control_box" class="row">
-			    	<div class="btn-group">		    		
+			    	<div class="btn-group">
+			    		<input id="input_title" type="text" class="form-control" placeholder="편지 이름을 입력하세요" style="margin-bottom: 15px; text-align: center;"/>		    		
 						<button id="btn_page_add" type="button" class="btn btn-default">페이지 추가</button>
-						<button id="btn_post" type="button" class="btn btn-success">완성본 보기</button>
-					</div>				  					
+						<button id="btn_post" type="button" class="btn btn-success">완성본 보기</button>												
+					</div>									  					
+			    </div>			    
+			    
+			    <div id="letter_list" class="row">
 			    </div>
 			    
 			    <div id="page_list">
@@ -118,6 +146,8 @@
 										<input id="fileupload" type="file" name="imageFile" data-url="${pageContext.request.contextPath}/upload" multiple style="">
 								</span>
 					  			<button type="button" class="btn btn-default"><span class="fa fa-repeat"></span></button>
+					  			<button type="button" class="btn btn-default" onclick="moveUp(this)"><span class="fa fa-arrow-up"></span></button>
+					  			<button type="button" class="btn btn-default" onclick="moveDown(this)"><span class="fa fa-arrow-down"></span></button>
 					  			<button type="button" class="btn btn-warning" onclick="deletePage(this)"><span class="fa fa-trash-o"></span></button>
 					  		</div>
 					  		<div class="panel-body">		  		
@@ -133,8 +163,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
-				<div style="height: 30px;"></div> <!-- 푸터가 지워지지 않게 하는 간격 -->
+				</div>				
 			</div>
 		</div><!-- make -->
 		<div id="letter" class="container">
@@ -146,10 +175,18 @@
 				<div class="letter_contents" style="font-family: 'NanumPen',sans-serif;  line-height: normal; font-size:large; text-align: center;">				
 				</div>
 			</div>			
-		</div>		
+		</div>
+		
+		<!-- <form id="form_letter" method="post" action="${pageContext.request.contextPath}/letter" accept-charset="ISO-8859-1">  -->
+		<form id="form_letter" method="post" action="${pageContext.request.contextPath}/letter">
+			
+			<input name="page_list" id="page_letter_input" type="hidden"/>
+			<input name="page_list2" value="김대현" type="hidden"/>
+			
+		</form>
+						
 	</div>	
-	<%@ include file="footer.jsp"%>
-	
+	<%@ include file="footer.jsp"%>	
 </body>
 
 
@@ -160,18 +197,6 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery-ui-touch-punch.min.js"></script>	
 <script src="${pageContext.request.contextPath}/resources/upload/js/jquery.fileupload.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js_custom/sp.js"></script>
-
-<script>
-if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
-	  var msViewportStyle = document.createElement("style")
-	  msViewportStyle.appendChild(
-	    document.createTextNode(
-	      "@-ms-viewport{width:auto!important}" )
-	  )
-	  document.getElementsByTagName("head")[0].appendChild(msViewportStyle)
-	}
-</script>
-
 	
 		
 </html>
