@@ -1,6 +1,25 @@
 /**
  * 
  */
+
+	// 초기화
+	$(function(){		
+		$('#btn_page_add').bind('click', function(){addPage();});		
+		$('#btn_post').bind('click', function(){postData();});
+		$('#btn_page_add').click();
+		
+		// 만약 저장한 페이지가 있다면 맨 위에 것을 뿌린다.
+		var btn = $('.btn-page-load');
+		if(btn.length > 1){
+			// 페이지 존재
+			$(btn[0]).click();			
+		}
+	});
+	
+	function giveLetter(pageId){
+		
+	}
+	
 	// 페이지 삭제
 	function deletePage(div){
 		console.log(div);
@@ -10,6 +29,9 @@
 	
 	// 페이지 로드
 	function loadPage(btn){
+		
+		console.log('test');
+		
 		var json = $(btn).attr("json");		
 		var items = JSON.parse(json);
 		
@@ -46,12 +68,20 @@
 			}
 			
 			var contents = page_list[i].contents;
-			contents = contents.replace('|', '\n');
+			console.log(contents);
+			contents = contents.replace(/\|/g, '\n'); // 엔터로 다시 바꾼다..			
+			console.log(contents);
 			$(pages[i]).find("textarea").val(contents);
 		}
 		
 		resetIndex();		
 		$('#pre_pages').hide(1000);
+	}
+	
+	// 새 페이지
+	function newPage(){
+		$('.page').remove();
+		$('#input_title').val('');
 	}
 	
 	
@@ -198,7 +228,7 @@
 		fileuploaddiv.fileupload({
 		    dataType: 'json',
 		    send: function (e, data) {
-		    	var image = page.children('.panel-body').children('.div').children('img'); // 이미지 버튼
+		    	var image = page.find('img'); // 이미지 버튼
 		    	image.remove();
 		        $('#loading').show();
 		        $('#mask').show();
@@ -237,9 +267,3 @@
 		$('.letter_contents').append(data.page_list[0].contents);
 		$('.letter_page').show(500);
 	}
-	
-	$(function(){
-		$('#btn_page_add').bind('click', function(){addPage();});		
-		$('#btn_post').bind('click', function(){postData();});
-		$('#btn_page_add').click();
-	});

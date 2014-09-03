@@ -50,7 +50,7 @@
     	h2{font-family: 'Jeju Gothic', serif;  line-height: normal; font-size: x-large;}
     	*/
     	
-    	img{margin-bottom: 20px; width: 80%;}
+    	img{margin-bottom: 20px; max-height: 300px; max-width: 300px;}
     	    	
     	.rotate90 {
 		    -webkit-transform: rotate(90deg);
@@ -107,6 +107,8 @@
 			font-size: x-large;			
 		}
 		
+		th{text-align: center;}
+		
     </style>
 
 </head>
@@ -120,18 +122,34 @@
 				</div>
 			    
 			    <div class="row" style="text-align: center; margin-bottom: 15px;">
-			    	<button id="envelope" class="btn btn-default fa fa-envelope" onclick="$('#pre_pages').toggle(500); $('#envelope').toggleClass('btn-primary')"></button>
+			    	<button id="envelope" class="btn btn-default" onclick="$('#pre_pages').toggle(500); $('#envelope').toggleClass('btn-primary')"><span class="fa fa-folder-open-o"></span> 편지함</button>
+			    	<button id="new" class="btn btn-default" onclick="newPage();"><span class="fa fa-pencil"></span> 새편지</button>
 			    </div>
 			    
 			    <div class="row" style="text-align: center; margin-bottom: 15px;">
 			    	<div id="pre_pages" class="btn-group" style="display: none;">
 			    		<table class="table table-hover">
-			    			<tr><th>작성시각</th><th>메시지 이름</th><th>불러오기</th></tr>
+			    			<tr><th>작성 시각</th><th>메시지 이름</th></tr>
 					        <c:forEach var="letter" items="${letter_list}">
 					        	<tr>
 					        	  <td><fmt:formatDate value="${letter['update_dt']}" pattern="MM/dd KK:mm"/></td>
-					              <td>${letter['title']}</td>
-					              <td><button class="btn btn-default" onclick="loadPage(this)" json=' ${letter["json"]}'>로드</button></td>
+					              <td>
+					              <div class="btn-group" style="width: 100%;">
+									  <button type="button" class="btn btn-large dropdown-toggle" data-toggle="dropdown" style="width: 100%; font-size: x-large;">
+									    ${letter['title']} <span class="caret"></span>
+									  </button>
+									  <ul class="dropdown-menu" role="menu">
+									    <!-- <li><button class="btn btn-default btn-page-load" onclick="loadPage(this)" json=' ${letter["json"]}'>로드</button></li> -->
+									    <li><a class="btn-page-load" onclick="loadPage(this)" json=' ${letter["json"]}' style="font-size: x-large;">로드</a></li>
+									    <li><a onclick="giveLetter(this)" style="font-size: x-large;" page_id='${letter["page_id"]}'>편지주기</a></li>
+									    <li class="divider"></li>									    
+									    <li><a href="#"><span class="fa fa-trash-o"></span></a></li>
+									  </ul>
+									</div>
+					              </td>
+					              <%-- <td><button class="btn btn-success" onclick="loadPage(this)" json=' ${letter["json"]}'>로드</button></td>
+					              <td><button class="btn btn-default" onclick="loadPage(this)" json=' ${letter["json"]}'>삭제</button></td>
+					              <td><button class="btn btn-default" onclick="loadPage(this)" json=' ${letter["json"]}'>편지주기</button></td> --%>
 					            </tr>
 					        </c:forEach>
 				        </table>

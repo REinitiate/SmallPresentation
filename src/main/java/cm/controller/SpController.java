@@ -82,8 +82,7 @@ public class SpController {
 		if(id == null){
 			// 아이디 등록
 			loginService.RegisterUser(email, pass);
-			request.getSession().setAttribute("id", email);
-			request.getSession().setAttribute("id", email);
+			request.getSession().setAttribute("id", email);			
 			return "upload";
 		}
 		else{
@@ -102,14 +101,35 @@ public class SpController {
 		}
 	}
 	
+	// 편지보기
+	@RequestMapping(value={"/view"}, method = {RequestMethod.GET})
+	private String letter(@RequestParam String page_id, HttpServletRequest request, HttpServletResponse response, Model model) {		
+		String json = letterService.GetJsonByPageId(page_id);
+		JSONObject data = new JSONObject();
+		data.put("page_list", json);
+		model.addAttribute("page_list", json);
+		return "view";
+	}
+	
+	@RequestMapping(value={"/loginMain"}, method = {RequestMethod.GET})
+	private String homeMain(HttpServletRequest request, HttpServletResponse response, Model model) {		
+		
+		String id = (String) request.getSession().getAttribute("id");		
+		if(id == null){
+			return "";
+		}
+		List<HashMap> letters = letterService.GetLetterHashListById(id);				
+		model.addAttribute("letter_list", letters);				
+		return "upload";
+	}
+	
 	/**
 	 * 이미지 업로드 페이지의 폼에서 전송 시 받게 되는 메서드 
 	 */	
 	@RequestMapping(value = "/letter", method = RequestMethod.POST)
 	private String upload(@RequestParam String page_list, HttpServletRequest request, HttpServletResponse response, Model model) {
 		
-		String temp = request.getParameter("page_list");
-		
+		String temp = request.getParameter("page_list");		
 		JSONTokener tokener = new JSONTokener(page_list);
 		JSONObject data = new JSONObject(tokener);
 		String jsonString = data.toString();

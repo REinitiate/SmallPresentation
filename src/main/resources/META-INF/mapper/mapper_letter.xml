@@ -24,4 +24,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by update_dt desc]]>		
 	</select>
 	
+	<select id="selectLetterByPageId" resultType="HashMap" parameterType="String">
+		<![CDATA[select title, json, update_dt, page_id
+		from letter
+		where page_id = #{page_id}
+		]]>		
+	</select>
+	
 </mapper>

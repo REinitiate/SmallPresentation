@@ -62,6 +62,11 @@ public class LetterService extends SqlSessionDaoSupport{
 		return result;
 	}
 	
+	public String GetJsonByPageId(String page_id){
+		HashMap result = (HashMap) getSqlSession().selectOne("letter.selectLetterByPageId", page_id);	
+		return (String) result.get("json");
+	}
+	
 	public static class Letter{
 		public String Title;
 		public String Json;
