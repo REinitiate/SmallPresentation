@@ -35,11 +35,16 @@
 		@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 		@import url(http://fonts.googleapis.com/earlyaccess/jejuhallasan.css);
 		
+		/*
 		h1{font-family: 'Hanna', serif;  line-height: normal}
     	h2{font-family: 'Hanna', serif;  line-height: normal}
+    	*/
+    	
+    	h1{font-family: 'NanumPen',sans-serif;  line-height: normal}
+    	h2{font-family: 'NanumPen',sans-serif;  line-height: normal}
     	
 		.page-header{text-align: center;}		
-		#control_box{text-align: center;}		
+		#control_box{text-align: center;}
 		.page_repo{display: none;}		
 		#page_list{margin-top: 30px; text-align: center;}
 		
@@ -89,7 +94,7 @@
 			
 		<div class="container">		
 			<div class="page-header">
-			  <h1>소중한 사람에게<br/>작은 모바일 프레젠테이션을 선물하세요<br/><small>그림과 글조각들로 마음을 전하세요</small></h1>
+			  <h1><strong>소중한 사람에게<br/>작은 모바일 프레젠테이션을 선물하세요<br/></strong></h1>
 			</div>
 			
 			<div class="row" align="center" style="margin-top: 90px;">

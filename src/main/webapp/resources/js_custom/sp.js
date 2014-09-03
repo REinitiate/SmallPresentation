@@ -1,13 +1,61 @@
 /**
  * 
  */
-
+	// 페이지 삭제
 	function deletePage(div){
 		console.log(div);
 		var target = $(div).parent("div").parent("div").parent("div").parent("div").remove();
 		console.log(target);
 	}
 	
+	// 페이지 로드
+	function loadPage(btn){
+		var json = $(btn).attr("json");		
+		var items = JSON.parse(json);
+		
+		$('.page').remove();
+		
+		var page_list = items.page_list;
+		var title = items.title;
+		
+		console.log('page_list');
+		console.log(page_list);
+		
+		// 페이지 추가
+		console.log('page_list.length');
+		console.log(page_list.length);
+		for(i=0; i<page_list.length; i++){
+			console.log('page_list[i]');
+			console.log(page_list[i]);
+			addPage();
+			console.log(i);
+		}
+		
+		$('#input_title').val(title);
+		
+		// 페이지 추가
+		var pages = $('.page'); // 페이지들
+		var textareas = $('textarea'); // 텍스트 area;		
+		for(var i=0; i<pages.length; i++){
+			console.log($(pages[i]));
+			var uploaded_files = $(pages[i]).find('#uploaded_files');			
+			if(page_list[i].img_url != undefined){
+				var img = "<img src='./$id'/>";		            
+	            img = img.replace('$id', page_list[i].img_url);		            
+	            uploaded_files.append(img);
+			}
+			
+			var contents = page_list[i].contents;
+			contents = contents.replace('|', '\n');
+			$(pages[i]).find("textarea").val(contents);
+		}
+		
+		resetIndex();		
+		$('#pre_pages').hide(1000);
+	}
+	
+	
+	// 페이지 올리기
 	function moveUp(div){
 		
 		var index = parseInt($(div).parent("div").parent("div").parent("div").parent("div").attr('index'));
@@ -37,6 +85,7 @@
 		}
 	}
 	
+	// 페이지 내리기
 	function moveDown(div){
 		
 		var index = parseInt($(div).parent("div").parent("div").parent("div").parent("div").attr('index'));
@@ -66,6 +115,7 @@
 		}
 	}
 	
+	// 페이지 인덱스 재세팅
 	function resetIndex(){
 		var page_list = $('.page');
 		var page_list = $('.page');
@@ -75,6 +125,7 @@
 		}
 	}
 	
+	// 페이지 추가
 	function addPage(){
 		var page = $(".page_repo")
 					.clone()
@@ -84,18 +135,17 @@
 					.appendTo('#page_list')
 					.show(1000);
 		fileUploadBind(page.children("div").children("div"));		
-		resetIndex();
+		resetIndex(); // 인덱스 재세팅
 	}
 	
-	function postData(){
-		
+	// 저장 & 보기
+	function postData(){		
 		//Json 형태의 데이터로 추출..		
 		var post_data = {};
 		post_data.page_list = [];
 		var page_list = $('#page_list').children("div");
 		
-		page_cnt = page_list.length;
-		
+		page_cnt = page_list.length;		
 		var uploaded_files = $('#page_list .uploaded_files');
 		var text_areas = $('#page_list textarea');
 		
@@ -117,42 +167,33 @@
 			var page = {}
 			page.contents = $(text_areas[i]).val();
 			page.img_url = img.attr('src');
-			post_data.page_list.push(page);
-			console.log($('#input_title').text());
-			post_data.title = $('#input_title').val();
+			post_data.page_list.push(page);				
 		}
+		post_data.title = $('#input_title').val();
 		
 		console.log(JSON.stringify(post_data));
-		$('#page_letter_input').val(JSON.stringify(post_data));		
-		$('#form_letter').submit();
+		$('#page_letter_input').val(JSON.stringify(post_data));
 		
-//		$.ajax({			
-//			type: 'post',				
-//			url: './post',
-//			contentType: "application/x-www-form-urlencoded; charset=UTF-8",				
-//			dataType: "json",
-//			beforeSend: function(){
-//			     $("#loading").show();
-//			},
-//			complete: function(){
-//			     $("#loading").hide();
-//			},
-//			data: {page_list : JSON.stringify(post_data)},				
-//			success: function(data){
-//				makeLetter(data);
-//            },
-//            error: function(XMLHttpRequest, textStatus, errorThrown) {	            	  
-//              alert("Status: " + textStatus); alert("Error: " + errorThrown); 
-//            }
-//		});
+		// Input Validation
+		if($('#input_title').val() == "" || $('#input_title').val() == null){
+			alert('페이지 제목을 입력해주세요.');
+		}
+		else if(post_data.page_list.length == 0){
+			alert('페이지가 없네요. 내용을 만드셔야....');
+		}
+		else{
+			$('#form_letter').submit();
+		}
 		
+				
 	}
 	
+	// 파일 업로드 바인드
 	function fileUploadBind(page){		
 		//console.log(page);		 
 		var fileuploaddiv = page.children('.panel-heading').children('span').children('#fileupload');
 		var uploaded_files = page.children('.panel-body').children('div').children('#uploaded_files');
-		console.log(uploaded_files);
+		//console.log(uploaded_files);
 		
 		fileuploaddiv.fileupload({
 		    dataType: 'json',

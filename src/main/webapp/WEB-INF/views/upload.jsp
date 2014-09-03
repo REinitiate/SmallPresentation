@@ -37,8 +37,13 @@
 		@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 		@import url(http://fonts.googleapis.com/earlyaccess/jejuhallasan.css);
 		
+		/*
 		h1{font-family: 'Hanna', serif;  line-height: normal}
     	h2{font-family: 'Hanna', serif;  line-height: normal}
+    	*/
+    	
+    	h1{font-family: 'NanumPen',sans-serif;  line-height: normal}
+    	h2{font-family: 'NanumPen',sans-serif;  line-height: normal}
     	
 		/*   	
     	h1{font-family: 'Jeju Gothic', serif;  line-height: normal; font-size: xx-large;}
@@ -96,6 +101,12 @@
 			background-repeat: no-repeat;    		    		
 		}
 		
+		.table
+		{
+			font-family: 'NanumPen',sans-serif;  line-height: normal;
+			font-size: x-large;			
+		}
+		
     </style>
 
 </head>
@@ -105,19 +116,25 @@
 		<div id="make">
 			<div class="container">		
 				<div class="page-header">
-				  <h1>소중한 사람에게<br/>작은 모바일 프레젠테이션을 선물하세요<br/><small>그림과 글조각들로 마음을 전하세요</small></h1>				</div>
+				  <h1><strong>소중한 사람에게<br/>작은 모바일 프레젠테이션을 선물하세요<br/></strong></h1>				
+				</div>
 			    
 			    <div class="row" style="text-align: center; margin-bottom: 15px;">
-			    	<button class="btn btn-default" onclick="$('#pre_pages').toggle(500);">작성한 메시지</button>
+			    	<button id="envelope" class="btn btn-default fa fa-envelope" onclick="$('#pre_pages').toggle(500); $('#envelope').toggleClass('btn-primary')"></button>
 			    </div>
 			    
-			    <div class="row" style="text-align: center; margin-bottom: 15px;">			    	
+			    <div class="row" style="text-align: center; margin-bottom: 15px;">
 			    	<div id="pre_pages" class="btn-group" style="display: none;">
-				        <c:forEach var="dish" items="${letter_list}">
-				              <button class="btn btn-default" onclick="resetPage('${dish['page_id']}')">
-				              ${dish['title']}
-				              </button>
-				        </c:forEach>
+			    		<table class="table table-hover">
+			    			<tr><th>작성시각</th><th>메시지 이름</th><th>불러오기</th></tr>
+					        <c:forEach var="letter" items="${letter_list}">
+					        	<tr>
+					        	  <td><fmt:formatDate value="${letter['update_dt']}" pattern="MM/dd KK:mm"/></td>
+					              <td>${letter['title']}</td>
+					              <td><button class="btn btn-default" onclick="loadPage(this)" json=' ${letter["json"]}'>로드</button></td>
+					            </tr>
+					        </c:forEach>
+				        </table>
 			        </div>
 		        </div>
 		        
@@ -126,7 +143,7 @@
 			    	<div class="btn-group">
 			    		<input id="input_title" type="text" class="form-control" placeholder="편지 이름을 입력하세요" style="margin-bottom: 15px; text-align: center;"/>		    		
 						<button id="btn_page_add" type="button" class="btn btn-default">페이지 추가</button>
-						<button id="btn_post" type="button" class="btn btn-success">완성본 보기</button>												
+						<button id="btn_post" type="button" class="btn btn-success">저장 & 보기</button>												
 					</div>									  					
 			    </div>			    
 			    
