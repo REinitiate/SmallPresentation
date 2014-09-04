@@ -116,7 +116,7 @@ public class SpController {
 		
 		String id = (String) request.getSession().getAttribute("id");		
 		if(id == null){
-			return "";
+			return "login";
 		}
 		List<HashMap> letters = letterService.GetLetterHashListById(id);				
 		model.addAttribute("letter_list", letters);				
@@ -124,10 +124,10 @@ public class SpController {
 	}
 	
 	/**
-	 * 이미지 업로드 페이지의 폼에서 전송 시 받게 되는 메서드 
+	 * 편지 저장 메서드 
 	 */	
 	@RequestMapping(value = "/letter", method = RequestMethod.POST)
-	private String upload(@RequestParam String page_list, HttpServletRequest request, HttpServletResponse response, Model model) {
+	private String upload(@RequestParam String page_list, @RequestParam String page_id, HttpServletRequest request, HttpServletResponse response, Model model) {
 		
 		String temp = request.getParameter("page_list");		
 		JSONTokener tokener = new JSONTokener(page_list);
@@ -143,10 +143,16 @@ public class SpController {
 		}
 		else
 		{
-			String page_id = "page-" + UUID.randomUUID().toString();
-			letterService.ReplaceLetter(id, title, jsonString, page_id);
-		}
-		// DB에 저장
+			// 페이지 할당을 항상 새로 하는 것이 아니라 페이지 아이디가 같이 들어오면 동일한 페이지 아이디를 할당해준다.
+			
+			String page_id_new = null;
+			if(page_id.compareTo("")==0){
+				page_id_new = "page-" + UUID.randomUUID().toString();
+			}else{
+				page_id_new = page_id;
+			}
+			letterService.ReplaceLetter(id, title, jsonString, page_id_new);
+		} 
 		model.addAttribute("page_list", jsonString);
 		return "letter";
 	}

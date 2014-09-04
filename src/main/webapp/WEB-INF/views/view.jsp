@@ -134,8 +134,7 @@
 				$($('.page')[index+1]).show(500);
 			}
 			else{				
-				$('.page').hide(1000);				
-				window.location.replace("${pageContext.request.contextPath}/loginMain");
+				$('.page').hide(1000);
 			}
 		});
 	});

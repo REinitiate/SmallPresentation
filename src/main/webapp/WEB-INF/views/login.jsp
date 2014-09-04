@@ -84,6 +84,10 @@
 			background-repeat: no-repeat;
 		}
 		
+		.img-responsive {
+		    margin: 0 auto;
+		}
+		
 		
     </style>
 
@@ -94,7 +98,7 @@
 			
 		<div class="container">		
 			<div class="page-header">
-			  <h1><strong>소중한 사람에게<br/>작은 모바일 프레젠테이션을 선물하세요<br/></strong></h1>
+				  <a href="${pageContext.request.contextPath}/" style="text-align: center;"><img src="${pageContext.request.contextPath}/resources/img/title.png" class="img-responsive" alt="Responsive image"/></a>				
 			</div>
 			
 			<div class="row" align="center" style="margin-top: 90px;">

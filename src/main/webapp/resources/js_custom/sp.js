@@ -10,14 +10,18 @@
 		
 		// 만약 저장한 페이지가 있다면 맨 위에 것을 뿌린다.
 		var btn = $('.btn-page-load');
-		if(btn.length > 1){
+		console.log(btn);
+		if(btn.length > 0){
 			// 페이지 존재
-			$(btn[0]).click();			
+			$(btn[0]).click();
 		}
 	});
 	
-	function giveLetter(pageId){
-		
+	function giveLetter(pageId){		
+		var id = $(pageId).attr('page_id');
+		console.log(id);		
+		var url = 'www.daehyeonkim.com/sp/view?page_id=' + id;
+		$(pageId).append(url);		
 	}
 	
 	// 페이지 삭제
@@ -32,7 +36,11 @@
 		
 		console.log('test');
 		
-		var json = $(btn).attr("json");		
+		var json = $(btn).attr("json");
+		var page_id = $(btn).attr("page_id");
+		
+		$('#page_id_input').val(page_id);
+		
 		var items = JSON.parse(json);
 		
 		$('.page').remove();
@@ -54,6 +62,9 @@
 		}
 		
 		$('#input_title').val(title);
+		
+		// 원래 타이틀 저장
+		$('#title_original').val(title);
 		
 		// 페이지 추가
 		var pages = $('.page'); // 페이지들
@@ -82,6 +93,7 @@
 	function newPage(){
 		$('.page').remove();
 		$('#input_title').val('');
+		$('#page_id_input').val('');
 	}
 	
 	
@@ -163,7 +175,7 @@
 					.addClass("page")
 					.hide()
 					.appendTo('#page_list')
-					.show(1000);
+					.slideToggle(1000);
 		fileUploadBind(page.children("div").children("div"));		
 		resetIndex(); // 인덱스 재세팅
 	}
@@ -213,9 +225,7 @@
 		}
 		else{
 			$('#form_letter').submit();
-		}
-		
-				
+		}		
 	}
 	
 	// 파일 업로드 바인드

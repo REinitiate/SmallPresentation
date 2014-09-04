@@ -91,6 +91,9 @@
 <script src="${pageContext.request.contextPath}/resources/upload/js/jquery.fileupload.js"></script>
 
 <script>
+
+	var trans_itv = ["slide", {direction :"up"}, 2000];
+
 	$(function(){
 		var page_list = JSON.parse('${page_list}').page_list;
 		for(i=0; i<page_list.length; i++){
@@ -130,8 +133,8 @@
 			console.log(max);
 			console.log($('.page'));
 			if(index != max-1){
-				$($('.page')[index]).hide();
-				$($('.page')[index+1]).show(500);
+				$($('.page')[index]).hide(1000);
+				$($('.page')[index+1]).slideDown(1000);
 			}
 			else{				
 				$('.page').hide(1000);				

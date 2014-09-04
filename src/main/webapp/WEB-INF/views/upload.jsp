@@ -109,6 +109,10 @@
 		
 		th{text-align: center;}
 		
+		.img-responsive {
+		    margin: 0 auto;
+		}
+		
     </style>
 
 </head>
@@ -116,13 +120,13 @@
 	<div class='background'></div>
 	<div id="wrap">
 		<div id="make">
-			<div class="container">		
+			<div class="container" style="text-align: center;">		
 				<div class="page-header">
-				  <h1><strong>소중한 사람에게<br/>작은 모바일 프레젠테이션을 선물하세요<br/></strong></h1>				
+				  <a href="${pageContext.request.contextPath}/" style="text-align: center;"><img src="${pageContext.request.contextPath}/resources/img/title.png" class="img-responsive" alt="Responsive image"/></a>				
 				</div>
 			    
 			    <div class="row" style="text-align: center; margin-bottom: 15px;">
-			    	<button id="envelope" class="btn btn-default" onclick="$('#pre_pages').toggle(500); $('#envelope').toggleClass('btn-primary')"><span class="fa fa-folder-open-o"></span> 편지함</button>
+			    	<button id="envelope" class="btn btn-default" onclick="$('#pre_pages').slideToggle(500); $('#envelope').toggleClass('btn-primary'); $('#folder_icon').toggleClass('fa-folder-open-o');"><span id="folder_icon" class="fa fa-folder"></span> 편지함</button>
 			    	<button id="new" class="btn btn-default" onclick="newPage();"><span class="fa fa-pencil"></span> 새편지</button>
 			    </div>
 			    
@@ -140,7 +144,7 @@
 									  </button>
 									  <ul class="dropdown-menu" role="menu">
 									    <!-- <li><button class="btn btn-default btn-page-load" onclick="loadPage(this)" json=' ${letter["json"]}'>로드</button></li> -->
-									    <li><a class="btn-page-load" onclick="loadPage(this)" json=' ${letter["json"]}' style="font-size: x-large;">로드</a></li>
+									    <li><a class="btn-page-load" onclick="loadPage(this); $('#envelope').toggleClass('btn-primary');" json=' ${letter["json"]}' page_id='${letter["page_id"]}' style="font-size: x-large;">로드</a></li>
 									    <li><a onclick="giveLetter(this)" style="font-size: x-large;" page_id='${letter["page_id"]}'>편지주기</a></li>
 									    <li class="divider"></li>									    
 									    <li><a href="#"><span class="fa fa-trash-o"></span></a></li>
@@ -213,11 +217,11 @@
 		</div>
 		
 		<!-- <form id="form_letter" method="post" action="${pageContext.request.contextPath}/letter" accept-charset="ISO-8859-1">  -->
-		<form id="form_letter" method="post" action="${pageContext.request.contextPath}/letter">
-			
+		<form id="form_letter" method="post" action="${pageContext.request.contextPath}/letter">			
 			<input name="page_list" id="page_letter_input" type="hidden"/>
 			<input name="page_list2" value="김대현" type="hidden"/>
-			
+			<input id="page_id_input" name="page_id" type="hidden" value=""/>
+			<input id="title_original" type="hidden"/>			
 		</form>
 						
 	</div>	
